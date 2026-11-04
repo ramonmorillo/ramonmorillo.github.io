@@ -16,7 +16,8 @@ export function loadData() {
 const BASE = 'https://ramonmorillo.es';
 const PERSON = 'Ramón Morillo Verdugo';
 const EMAIL = ['ramon.morillo.verdugo', 'gmail.com'].join('@');
-const GITHUB = 'https://github.com/ramonmorillo';
+const TWITTER = 'https://x.com/morilloverdugo';
+const INSTAGRAM = 'https://www.instagram.com/morilloverdugo/';
 const OG_IMAGE = '/assets/og-ramon-morillo.png';
 const ASSET_V = '20261104';
 
@@ -87,7 +88,7 @@ ${body}
     <div class="footer-grid">
       <div><h2>Ramón Morillo Verdugo</h2><p>Farmacéutico especialista en Farmacia Hospitalaria, investigador y profesor universitario. Coordinador nacional de MAPEX-SEFH.</p><p class="small muted">Las herramientas enlazadas son de apoyo profesional. Su disponibilidad no implica validación clínica ni certificación como producto sanitario.</p></div>
       <div><h2>Explorar</h2><ul><li><a href="/proyectos/">Proyectos y herramientas</a></li><li><a href="/proyectos/ecosistema-cmo/">Ecosistema CMO</a></li><li><a href="/investigacion/">Investigación</a></li><li><a href="/conferencias/">Conferencias</a></li></ul></div>
-      <div><h2>Contacto</h2><ul><li><a href="mailto:${EMAIL}">${EMAIL}</a></li><li>${ext(GITHUB, 'GitHub')}</li><li><a href="/privacidad/">Aviso legal y privacidad</a></li></ul></div>
+      <div><h2>Contacto</h2><ul><li><a href="mailto:${EMAIL}">${EMAIL}</a></li><li>${ext(TWITTER, 'X (Twitter) @morilloverdugo')}</li><li>${ext(INSTAGRAM, 'Instagram @morilloverdugo')}</li><li><a href="/privacidad/">Aviso legal y privacidad</a></li></ul></div>
     </div>
     <p class="legal">© 2026 Ramón Morillo Verdugo. Textos de esta web: todos los derechos reservados salvo indicación distinta. El modelo CMO es una obra colectiva de la Sociedad Española de Farmacia Hospitalaria (SEFH).</p>
   </div>
@@ -107,20 +108,17 @@ function helpers(cat) {
   const aiName = (id) => cat.aiTypes.find((a) => a.id === id)?.name || id;
   const badges = (t) => `<ul class="badges"><li><span class="badge st-${t.status}">${stName(t.status)}</span></li><li><span class="badge acc">${accName(t.access)}</span></li>${t.recognition ? '<li><span class="badge award">Premio</span></li>' : ''}</ul>`;
   const pageHref = (t) => (t.page ? `/proyectos/${t.page}/` : null);
-  const repoUrl = (t) => `${GITHUB}/${t.repo}`;
-  const showRepo = (t) => t.access === 'publico';
   const related = (t, n = 3) => cat.tools
     .filter((o) => o.id !== t.id && o.access !== 'interno')
     .map((o) => ({ o, s: o.tags.filter((x) => t.tags.includes(x) && x !== 'CMO').length * 2 + o.areas.filter((x) => t.areas.includes(x) && x !== 'Multipatología').length * 3 + (o.category === t.category ? 1 : 0) }))
     .filter((x) => x.s > 0).sort((a, b) => b.s - a.s || a.o.name.localeCompare(b.o.name)).slice(0, n).map((x) => x.o);
-  return { byId, catName, stName, accName, aiName, badges, pageHref, repoUrl, showRepo, related };
+  return { byId, catName, stName, accName, aiName, badges, pageHref, related };
 }
 
 function toolLinks(t, h, { withPage = true } = {}) {
   const out = [];
   if (t.url) out.push(ext(t.url, t.access === 'restringido' ? `Portal ${esc(t.urlLabel || '')}`.trim() : 'Abrir herramienta', 'btn sm'));
   if (withPage && h.pageHref(t)) out.push(`<a class="btn sm ghost" href="${h.pageHref(t)}">Ficha completa</a>`);
-  if (h.showRepo(t)) out.push(ext(h.repoUrl(t), 'Código', 'btn sm ghost'));
   return out.length ? `<div class="links">${out.join('')}</div>` : '';
 }
 
@@ -239,7 +237,7 @@ function personLd() {
     worksFor: { '@type': 'Hospital', name: 'Hospital Universitario de Valme' },
     memberOf: { '@type': 'Organization', name: 'Sociedad Española de Farmacia Hospitalaria (SEFH)' },
     knowsAbout: ['Farmacia hospitalaria', 'Atención farmacéutica', 'Modelo CMO', 'Estratificación de pacientes', 'VIH', 'Investigación clínica', 'Herramientas digitales en salud'],
-    sameAs: [GITHUB],
+    sameAs: [TWITTER, INSTAGRAM],
   };
 }
 
@@ -339,7 +337,7 @@ ${pubs.length ? `<section class="section"><div class="wrap"><p class="kicker">Pu
 </div></section>`;
   const jsonld = [{ '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: t.name, description: t.summary, applicationCategory: 'HealthApplication', operatingSystem: 'Navegador web', url: t.url || BASE + h.pageHref(t),
     author: t.authorship.includes('Cecilia') ? [{ '@type': 'Person', name: PERSON }, { '@type': 'Person', name: 'Cecilia Solís Martín' }] : t.authorship.includes('María Romero') ? [{ '@type': 'Person', name: PERSON }, { '@type': 'Person', name: 'María Romero Murillo' }] : [{ '@type': 'Person', name: PERSON }],
-    ...(t.recognition ? { award: t.recognition.title } : {}), ...(h.showRepo(t) ? { codeRepository: h.repoUrl(t) } : {}) }];
+    ...(t.recognition ? { award: t.recognition.title } : {}) }];
   return layout({ path: h.pageHref(t), section: '/proyectos/', title: `${t.name} · ${h.catName(t.category)} · Ramón Morillo`, description: t.summary, body, jsonld });
 }
 
@@ -529,8 +527,8 @@ function pageContact() {
     <div>
       <h2 style="font-size:var(--fs-4)">Correo directo</h2>
       <p><a href="mailto:${EMAIL}">${EMAIL}</a></p>
-      <h2 style="font-size:var(--fs-4);margin-top:var(--s-6)">Código</h2>
-      <p>${ext(GITHUB, 'github.com/ramonmorillo')}</p>
+      <h2 style="font-size:var(--fs-4);margin-top:var(--s-6)">Redes</h2>
+      <ul><li>${ext(TWITTER, 'X (Twitter) @morilloverdugo')}</li><li>${ext(INSTAGRAM, 'Instagram @morilloverdugo')}</li></ul>
       <h2 style="font-size:var(--fs-4);margin-top:var(--s-6)">Para orientar la respuesta</h2>
       <ul><li>Servicio, centro o grupo desde el que escribes.</li><li>Proyecto o herramienta de interés.</li><li>Tipo de colaboración y plazos aproximados.</li></ul>
       <p class="note warn">Las herramientas de estudios con acceso restringido solo se abren a los equipos autorizados por cada investigador principal.</p>
