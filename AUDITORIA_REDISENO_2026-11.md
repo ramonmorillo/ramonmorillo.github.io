@@ -56,10 +56,9 @@ Leídos mediante clonado superficial de solo lectura. «Pages» = GitHub Pages a
 | pidefar | PIDEFAR | Gestión | Disponible | Interno | **Nueva**, sin enlace |
 | actadeguardias | Acta de Guardias | Gestión | Disponible | Interno | **Nueva**, sin enlace |
 | sesionesfarmacia | Sesiones clínicas | Gestión | Disponible | Interno | **Nueva**, sin enlace |
-| ubicacionesfh | Localizador de medicamentos | Gestión | Disponible | Interno | **Nueva**, sin enlace. Ver riesgo R3 |
 | antipcsk9tool | Prescripción de anti-PCSK9 | Gestión | Disponible | Interno | **Nueva**, sin enlace |
 
-Excluidos con motivo (en `excludedRepos`): `ramonmorillo.github.io`, `cmo-vih-app2` (v2 sustituida), `cmocomunifar` (versión previa de IRIS), `estratificacionRCV` (vacío), `scientific-writing-hospital-pharmacy` (archivado), `herramientasfarmacia` (portal interno), `farmahub360` (privada con autenticación), `Liga`, `pisobarbate`, `clinicadelpiemorillo` (no profesionales o de terceros), `markitdown-converter` (privado).
+Excluidos con motivo (en `excludedRepos`): `ramonmorillo.github.io`, `cmo-vih-app2` (v2 sustituida), `cmocomunifar` (versión previa de IRIS), `estratificacionRCV` (vacío), `scientific-writing-hospital-pharmacy` (archivado), `herramientasfarmacia` (portal interno), `farmahub360` (privada con autenticación), `Liga`, `pisobarbate`, `clinicadelpiemorillo` (no profesionales o de terceros), `markitdown-converter` (privado), `ubicacionesfh` (decisión del autor, 04/11/2026).
 
 **Buscados y no encontrados como repositorio público:** CMOPROMEM. «CMO-RCV / IRIS» corresponde a `cmorcvtesis` (IRIS) y `cmoriesgocardiovascular` (hospital).
 
@@ -74,7 +73,7 @@ Las fichas lo declaran así. **Incoherencia a revisar:** el título del proyecto
 
 ## 4. Premio del HIV Prescribing Cascade Auditor
 
-Fuente encontrada: la propia página pública de la herramienta (sección «Reconocimientos»): «1.er Premio — XII Premios SEFH/CSL sobre Calidad de los Servicios de Farmacia y Seguridad en el Uso de los Medicamentos»; proyecto galardonado: «Mejora de la seguridad farmacoterapéutica en personas que viven con VIH mediante una herramienta digital basada en inteligencia artificial para la detección y abordaje de cascadas terapéuticas». En `site.config.js`, `awardUrl` está vacío: **no hay enlace a una comunicación oficial de la SEFH**, y una búsqueda web no la localizó. Pendiente: añadir la URL oficial en `recognition.sourceUrl` del catálogo.
+Fuente encontrada: la propia página pública de la herramienta (sección «Reconocimientos»): «1.er Premio — XII Premios SEFH/CSL sobre Calidad de los Servicios de Farmacia y Seguridad en el Uso de los Medicamentos»; proyecto galardonado: «Mejora de la seguridad farmacoterapéutica en personas que viven con VIH mediante una herramienta digital basada en inteligencia artificial para la detección y abordaje de cascadas terapéuticas». En `site.config.js`, `awardUrl` está vacío: **no hay enlace a una comunicación oficial de la SEFH**, y una búsqueda web no la localizó. **Actualización 04/11/2026:** el autor dispone solo de noticias de prensa. Se enlazan como fuente las piezas de Diariofarma, Redacción Médica y El Global del 26/10/2026 (localizadas por búsqueda web; no se pudieron abrir desde la sesión). Según el resumen de esa búsqueda, el trabajo premiado es multicéntrico y tiene un equipo más amplio que la autoría registral de la herramienta. No se publican nombres adicionales hasta que el autor los confirme.
 
 ## 5. Decisiones de arquitectura
 
@@ -83,15 +82,15 @@ Fuente encontrada: la propia página pública de la herramienta (sección «Reco
 - **Taxonomía:** una categoría principal por ficha (6) + áreas clínicas y etiquetas como dimensiones secundarias. VIH es un área, no una categoría, para no duplicar fichas.
 - **Estado y acceso son ejes distintos.** Estado: disponible / piloto / en desarrollo. Acceso: abierto / restringido / interno. La validación clínica es un tercer campo de texto.
 - **Formación retirada** de la navegación y del contenido. Las rutas antiguas (`#cursos`, `#aula`, módulos…) redirigen a `/formacion/` (página de transición `noindex`); `#conferencias`, `#portfolio`, `#iris`, `#acerca` y `#contacto` redirigen a sus nuevas páginas. Las páginas estáticas formativas (`modulos/`, `perfiles/`, `recursos/`, `diccionario-ia.html`, `herramientas-ia.html`, `encuesta-previa.html`) se conservan para no romper enlaces y se han marcado `noindex`.
-- **Talleres de Sevilla y Santiago:** se mantienen en Conferencias como participaciones en eventos, con sus páginas intactas (Santiago es el 16/11/2026 y los asistentes tienen el enlace). **Decisión del autor:** si los considera «formación», basta `"visible": false` en `data/conferencias.json`.
+- **Talleres de Sevilla y Santiago:** se mantienen en Conferencias como participaciones en eventos, con sus páginas intactas (Santiago es el 16/11/2026 y los asistentes tienen el enlace). **Decisión del autor (04/11/2026): se mantienen.**
 - **Privacidad:** sin cookies propias ni `localStorage`; tipografías autoalojadas (OFL) en lugar de Google Fonts.
 
 ## 6. Riesgos y pendientes de verificación
 
 - **R1. Producción no verificada** (red bloqueada). Tras fusionar, comprobar que `ramonmorillo.es` sirve esta versión y que las URL de las herramientas responden (`npm run audit:github -- --check-urls`).
 - **R2. URL de herramientas nuevas inferidas** de `ramonmorillo.es/<repositorio>/` con Pages activo; no comprobadas en vivo: cmo-vhb-vhd, estratificacionEM, cmocoagulopatias, adhefarmapexhub, cambiosTAR, drugpersist, DRUGIMID, MRCI, ayudainvestigacion, CMO-Scientific-Engine.
-- **R3. `ubicacionesfh` publica exportaciones XLS reales de Farmatools** (`data/raw/`) en un repositorio público. No son datos de pacientes, pero son inventario interno del hospital. Valorar hacerlo privado. No se ha modificado (fuera del alcance).
-- **R4. Afiliación «Hospital Universitario de Valme»**: tomada de las páginas propias de los talleres. «Doctor» y «profesor universitario» proceden del encargo y de la web anterior; no hay fuente enlazada. Confirmar.
+- **R3. Resuelto en la web:** `ubicacionesfh` retirado del catálogo por decisión del autor. Sigue vigente la recomendación sobre el repositorio: publica exportaciones XLS reales de Farmatools** (`data/raw/`) en un repositorio público. No son datos de pacientes, pero son inventario interno del hospital. Valorar hacerlo privado. No se ha modificado (fuera del alcance).
+- **R4. Resuelto:** afiliación (H. U. de Valme), título de doctor y docencia universitaria confirmados por el autor el 04/11/2026.
 - **R5. DERMAPEX:** el README dice que la lógica clínica «aún no está implementada», pero el repositorio tiene commits del 03/11/2026. Ficha marcada «En desarrollo»; actualizar cuando cambie.
 - **R6. Conferencias:** solo hay tres participaciones documentadas en el repositorio. El resto de la trayectoria como ponente (incluida la del Congreso SEFH con neumoCMO) debe añadirse con su evidencia.
 - **R7. Código antiguo de la SPA** (`js/app.js`, `js/teaching.js`, `js/diagnostico.js`, `data/course-data.js`, `data/site-v5.js`, `data/teaching-programs.js`, `data/cases.js`, `data/github-route.js`, `data/tooling-current.js`, `css/components.css`, `css/professional.css`) ya no se carga desde ninguna página. Se conserva sin borrar; puede eliminarse tras aprobación.

@@ -325,7 +325,7 @@ function projectPage(t, d) {
     <div><p class="kicker">La solución</p><h2>Qué hace</h2><ul>${t.features.map((f) => `<li>${esc(f)}</li>`).join('')}</ul></div>
   </div>
 </div></section>
-${t.recognition ? `<section class="section"><div class="wrap"><div class="feature"><div><p class="kicker">Reconocimiento</p><h3>${esc(t.recognition.title)}</h3><p>${esc(t.recognition.detail)}</p></div><dl class="feature-aside"><dt>Fuente</dt><dd>${esc(t.recognition.source)} ${t.recognition.sourceUrl ? ext(t.recognition.sourceUrl, 'Ver la página') : ''}</dd></dl></div></div></section>` : ''}
+${t.recognition ? `<section class="section"><div class="wrap"><div class="feature"><div><p class="kicker">Reconocimiento</p><h3>${esc(t.recognition.title)}</h3><p>${esc(t.recognition.detail)}</p></div><dl class="feature-aside"><dt>Fuente</dt><dd>${esc(t.recognition.source)}</dd>${(t.recognition.press || []).length ? `<dt>Prensa</dt>${t.recognition.press.map((x) => `<dd>${ext(x.url, esc(x.label))}</dd>`).join('')}` : ''}${t.recognition.sourceUrl ? `<dd>${ext(t.recognition.sourceUrl, 'Página de la herramienta')}</dd>` : ''}</dl></div></div></section>` : ''}
 <section class="section"><div class="wrap">
   <p class="kicker">Ficha técnica y científica</p><h2>Contexto, validación y autoría</h2>
   <dl class="deflist">

@@ -47,6 +47,7 @@ for (const t of cat.tools) {
   if (t.page) { if (pages.has(t.page)) err(`${where}: página duplicada «${t.page}»`); pages.add(t.page); }
   if (t.recognition && (!t.recognition.title || !t.recognition.source)) err(`${where}: reconocimiento sin título o sin fuente`);
   if (t.recognition?.sourceUrl && !isHttps(t.recognition.sourceUrl)) err(`${where}: fuente del reconocimiento malformada`);
+  for (const x of t.recognition?.press || []) if (!x.label || !isHttps(x.url)) err(`${where}: enlace de prensa sin etiqueta o malformado`);
   if (!Array.isArray(t.features) || t.features.some((f) => !f || f.length < 8)) err(`${where}: funcionalidades vacías o demasiado breves`);
 }
 for (const x of cat.excludedRepos || []) {
