@@ -1,39 +1,126 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IA aplicada a la farmacia hospitalaria · Ramón Morillo Verdugo</title>
-  <meta name="author" content="Ramón Morillo Verdugo">
-  <meta name="description" content="Cursos y sesiones prácticas para enseñar y aplicar inteligencia artificial en farmacia hospitalaria con evidencia, seguridad y resultados evaluables.">
-  <meta name="theme-color" content="#102831">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Ramón Morillo · IA aplicada a farmacia hospitalaria">
-  <meta property="og:description" content="Formación, conferencias y herramientas prácticas de IA para farmacia hospitalaria.">
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/professional.css">
-<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5a04dad56e064c7ab68ffed70d23e732"}'></script><!-- End Cloudflare Web Analytics -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ramón Morillo Verdugo · Farmacia hospitalaria, investigación y herramientas digitales</title>
+<meta name="description" content="Farmacéutico de hospital, investigador y coordinador de MAPEX-SEFH. Herramientas digitales de estratificación CMO, seguridad farmacoterapéutica e investigación clínica.">
+<meta name="author" content="Ramón Morillo Verdugo">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://ramonmorillo.es/">
+<meta name="theme-color" content="#0f2530" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d1619" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Ramón Morillo Verdugo">
+<meta property="og:title" content="Ramón Morillo Verdugo · Farmacia hospitalaria, investigación y herramientas digitales">
+<meta property="og:description" content="Farmacéutico de hospital, investigador y coordinador de MAPEX-SEFH. Herramientas digitales de estratificación CMO, seguridad farmacoterapéutica e investigación clínica.">
+<meta property="og:url" content="https://ramonmorillo.es/">
+<meta property="og:image" content="https://ramonmorillo.es/assets/og-ramon-morillo.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/source-serif-4-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css?v=20261104">
+<script>document.documentElement.classList.add('js')</script>
+<script>(function(){var h=location.hash.slice(1);if(!h||h==='inicio'||h==='contenido')return;var m={"conferencias":"/conferencias/","portfolio":"/proyectos/","iris":"/proyectos/iris/","acerca":"/sobre-mi/","contacto":"/contacto/"};if(m[h]){location.replace(m[h]);return;}if(/^[a-z0-9-]+$/.test(h)&&!document.getElementById(h)){location.replace('/formacion/?desde='+encodeURIComponent(h));}})();</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Ramón Morillo Verdugo","url":"https://ramonmorillo.es/","inLanguage":"es"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","@id":"https://ramonmorillo.es/#persona","name":"Ramón Morillo Verdugo","alternateName":"Ramón Morillo","url":"https://ramonmorillo.es/","image":"https://ramonmorillo.es/assets/ramon-morillo-retrato.webp","jobTitle":"Farmacéutico especialista en Farmacia Hospitalaria","worksFor":{"@type":"Hospital","name":"Hospital Universitario de Valme"},"memberOf":{"@type":"Organization","name":"Sociedad Española de Farmacia Hospitalaria (SEFH)"},"knowsAbout":["Farmacia hospitalaria","Atención farmacéutica","Modelo CMO","Estratificación de pacientes","VIH","Investigación clínica","Herramientas digitales en salud"],"sameAs":["https://github.com/ramonmorillo"]}</script>
+<!-- Cloudflare Web Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "5a04dad56e064c7ab68ffed70d23e732"}'></script><!-- End Cloudflare Web Analytics -->
 </head>
 <body>
-<a class="skip" href="#app">Saltar al contenido</a>
+<a class="skip" href="#contenido">Saltar al contenido</a>
 <header class="site-header">
-  <a class="brand" href="#inicio" aria-label="Ramón Morillo, ir al inicio"><span aria-hidden="true">RM</span><div><strong>Ramón Morillo</strong><small>IA × farmacia hospitalaria</small></div></a>
-  <nav id="app-nav" aria-label="Navegación principal"></nav>
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Ramón Morillo Verdugo, inicio"><span class="brand-mark" aria-hidden="true">RM</span><span><strong>Ramón Morillo Verdugo</strong><small>Farmacia hospitalaria · investigación · herramientas digitales</small></span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menú</button>
+    <nav id="site-nav" class="nav" aria-label="Principal"><ul><li><a href="/" aria-current="page">Inicio</a></li><li><a href="/sobre-mi/">Sobre mí</a></li><li><a href="/proyectos/">Proyectos y herramientas</a></li><li><a href="/investigacion/">Investigación</a></li><li><a href="/conferencias/">Conferencias</a></li><li class="nav-cta"><a href="/contacto/">Contacto</a></li></ul></nav>
+  </div>
 </header>
-<noscript><main class="container"><h1>IA aplicada a la farmacia hospitalaria</h1><p>Esta versión incluye contenido base accesible, pero el progreso, búsqueda y evaluaciones interactivas requieren JavaScript. La web no usa backend ni cuentas.</p></main></noscript>
-<div class="progress-wrap" aria-label="Progreso del curso"><span id="progressText">0/0 módulos completados</span><div class="progress"><span id="progressBar"></span></div></div>
-<main id="app" class="container" tabindex="-1"></main>
-<footer class="site-footer"><div><strong>Ramón Morillo Verdugo</strong><p>Formación e innovación aplicada a farmacia hospitalaria.</p></div><div><a href="#acerca">Sobre mí</a><a href="#contacto">Contacto</a></div><p>© 2026 Ramón Morillo Verdugo. Contenido formativo; las herramientas requieren evaluación y autorización en su contexto de uso.</p></footer>
-<script src="data/course-data.js"></script>
-<script src="data/github-route.js"></script>
-<script src="data/tooling-current.js"></script>
-<script src="data/cases.js"></script>
-<script src="data/site-v5.js"></script>
-<script src="data/teaching-programs.js"></script>
-<script src="js/teaching.js"></script>
-<script src="js/diagnostico.js"></script>
-<script src="js/app.js"></script>
+<main id="contenido" tabindex="-1">
+
+<section class="hero"><div class="wrap hero-grid">
+  <div class="reveal">
+    <p class="kicker">Farmacia hospitalaria · Investigación · Inteligencia artificial</p>
+    <h1>De las ideas a herramientas reales para la farmacia hospitalaria.</h1>
+    <p class="lead">Soy Ramón Morillo Verdugo, farmacéutico de hospital, investigador y coordinador nacional de MAPEX-SEFH. Desarrollo herramientas digitales y proyectos de investigación para estratificar la atención farmacéutica, mejorar la seguridad de los tratamientos y avanzar hacia una atención más personalizada.</p>
+    <div class="actions"><a class="btn" href="/proyectos/">Explorar herramientas</a><a class="btn ghost" href="/sobre-mi/">Conocer mi trayectoria</a></div>
+  </div>
+  <figure class="portrait"><img src="/assets/ramon-morillo-retrato.webp" alt="Retrato de Ramón Morillo Verdugo" width="1122" height="1402" fetchpriority="high" decoding="async"></figure>
+</div></section>
+
+<section class="section" aria-labelledby="h-cifras" style="padding-top:0"><div class="wrap">
+  <h2 id="h-cifras" class="visually-hidden">Cifras del catálogo</h2>
+  <div class="facts">
+    <div><strong>24</strong><span>herramientas de acceso abierto en el catálogo</span></div>
+    <div><strong>10</strong><span>aplicaciones de estratificación CMO por patología</span></div>
+    <div><strong>3</strong><span>plataformas de estudios clínicos (acceso restringido)</span></div>
+    <div><strong>123</strong><span>registros en PubMed con autoría «Morillo-Verdugo R»</span></div>
+  </div>
+  <p class="facts-note">Las tres primeras cifras se calculan a partir del <a href="/proyectos/">catálogo</a>. PubMed: <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Morillo-Verdugo+R%5BAuthor%5D&amp;sort=date" target="_blank" rel="noopener noreferrer">búsqueda</a> del 4 de noviembre de 2026.</p>
+</div></section>
+
+<section class="section" aria-labelledby="h-problema"><div class="wrap">
+  <div class="section-head split"><div><p class="kicker">Qué problema intento resolver</p><h2 id="h-problema">Los modelos de atención farmacéutica necesitan herramientas para llegar a la consulta.</h2></div>
+  <p>Un modelo de estratificación bien diseñado tiene poco efecto si en la consulta no hay tiempo para aplicarlo. Mi trabajo consiste en convertir criterios farmacéuticos explícitos en aplicaciones que se pueden examinar, probar y mejorar, y en investigar si funcionan.</p></div>
+  <div class="grid g3">
+    <div class="panel"><h3>Estratificar con criterios explícitos</h3><p>Aplicaciones del modelo CMO por patología que muestran qué variable determina cada prioridad y qué intervención corresponde.</p><a class="arrow-link" href="/proyectos/ecosistema-cmo/">Ecosistema CMO</a></div>
+    <div class="panel"><h3>Hacer más seguros los tratamientos</h3><p>Revisión estructurada de cascadas de prescripción, complejidad terapéutica y cambios de tratamiento.</p><a class="arrow-link" href="/proyectos/?categoria=seguridad">Seguridad farmacoterapéutica</a></div>
+    <div class="panel"><h3>Medir para investigar</h3><p>Plataformas de estudio con datos seudonimizados, cuestionarios y exportación para el análisis.</p><a class="arrow-link" href="/investigacion/">Investigación</a></div>
+  </div>
+</div></section>
+
+<section class="section" aria-labelledby="h-destacados"><div class="wrap">
+  <div class="section-head split"><div><p class="kicker">Proyectos destacados</p><h2 id="h-destacados">Herramientas en uso, en estudio y en construcción.</h2></div><p>Cada proyecto indica su estado, quién puede acceder y qué validación tiene documentada.</p></div>
+  <article class="feature" aria-labelledby="h-hiv">
+    <div>
+      <p class="kicker">Seguridad farmacoterapéutica · VIH</p>
+      <h3 id="h-hiv">HIV Prescribing Cascade Auditor</h3>
+      <p>Detección y auditoría de posibles cascadas de prescripción en personas que viven con VIH, para revisión experta. Un efecto adverso de un fármaco puede interpretarse como una nueva enfermedad y tratarse con otro fármaco.</p>
+      <div class="actions"><a class="btn" href="/proyectos/hiv-prescribing-cascade-auditor/">Conocer el proyecto</a><a class="btn ghost ext" href="https://ramonmorillo.es/hiv-prescribing-cascade-auditor/" target="_blank" rel="noopener noreferrer">Abrir herramienta</a></div>
+    </div>
+    <dl class="feature-aside">
+      <dt>Reconocimiento</dt><dd>1.er Premio · XII Premios SEFH/CSL sobre Calidad de los Servicios de Farmacia y Seguridad en el Uso de los Medicamentos</dd>
+      <dt>Autoría</dt><dd>Ramón Morillo Verdugo y Cecilia Solís Martín</dd>
+      <dt>Registro de la Propiedad Intelectual</dt><dd>Asiento 04/2026/2614</dd>
+    </dl>
+  </article>
+  <ul class="project-list" style="margin-top:var(--s-6)">
+    <li><a href="/proyectos/iris/"><strong>IRIS CMO</strong><span class="desc">Plataforma de atención farmacéutica CMO y seguimiento del riesgo cardiovascular en farmacia comunitaria, desarrollada para una tesis doctoral.</span><span class="go"><span class="badge st-piloto">Piloto o en evaluación</span></span></a></li><li><a href="/proyectos/dermapex/"><strong>DERMAPEX</strong><span class="desc">Plataforma del estudio prospectivo multicéntrico sobre el modelo CMO-MAPEX en adultos con dermatitis atópica moderada-grave.</span><span class="go"><span class="badge st-desarrollo">En desarrollo</span></span></a></li><li><a href="/proyectos/coamo/"><strong>COAMO</strong><span class="desc">Herramienta digital del estudio COAMO: atención farmacéutica según el modelo CMO en adultos con hemofilia A, hemofilia B o enfermedad de von Willebrand.</span><span class="go"><span class="badge st-piloto">Piloto o en evaluación</span></span></a></li><li><a href="/proyectos/neumocmo/"><strong>neumoCMO</strong><span class="desc">Entorno de consulta para el farmacéutico que atiende pacientes respiratorios: reúne estratificación, adherencia, educación y evidencia.</span><span class="go"><span class="badge st-disponible">Disponible</span></span></a></li><li><a href="/proyectos/#hub-estratificacion-cmo"><strong>Hub de Estratificación CMO</strong><span class="desc">Punto de acceso único a las herramientas de estratificación CMO por patología, con un sistema de diseño común.</span><span class="go"><span class="badge st-disponible">Disponible</span></span></a></li>
+  </ul>
+  <p style="margin-top:var(--s-5)"><a class="arrow-link" href="/proyectos/">Ver el catálogo completo (33 fichas)</a></p>
+</div></section>
+
+<section class="section" aria-labelledby="h-cmo"><div class="wrap">
+  <div class="section-head split"><div><p class="kicker">Modelo CMO</p><h2 id="h-cmo">Un mismo marco, adaptado a cada patología.</h2></div>
+  <p>El modelo Capacidad–Motivación–Oportunidad, desarrollado colectivamente en el proyecto MAPEX de la SEFH, ordena la atención farmacéutica según las necesidades de cada paciente. Las adaptaciones por patología se han traducido en aplicaciones que comparten lógica y diseño.</p></div>
+  <div class="actions"><a class="btn" href="/proyectos/ecosistema-cmo/">Ver el ecosistema CMO</a><a class="btn ghost ext" href="https://ramonmorillo.es/hub-estratificacionCMO/" target="_blank" rel="noopener noreferrer">Abrir el Hub de Estratificación</a></div>
+</div></section>
+
+<section class="section" aria-labelledby="h-conf"><div class="wrap">
+  <div class="section-head split"><div><p class="kicker">Conferencias</p><h2 id="h-conf">Ponencias y sesiones recientes.</h2></div><p>Participaciones en congresos y encuentros profesionales, con sus materiales cuando están publicados.</p></div>
+  <ul class="project-list"><li><a href="/conferencias/#santiago-2026-11-16"><strong>Encuentro «IA aplicada a la farmacia hospitalaria»</strong><span class="desc">Taller práctico de IA aplicada a la farmacia hospitalaria · Santiago de Compostela</span><span class="go"><time datetime="2026-11-16">16 de noviembre de 2026</time></span></a></li><li><a href="/conferencias/#sevilla-2026-10-14"><strong>Encuentro «IA aplicada a la farmacia hospitalaria»</strong><span class="desc">Taller práctico de IA aplicada a la farmacia hospitalaria · Sevilla</span><span class="go"><time datetime="2026-10-14">14 de octubre de 2026</time></span></a></li><li><a href="/conferencias/#foco-vih-2026"><strong>FOCO VIH 2026</strong><span class="desc">Introducción práctica a Claude · Madrid</span><span class="go"><time datetime="2026-10-03">3 de octubre de 2026</time></span></a></li></ul>
+  <p style="margin-top:var(--s-5)"><a class="arrow-link" href="/conferencias/">Todas las conferencias</a></p>
+</div></section>
+
+<section class="section" aria-labelledby="h-colab"><div class="wrap narrow">
+  <p class="kicker">Colaboración</p><h2 id="h-colab">¿Un proyecto de investigación o una herramienta que construir?</h2>
+  <p class="lead">Colaboro con servicios de farmacia, grupos de investigación y sociedades científicas en estudios multicéntricos, adaptación de modelos de estratificación y desarrollo de herramientas.</p>
+  <div class="actions"><a class="btn" href="/contacto/">Contactar</a></div>
+</div></section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><h2>Ramón Morillo Verdugo</h2><p>Farmacéutico especialista en Farmacia Hospitalaria, investigador y profesor universitario. Coordinador nacional de MAPEX-SEFH.</p><p class="small muted">Las herramientas enlazadas son de apoyo profesional. Su disponibilidad no implica validación clínica ni certificación como producto sanitario.</p></div>
+      <div><h2>Explorar</h2><ul><li><a href="/proyectos/">Proyectos y herramientas</a></li><li><a href="/proyectos/ecosistema-cmo/">Ecosistema CMO</a></li><li><a href="/investigacion/">Investigación</a></li><li><a href="/conferencias/">Conferencias</a></li></ul></div>
+      <div><h2>Contacto</h2><ul><li><a href="mailto:ramon.morillo.verdugo@gmail.com">ramon.morillo.verdugo@gmail.com</a></li><li><a class="ext" href="https://github.com/ramonmorillo" target="_blank" rel="noopener noreferrer">GitHub</a></li><li><a href="/privacidad/">Aviso legal y privacidad</a></li></ul></div>
+    </div>
+    <p class="legal">© 2026 Ramón Morillo Verdugo. Textos de esta web: todos los derechos reservados salvo indicación distinta. El modelo CMO es una obra colectiva de la Sociedad Española de Farmacia Hospitalaria (SEFH).</p>
+  </div>
+</footer>
+<script src="/assets/js/site.js?v=20261104" defer></script>
 </body>
 </html>

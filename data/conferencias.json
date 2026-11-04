@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "reviewedAt": "2026-11-04",
+    "note": "Añadir solo participaciones con evidencia (programa, página del evento o material propio). Campos obligatorios: id, date (AAAA-MM-DD), title, event, city, type, topics. Opcionales: end (fecha-hora de fin), venue, organizer, href, hrefLabel, photo, photoAlt, programUrl, summary, visible."
+  },
+  "topics": [
+    {"id": "ia", "name": "Inteligencia artificial"},
+    {"id": "innovacion", "name": "Innovación farmacéutica"},
+    {"id": "cmo", "name": "Modelo CMO"},
+    {"id": "atencion", "name": "Atención farmacéutica"},
+    {"id": "seguridad", "name": "Seguridad farmacoterapéutica"},
+    {"id": "digital", "name": "Transformación digital"}
+  ],
+  "types": ["Ponencia", "Sesión práctica", "Taller", "Mesa redonda", "Comunicación"],
+  "events": [
+    {
+      "id": "foco-vih-2026",
+      "date": "2026-10-03",
+      "end": "2026-10-03T12:30",
+      "title": "Introducción práctica a Claude",
+      "event": "FOCO VIH 2026",
+      "city": "Madrid",
+      "venue": "Espacio BLOKE",
+      "type": "Sesión práctica",
+      "topics": ["ia", "atencion"],
+      "summary": "Sesión práctica sobre el uso de un asistente de IA en la atención farmacéutica a personas con VIH, con datos simulados.",
+      "href": "/foco-3-octubre.html",
+      "hrefLabel": "Página y materiales de la sesión",
+      "photo": "/assets/foco-3-octubre/foto-sesion-foco-vih.webp",
+      "photoAlt": "Sesión sobre inteligencia artificial en FOCO VIH 2026, Madrid",
+      "visible": true
+    },
+    {
+      "id": "sevilla-2026-10-14",
+      "date": "2026-10-14",
+      "end": "2026-10-14T19:40",
+      "title": "Taller práctico de IA aplicada a la farmacia hospitalaria",
+      "event": "Encuentro «IA aplicada a la farmacia hospitalaria»",
+      "city": "Sevilla",
+      "venue": "Hotel AC Ciudad de Sevilla",
+      "type": "Taller",
+      "topics": ["ia", "digital"],
+      "summary": "Uso de herramientas de IA con método y creación de pequeñas herramientas propias, con materiales ficticios.",
+      "href": "/sevilla-14-octubre.html",
+      "hrefLabel": "Página y materiales para asistentes",
+      "photo": "/assets/sevilla-14-octubre/foto-sesion-sevilla.webp",
+      "photoAlt": "Taller de inteligencia artificial en farmacia hospitalaria, Sevilla",
+      "visible": true
+    },
+    {
+      "id": "santiago-2026-11-16",
+      "date": "2026-11-16",
+      "end": "2026-11-16T19:00",
+      "title": "Taller práctico de IA aplicada a la farmacia hospitalaria",
+      "event": "Encuentro «IA aplicada a la farmacia hospitalaria»",
+      "city": "Santiago de Compostela",
+      "venue": "Complejo Universitario de Santiago",
+      "type": "Taller",
+      "topics": ["ia", "digital"],
+      "summary": "Herramientas esenciales de IA para la práctica farmacéutica y creación de herramientas propias, con materiales ficticios.",
+      "href": "/santiago-16-noviembre.html",
+      "hrefLabel": "Página y materiales para asistentes",
+      "visible": true
+    }
+  ]
+}

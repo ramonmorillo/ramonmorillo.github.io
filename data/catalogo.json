@@ -1,0 +1,1280 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "reviewedAt": "2026-11-04",
+    "source": "Inventario de los repositorios públicos de github.com/ramonmorillo (lectura de README, documentación y código) a 2026-11-04. Las fechas «updated» corresponden al último commit del repositorio, no a una publicación ni a una validación clínica.",
+    "baseUrl": "https://ramonmorillo.es"
+  },
+  "categories": [
+    {
+      "id": "estratificacion",
+      "name": "Estratificación y atención farmacéutica CMO",
+      "short": "Estratificación CMO",
+      "description": "Aplicaciones que trasladan a la consulta los modelos de estratificación CMO publicados por la SEFH para cada patología."
+    },
+    {
+      "id": "seguridad",
+      "name": "Seguridad y optimización farmacoterapéutica",
+      "short": "Seguridad",
+      "description": "Revisión estructurada de tratamientos: cascadas de prescripción, complejidad terapéutica y apoyo a la decisión."
+    },
+    {
+      "id": "estudios",
+      "name": "Plataformas de estudios clínicos",
+      "short": "Estudios clínicos",
+      "description": "Herramientas desarrolladas para proyectos de investigación concretos, con acceso restringido al equipo investigador."
+    },
+    {
+      "id": "resultados",
+      "name": "Adherencia, persistencia y resultados en salud",
+      "short": "Resultados en salud",
+      "description": "Registro y análisis de adherencia, persistencia y cambios de tratamiento con datos seudonimizados."
+    },
+    {
+      "id": "evidencia",
+      "name": "Evidencia, investigación y comunicación",
+      "short": "Evidencia y comunicación",
+      "description": "Apoyo a la búsqueda de evidencia, al diseño de proyectos y a la comunicación con pacientes."
+    },
+    {
+      "id": "gestion",
+      "name": "Gestión interna del servicio de farmacia",
+      "short": "Gestión interna",
+      "description": "Herramientas de uso interno. Se describen sin enlazar sus interfaces."
+    }
+  ],
+  "statuses": [
+    {
+      "id": "disponible",
+      "name": "Disponible",
+      "description": "Aplicación accesible y funcional. Disponible no significa validada clínicamente."
+    },
+    {
+      "id": "piloto",
+      "name": "Piloto o en evaluación",
+      "description": "En uso dentro de un estudio, una fase de pruebas o un pilotaje declarado."
+    },
+    {
+      "id": "desarrollo",
+      "name": "En desarrollo",
+      "description": "Funcionalidad incompleta o en construcción según su propia documentación."
+    }
+  ],
+  "access": [
+    {
+      "id": "publico",
+      "name": "Acceso abierto"
+    },
+    {
+      "id": "restringido",
+      "name": "Acceso restringido"
+    },
+    {
+      "id": "interno",
+      "name": "Uso interno"
+    }
+  ],
+  "aiTypes": [
+    {
+      "id": "ninguna",
+      "name": "Sin IA",
+      "description": "Lógica determinista: reglas, cálculos o plantillas."
+    },
+    {
+      "id": "reglas-texto",
+      "name": "Extracción de texto por reglas locales",
+      "description": "Procesamiento de texto en el navegador mediante reglas y palabras clave. No es un modelo de lenguaje."
+    },
+    {
+      "id": "endpoint-opcional",
+      "name": "IA opcional vía servidor institucional",
+      "description": "Preparada para conectarse a un servicio de IA del propio centro; desactivada por defecto y sustituida por reglas locales."
+    }
+  ],
+  "tools": [
+    {
+      "id": "hub-estratificacion-cmo",
+      "name": "Hub de Estratificación CMO",
+      "repo": "hub-estratificacionCMO",
+      "url": "https://ramonmorillo.es/hub-estratificacionCMO/",
+      "category": "estratificacion",
+      "areas": [
+        "Multipatología"
+      ],
+      "tags": [
+        "CMO",
+        "MAPEX",
+        "estratificación",
+        "acceso unificado"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Punto de acceso único a las herramientas de estratificación CMO por patología, con un sistema de diseño común.",
+      "problem": "Las herramientas de estratificación por patología estaban dispersas y cada una tenía su propia interfaz.",
+      "audience": "Farmacéuticos de hospital que atienden pacientes externos.",
+      "features": [
+        "Acceso a cada herramienta de estratificación desde una sola página",
+        "Sistema de diseño CMO compartido entre aplicaciones",
+        "Aviso legal y de seguridad clínica propio",
+        "Pruebas automatizadas de extremo a extremo"
+      ],
+      "ai": "ninguna",
+      "validation": "No aplica: es un portal de acceso. Cada herramienta enlazada mantiene sus propios límites.",
+      "authorship": "Desarrollo: Ramón Morillo Verdugo. Los modelos clínicos enlazados son documentos de la SEFH.",
+      "updated": "2026-10-30",
+      "docs": true,
+      "featured": true,
+      "page": null
+    },
+    {
+      "id": "cmo-vih",
+      "name": "CMO-VIH Pro",
+      "repo": "cmo-vih-app",
+      "url": "https://ramonmorillo.es/cmo-vih-app/",
+      "category": "estratificacion",
+      "areas": [
+        "VIH"
+      ],
+      "tags": [
+        "CMO",
+        "VIH",
+        "estratificación",
+        "bilingüe"
+      ],
+      "status": "piloto",
+      "access": "publico",
+      "summary": "Estratificación CMO de personas con VIH con motor determinista explicable y planificación de intervenciones.",
+      "problem": "Aplicar de forma homogénea el modelo de estratificación CMO en VIH y dejar constancia de cada variable que determina la prioridad.",
+      "audience": "Farmacéuticos de hospital en consultas externas de VIH.",
+      "features": [
+        "Motor CMO determinista con contribución explícita de cada variable",
+        "Ajuste justificado por el profesional",
+        "Intensidad de seguimiento e intervenciones estructuradas",
+        "Interfaz en español, inglés y portugués",
+        "Importación y exportación JSON/CSV para investigación",
+        "Versión 3 (septiembre de 2026); la v2 se conserva en el repositorio cmo-vih-app2"
+      ],
+      "ai": "reglas-texto",
+      "aiNote": "La entrada de texto libre usa un módulo heurístico en el navegador que marca cada hallazgo como extraído, inferido, confirmado o ausente.",
+      "validation": "El propio repositorio la define como herramienta de apoyo de nivel piloto. Sin validación clínica documentada.",
+      "authorship": "Concepto, autoría y dirección: Ramón Morillo Verdugo. Modelo de estratificación VIH de la SEFH.",
+      "updated": "2026-10-30",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "cmo-cardiovascular",
+      "name": "CMO Cardiovascular",
+      "repo": "cmoriesgocardiovascular",
+      "url": "https://ramonmorillo.es/cmoriesgocardiovascular/",
+      "category": "estratificacion",
+      "areas": [
+        "Riesgo cardiovascular"
+      ],
+      "tags": [
+        "CMO",
+        "riesgo cardiovascular",
+        "estratificación",
+        "hospital"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Estratificación CMO de pacientes con enfermedad o riesgo cardiovascular atendidos en farmacia hospitalaria.",
+      "problem": "Priorizar la atención farmacéutica de pacientes cardiovasculares en consultas externas con criterios explícitos.",
+      "audience": "Farmacéuticos de hospital en consultas de prevención cardiovascular.",
+      "features": [
+        "Itinerario manual o asistido a partir de texto seudonimizado",
+        "Revisión de cada variable con evidencia y nivel de confianza",
+        "Cálculo de prioridad, necesidades e intervenciones",
+        "Informe final y pruebas de casos clínicos"
+      ],
+      "ai": "endpoint-opcional",
+      "aiNote": "El conector de IA está vacío por defecto; sin él, la aplicación funciona con reglas locales.",
+      "validation": "Sin validación clínica documentada. El repositorio exige cotejar la transcripción del modelo con el documento autorizado antes del uso asistencial.",
+      "authorship": "Desarrollo: Ramón Morillo Verdugo. Modelo CMO cardiovascular de la SEFH.",
+      "updated": "2026-10-30",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "cmo-respiratorio",
+      "name": "SIAF-CMO Respiratorio",
+      "repo": "cmorespiratorio",
+      "url": "https://ramonmorillo.es/cmorespiratorio/",
+      "category": "estratificacion",
+      "areas": [
+        "Respiratorio"
+      ],
+      "tags": [
+        "CMO",
+        "respiratorio",
+        "asma",
+        "EPOC",
+        "estratificación"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Estratificación CMO de pacientes con patologías respiratorias, con informe para la historia clínica.",
+      "problem": "Trasladar a la consulta la adaptación del modelo CMO al paciente respiratorio publicada por la SEFH.",
+      "audience": "Farmacéuticos de hospital de consultas de patología respiratoria.",
+      "features": [
+        "Asignación de prioridad P1–P3",
+        "Informe PDF y texto para copiar en la historia clínica",
+        "Registro del estado de cada intervención y plan de seguimiento",
+        "Guía rápida y casos clínicos de prueba"
+      ],
+      "ai": "ninguna",
+      "validation": "Pendiente de validación asistencial según su documentación. No es un producto sanitario certificado.",
+      "authorship": "Creada por Ramón Morillo Verdugo. Modelo publicado por la SEFH.",
+      "updated": "2026-10-30",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "cmo-migrana",
+      "name": "CMO-Migraña",
+      "repo": "estratificacionmigrana",
+      "url": "https://ramonmorillo.es/estratificacionmigrana/",
+      "category": "estratificacion",
+      "areas": [
+        "Migraña"
+      ],
+      "tags": [
+        "CMO",
+        "migraña",
+        "neurología",
+        "estratificación"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Modelo específico de priorización farmacéutica en migraña con reglas clínicas documentadas.",
+      "problem": "Estructurar la valoración farmacéutica del paciente con migraña según el modelo CMO.",
+      "audience": "Farmacéuticos de hospital que atienden pacientes con migraña.",
+      "features": [
+        "Reglas clínicas documentadas",
+        "Plan de pruebas propio",
+        "Aviso legal, privacidad y política de IA"
+      ],
+      "ai": "reglas-texto",
+      "aiNote": "Incluye extracción asistida por reglas en el navegador; su política de IA exige confirmación profesional.",
+      "validation": "Sin validación clínica documentada.",
+      "authorship": "Autor: Ramón Morillo Verdugo.",
+      "updated": "2026-10-30",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "cmo-inmunomediadas",
+      "name": "CMO Inmunomediadas",
+      "repo": "cmoinmunomediadas",
+      "url": "https://ramonmorillo.es/cmoinmunomediadas/",
+      "category": "estratificacion",
+      "areas": [
+        "Inmunomediadas"
+      ],
+      "tags": [
+        "CMO",
+        "inmunomediadas",
+        "dermatología",
+        "reumatología",
+        "digestivo"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Del texto de la historia clínica al plan de atención farmacéutica en enfermedades inflamatorias inmunomediadas.",
+      "problem": "Estratificar y planificar la atención farmacéutica en patologías dermatológicas, musculoesqueléticas y digestivas inmunomediadas.",
+      "audience": "Farmacéuticos de hospital de unidades de inmunomediadas.",
+      "features": [
+        "Validación de cada variable por el farmacéutico antes del cálculo",
+        "Estados explícitos: encontrada, dudosa, no encontrada, contradictoria",
+        "Necesidades, intervenciones e informe final"
+      ],
+      "ai": "endpoint-opcional",
+      "aiNote": "Sin servidor configurado funciona en «modo demostración» con búsqueda local de palabras clave, identificada como tal en la interfaz.",
+      "validation": "Sin validación clínica documentada. El repositorio no incluye pruebas automatizadas.",
+      "authorship": "Desarrollo: Ramón Morillo Verdugo. Basado en el proyecto MAPEX de la SEFH.",
+      "updated": "2026-10-30",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "cmo-pediatria",
+      "name": "SIAF-CMO Pediatría",
+      "repo": "cmopediatria",
+      "url": "https://ramonmorillo.es/cmopediatria/",
+      "category": "estratificacion",
+      "areas": [
+        "Pediatría"
+      ],
+      "tags": [
+        "CMO",
+        "pediatría",
+        "estratificación"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Estratificación y documentación de pacientes pediátricos según la adaptación CMO de la SEFH (2025).",
+      "problem": "Aplicar a la población pediátrica un modelo propio, sin extrapolar variables de otros modelos CMO.",
+      "audience": "Farmacéuticos de hospital que atienden población pediátrica.",
+      "features": [
+        "Toda la lógica clínica trazada al documento de origen",
+        "Almacenamiento local de datos confirmados",
+        "Plan de pruebas y reglas clínicas documentadas"
+      ],
+      "ai": "reglas-texto",
+      "aiNote": "Extracción local con política de IA documentada; el proceso de compilación verifica que no hay llamadas de red.",
+      "validation": "Sin validación clínica documentada.",
+      "authorship": "Creada por Ramón Morillo Verdugo. La autoría científica del modelo corresponde al grupo de trabajo de la SEFH.",
+      "updated": "2026-10-30",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "cmo-oncologia",
+      "name": "SIAF-CMO Oncología",
+      "repo": "cmoncologia",
+      "url": "https://ramonmorillo.es/cmoncologia/",
+      "category": "estratificacion",
+      "areas": [
+        "Oncohematología"
+      ],
+      "tags": [
+        "CMO",
+        "oncología",
+        "hematología",
+        "estratificación"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Estratificación farmacéutica de pacientes oncohematológicos con motor clínico separado de la interfaz.",
+      "problem": "Priorizar la atención farmacéutica oncohematológica con el modelo CMO de la SEFH.",
+      "audience": "Farmacéuticos de hospital de oncohematología.",
+      "features": [
+        "Tres condiciones de prioridad 1 automática",
+        "Modificación clínica excepcional trazable",
+        "Borradores y casos finalizados en el navegador",
+        "Exportación JSON/CSV y resumen imprimible"
+      ],
+      "ai": "ninguna",
+      "validation": "Sin validación clínica documentada.",
+      "authorship": "Desarrollo: Ramón Morillo Verdugo. Modelo CMO de la SEFH.",
+      "updated": "2026-10-30",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "cmo-coagulopatias",
+      "name": "CMO Coagulopatías Congénitas",
+      "repo": "cmocoagulopatias",
+      "url": "https://ramonmorillo.es/cmocoagulopatias/",
+      "category": "estratificacion",
+      "areas": [
+        "Coagulopatías congénitas"
+      ],
+      "tags": [
+        "CMO",
+        "hemofilia",
+        "von Willebrand",
+        "estratificación"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Estratificación y plan de atención farmacéutica en adultos con hemofilia A, hemofilia B o enfermedad de von Willebrand.",
+      "problem": "Aplicar el modelo CMO de coagulopatías congénitas con intervenciones acumulativas por prioridad.",
+      "audience": "Farmacéuticos de hospital de unidades de hemofilia.",
+      "features": [
+        "Modelo y puntuaciones centralizados en un único archivo",
+        "Intervenciones acumulativas por nivel",
+        "No envía ni guarda datos automáticamente",
+        "Pruebas automatizadas antes de cada publicación"
+      ],
+      "ai": "ninguna",
+      "validation": "Sin validación clínica documentada.",
+      "authorship": "Desarrollo: Ramón Morillo Verdugo. Documento de la SEFH.",
+      "updated": "2026-10-30",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "cmo-vhb-vhd",
+      "name": "CMO-HBV/HDV Pro",
+      "repo": "cmo-vhb-vhd",
+      "url": "https://ramonmorillo.es/cmo-vhb-vhd/",
+      "category": "estratificacion",
+      "areas": [
+        "Hepatitis B y D"
+      ],
+      "tags": [
+        "CMO",
+        "VHB",
+        "VHD",
+        "hepatitis",
+        "estratificación"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Estratificación farmacéutica preliminar en pacientes con VHB o coinfección VHB-VHD.",
+      "problem": "Priorizar la atención farmacéutica de personas con hepatitis B o D con un modelo específico.",
+      "audience": "Farmacéuticos de hospital de enfermedades infecciosas o hepatología.",
+      "features": [
+        "Extracción asistida de variables con reglas locales",
+        "Guardado en el propio navegador",
+        "Exportación de datos para investigación en Excel, CSV o JSON"
+      ],
+      "ai": "reglas-texto",
+      "validation": "El repositorio la describe como estratificación preliminar. Sin validación clínica documentada ni pruebas automatizadas.",
+      "authorship": "Creado por Ramón Morillo Verdugo.",
+      "updated": "2026-10-30",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "cmo-em",
+      "name": "CMO-EM Pro",
+      "repo": "estratificacionEM",
+      "url": "https://ramonmorillo.es/estratificacionEM/",
+      "category": "estratificacion",
+      "areas": [
+        "Esclerosis múltiple"
+      ],
+      "tags": [
+        "CMO",
+        "esclerosis múltiple",
+        "neurología",
+        "estratificación"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Estratificación y apoyo a la atención farmacéutica CMO en esclerosis múltiple.",
+      "problem": "Homogeneizar la valoración de necesidades farmacéuticas en esclerosis múltiple.",
+      "audience": "Farmacéuticos de hospital de unidades de esclerosis múltiple.",
+      "features": [
+        "Configuración clínica, puntuaciones y reglas separadas de la interfaz",
+        "Objetivos, seguimiento e informes",
+        "Autocomprobaciones del motor de prioridad"
+      ],
+      "ai": "ninguna",
+      "validation": "Sin validación clínica documentada.",
+      "authorship": "Herramienta desarrollada por Ramón Morillo Verdugo (junio de 2026). Documento de adaptación CMO-EM.",
+      "updated": "2026-10-30",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "neumocmo",
+      "name": "neumoCMO",
+      "repo": "neumoCMO",
+      "url": "https://ramonmorillo.es/neumoCMO/",
+      "category": "estratificacion",
+      "areas": [
+        "Respiratorio"
+      ],
+      "tags": [
+        "CMO",
+        "respiratorio",
+        "entorno de consulta",
+        "adherencia",
+        "biblioteca"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Entorno de consulta para el farmacéutico que atiende pacientes respiratorios: reúne estratificación, adherencia, educación y evidencia.",
+      "problem": "El farmacéutico de consultas respiratorias necesita varias herramientas y recursos dispersos en una misma visita.",
+      "audience": "Farmacéuticos de hospital de consultas de patología respiratoria.",
+      "features": [
+        "Acceso integrado a SIAF-CMO Respiratorio, MAPEX-ADHEFAR Hub, RxPlain y EvidenceGap Radar",
+        "Biblioteca respiratoria con búsqueda y filtros combinables",
+        "Distinción entre herramientas propias y recursos externos",
+        "Verificación documentada del origen de cada enlace"
+      ],
+      "ai": "ninguna",
+      "aiNote": "No incorpora algoritmos clínicos propios: enlaza herramientas existentes sin modificar su lógica.",
+      "validation": "Pendiente de validación asistencial. No recoge datos de pacientes.",
+      "authorship": "Autoría: Ramón Morillo Verdugo.",
+      "updated": "2026-10-13",
+      "docs": true,
+      "featured": true,
+      "page": "neumocmo"
+    },
+    {
+      "id": "siaf-cmo",
+      "name": "SIAF-CMO · Hub CMO-MAPEX",
+      "repo": "SIAF-CMO",
+      "url": "https://ramonmorillo.es/SIAF-CMO/",
+      "category": "estratificacion",
+      "areas": [
+        "Multipatología"
+      ],
+      "tags": [
+        "CMO",
+        "MAPEX",
+        "portal",
+        "recursos"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Página de referencia que explica el modelo CMO como arquitectura de intervención y reúne recursos MAPEX-SEFH.",
+      "problem": "Explicar de forma práctica cómo se conectan el modelo CMO, las herramientas digitales y los recursos MAPEX.",
+      "audience": "Farmacéuticos de hospital, residentes y equipos que implantan el modelo CMO.",
+      "features": [
+        "Checklist operativo para consulta externa",
+        "Matriz para explicar el ecosistema de herramientas",
+        "Enlaces a recursos MAPEX-SEFH"
+      ],
+      "ai": "ninguna",
+      "validation": "No aplica: contenido divulgativo.",
+      "authorship": "Autoría: Ramón Morillo Verdugo.",
+      "updated": "2026-10-16",
+      "docs": false,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "cmodelta",
+      "name": "cmodelta",
+      "repo": "cmodelta",
+      "url": null,
+      "category": "estratificacion",
+      "areas": [
+        "Multipatología"
+      ],
+      "tags": [
+        "CMO",
+        "seguimiento longitudinal",
+        "Google Apps Script"
+      ],
+      "status": "desarrollo",
+      "access": "interno",
+      "summary": "Prototipo de seguimiento farmacéutico CMO sobre Google Apps Script con visitas, intervenciones e informe.",
+      "problem": "Registrar el seguimiento longitudinal del paciente CMO (visitas, dispensaciones, seguridad, intervenciones) en una herramienta institucional.",
+      "audience": "Farmacéuticos de hospital (entorno Google Workspace del centro).",
+      "features": [
+        "Ficha de paciente y registros longitudinales por pestañas",
+        "Informe farmacéutico editable e imprimible"
+      ],
+      "ai": "ninguna",
+      "validation": "Prototipo sin publicación web.",
+      "authorship": "Repositorio de Ramón Morillo Verdugo.",
+      "updated": "2026-05-06",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "hiv-cascade-auditor",
+      "name": "HIV Prescribing Cascade Auditor",
+      "repo": "hiv-prescribing-cascade-auditor",
+      "url": "https://ramonmorillo.es/hiv-prescribing-cascade-auditor/",
+      "category": "seguridad",
+      "areas": [
+        "VIH"
+      ],
+      "tags": [
+        "VIH",
+        "cascadas de prescripción",
+        "seguridad",
+        "revisión de la medicación",
+        "TAR"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Detección y auditoría de posibles cascadas de prescripción en personas que viven con VIH, para revisión experta.",
+      "problem": "Un efecto adverso de un fármaco puede interpretarse como una nueva enfermedad y tratarse con otro fármaco. En personas con VIH, el TAR y la comorbilidad hacen más probable que pase inadvertido.",
+      "audience": "Farmacéuticos clínicos, médicos especialistas en VIH y equipos multidisciplinares.",
+      "features": [
+        "Extracción de medicación, problemas activos y mediciones desde texto libre",
+        "Base de conocimiento versionada (2.0.0) con referencias",
+        "Revisión estructurada de cada posible cascada",
+        "Funcionamiento sin conexión a servicios externos, sin telemetría"
+      ],
+      "ai": "reglas-texto",
+      "aiNote": "El procesamiento del texto es local y basado en reglas («NLP local, sin IA externa»). No hay llamadas a modelos de lenguaje.",
+      "validation": "No ha completado evaluación regulatoria ni dispone de marcado CE. Su clasificación conforme al Reglamento (UE) 2017/745 debe determinarse antes de un despliegue clínico.",
+      "authorship": "Autores: Ramón Morillo Verdugo y Cecilia Solís Martín.",
+      "registration": "Programa de ordenador inscrito en el Registro de la Propiedad Intelectual, asiento 04/2026/2614. Autoría y titularidad originaria al 50 %: Ramón Alejandro Morillo Verdugo y Cecilia Solís Martín.",
+      "recognition": {
+        "title": "1.er Premio · XII Premios SEFH/CSL sobre Calidad de los Servicios de Farmacia y Seguridad en el Uso de los Medicamentos",
+        "detail": "Proyecto galardonado: «Mejora de la seguridad farmacoterapéutica en personas que viven con VIH mediante una herramienta digital basada en inteligencia artificial para la detección y abordaje de cascadas terapéuticas». El reconocimiento corresponde al proyecto de investigación en el que se enmarca la herramienta; no constituye validación clínica ni certificación del software.",
+        "source": "Cobertura de prensa del 71.º Congreso de la SEFH (26/10/2026) y página pública de la herramienta.",
+        "sourceUrl": "https://ramonmorillo.es/hiv-prescribing-cascade-auditor/#reconocimientos",
+        "press": [
+          {
+            "label": "Diariofarma, 26/10/2026",
+            "url": "https://diariofarma.com/2026/10/26/la-sefh-entrega-los-premios-a-las-mejores-iniciativas-cientificas-en-su-71-o-congreso"
+          },
+          {
+            "label": "Redacción Médica, 26/10/2026",
+            "url": "https://www.redaccionmedica.com/profesionales/sociedades-cientificas/20261026/la-sefh-entrega-sus-premios-anuales-de-un-asistente-formulacion-al-abordaje-la-candidemia/363389_0.html"
+          },
+          {
+            "label": "El Global",
+            "url": "https://elglobalfarma.com/farmacia/sefh-premia-congreso-proyectos-seguridad-calidad-asistencial/"
+          }
+        ]
+      },
+      "research": "Fundamento investigador: tesis doctoral «Utilidad de la herramienta SANPAT para la prevención de cascadas de prescripción en pacientes VIH mayores», con aprobación de comité de ética.",
+      "updated": "2026-10-29",
+      "docs": true,
+      "featured": true,
+      "page": "hiv-prescribing-cascade-auditor"
+    },
+    {
+      "id": "mrci",
+      "name": "MRCI Local-First Calculator",
+      "repo": "MRCI",
+      "url": "https://ramonmorillo.es/MRCI/",
+      "category": "seguridad",
+      "areas": [
+        "Multipatología"
+      ],
+      "tags": [
+        "complejidad terapéutica",
+        "MRCI",
+        "polimedicación"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Cálculo del índice de complejidad del régimen terapéutico (MRCI) con desglose por fármaco.",
+      "problem": "Cuantificar de forma transparente y reproducible la complejidad de un tratamiento.",
+      "audience": "Farmacéuticos e investigadores.",
+      "features": [
+        "Implementación clásica del MRCI (George et al., 2004) con subtotales por sección",
+        "Variante abreviada configurable y comparación entre motores",
+        "Informe imprimible e importación/exportación JSON y CSV"
+      ],
+      "ai": "reglas-texto",
+      "aiNote": "Lectura de texto heurística local, siempre con validación humana.",
+      "validation": "La variante abreviada requiere validación local antes de uso clínico o investigador, según el propio repositorio. Interfaz en inglés.",
+      "authorship": "Repositorio de Ramón Morillo Verdugo.",
+      "updated": "2026-04-08",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "iris",
+      "name": "IRIS CMO",
+      "repo": "cmorcvtesis",
+      "url": "https://iriscmo.es/",
+      "urlLabel": "iriscmo.es",
+      "category": "estudios",
+      "areas": [
+        "Riesgo cardiovascular"
+      ],
+      "tags": [
+        "CMO",
+        "riesgo cardiovascular",
+        "farmacia comunitaria",
+        "tesis doctoral",
+        "seguimiento longitudinal",
+        "PROM"
+      ],
+      "status": "piloto",
+      "access": "restringido",
+      "summary": "Plataforma de atención farmacéutica CMO y seguimiento del riesgo cardiovascular en farmacia comunitaria, desarrollada para una tesis doctoral.",
+      "problem": "Conectar la estratificación CMO con la documentación de visitas, cuestionarios y evolución del paciente cardiovascular fuera del hospital.",
+      "audience": "Farmacéuticos comunitarios participantes en el proyecto de investigación.",
+      "features": [
+        "Valoración de pacientes, visitas y estratificación CMO",
+        "Cuestionarios y seguimiento longitudinal",
+        "Informes en PDF para paciente y médico generados en el navegador",
+        "Acceso autenticado del equipo investigador"
+      ],
+      "ai": "ninguna",
+      "validation": "En uso dentro del proyecto de investigación. La publicación de la web no demuestra eficacia clínica.",
+      "authorship": "Autoría y titularidad originaria al 50 %: Ramón Alejandro Morillo Verdugo y María Romero Murillo.",
+      "registration": "Inscrito como programa de ordenador en el Registro de la Propiedad Intelectual, asiento 04/2026/3197: «IRIS Plataforma de Atención Farmacéutica CMO a pacientes con Riesgo Cardiovascular en farmacia comunitaria».",
+      "research": "Proyecto de investigación (tesis doctoral) de María Romero Murillo sobre riesgo cardiovascular en farmacia comunitaria. El repositorio cmocomunifar conserva una versión previa.",
+      "updated": "2026-11-04",
+      "docs": true,
+      "featured": true,
+      "page": "iris"
+    },
+    {
+      "id": "dermapex",
+      "name": "DERMAPEX",
+      "repo": "dermapex",
+      "url": null,
+      "category": "estudios",
+      "areas": [
+        "Dermatitis atópica"
+      ],
+      "tags": [
+        "CMO",
+        "MAPEX",
+        "dermatología",
+        "dermatitis atópica",
+        "multicéntrico",
+        "seguimiento longitudinal"
+      ],
+      "status": "desarrollo",
+      "access": "restringido",
+      "summary": "Plataforma del estudio prospectivo multicéntrico sobre el modelo CMO-MAPEX en adultos con dermatitis atópica moderada-grave.",
+      "problem": "Recoger de forma homogénea, segura y seudonimizada los datos de un estudio multicéntrico de atención farmacéutica en dermatitis atópica.",
+      "audience": "Equipos investigadores de los centros participantes.",
+      "features": [
+        "Acceso por centro y por rol (investigación y coordinación)",
+        "Pacientes seudonimizados y registro de auditoría",
+        "Exportación anonimizada a CSV, XLSX y SPSS",
+        "Informes en PDF generados en el navegador"
+      ],
+      "ai": "ninguna",
+      "validation": "En desarrollo. La lógica clínica específica (variables, estratificación CMO-DERMAPEX, cuestionarios) se incorpora a partir del protocolo oficial.",
+      "authorship": "Desarrollo de la aplicación en el repositorio de Ramón Morillo Verdugo. Promotor del estudio: FISEVI.",
+      "research": "Estudio con dictamen favorable del CEI Sevilla Sur (27/10/2026): «Mejora de la experiencia del paciente con dermatitis atópica moderada-grave mediante la implementación de un modelo de atención farmacéutica CMO-MAPEX».",
+      "updated": "2026-11-03",
+      "docs": true,
+      "featured": true,
+      "page": "dermapex"
+    },
+    {
+      "id": "coamo",
+      "name": "COAMO",
+      "repo": "COAMO",
+      "url": null,
+      "category": "estudios",
+      "areas": [
+        "Coagulopatías congénitas"
+      ],
+      "tags": [
+        "CMO",
+        "hemofilia",
+        "von Willebrand",
+        "multicéntrico",
+        "PROM",
+        "adherencia"
+      ],
+      "status": "piloto",
+      "access": "restringido",
+      "summary": "Herramienta digital del estudio COAMO: atención farmacéutica según el modelo CMO en adultos con hemofilia A, hemofilia B o enfermedad de von Willebrand.",
+      "problem": "Gestionar inclusión, visitas, cuestionarios, estratificación e intervenciones de un estudio multicéntrico con trazabilidad y datos seudonimizados.",
+      "audience": "Profesionales autorizados de los centros participantes.",
+      "features": [
+        "Inclusión, visitas y datos clínicos con pacientes seudonimizados",
+        "Cuestionarios en visita inicial y final con puntuación",
+        "Evolución farmacéutica por visita y actuaciones por prioridad CMO",
+        "Agenda de visitas y exportación de investigación verificada"
+      ],
+      "ai": "ninguna",
+      "validation": "En fase de pruebas: los pacientes registrados hasta ahora son ficticios y se excluyen de cualquier análisis.",
+      "authorship": "Promotor e investigador principal: Tomás Palanques Pastor (Servicio de Farmacia, Hospital Universitario y Politécnico La Fe). Desarrollo de la aplicación en el repositorio de Ramón Morillo Verdugo.",
+      "research": "Estudio con informe favorable del CEIm del Hospital Universitario y Politécnico La Fe (sesión de 21/10/2026).",
+      "updated": "2026-11-03",
+      "docs": true,
+      "featured": true,
+      "page": "coamo"
+    },
+    {
+      "id": "ayudaceia",
+      "name": "AYUDA CEIA",
+      "repo": "ayudaceia",
+      "url": null,
+      "category": "estudios",
+      "areas": [
+        "Ética de la investigación"
+      ],
+      "tags": [
+        "comité de ética",
+        "evaluación de protocolos"
+      ],
+      "status": "disponible",
+      "access": "interno",
+      "summary": "Apoyo a la evaluación ética de protocolos de investigación, de uso interno en un comité de ética.",
+      "problem": "Ordenar la lectura y el dictamen de protocolos con un procedimiento común.",
+      "audience": "Miembros de comités de ética de la investigación.",
+      "features": [
+        "Lectura guiada, evaluación, preguntas y dictamen",
+        "Casos guardados en el navegador y exportación a PDF"
+      ],
+      "ai": "ninguna",
+      "validation": "No aplica.",
+      "authorship": "Repositorio de Ramón Morillo Verdugo.",
+      "updated": "2026-02-18",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "adhefar-hub",
+      "name": "MAPEX-ADHEFAR Hub",
+      "repo": "adhefarmapexhub",
+      "url": "https://ramonmorillo.es/adhefarmapexhub/",
+      "category": "resultados",
+      "areas": [
+        "Multipatología"
+      ],
+      "tags": [
+        "adherencia",
+        "MAPEX",
+        "ADHEFAR",
+        "consultas externas",
+        "casos prácticos"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Herramientas operativas, casos prácticos y recursos para aplicar la Guía MAPEX-ADHEFAR de adherencia (SEFH, 2026).",
+      "problem": "Llevar a la consulta la medición, monitorización y mejora de la adherencia descritas en la guía.",
+      "audience": "Farmacéuticos de hospital de consultas externas.",
+      "features": [
+        "Accesos por perfil profesional",
+        "Casos prácticos y glosario",
+        "Recursos de implantación"
+      ],
+      "ai": "ninguna",
+      "validation": "No aplica: recurso de apoyo a la implantación de una guía.",
+      "authorship": "Desarrollada por Ramón Morillo Verdugo. La guía es del Grupo ADHEFAR (SEFH).",
+      "updated": "2026-06-26",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "cambiostar",
+      "name": "cambiosTAR",
+      "repo": "cambiosTAR",
+      "url": "https://ramonmorillo.es/cambiosTAR/",
+      "category": "resultados",
+      "areas": [
+        "VIH"
+      ],
+      "tags": [
+        "VIH",
+        "TAR",
+        "cambios de tratamiento",
+        "costes",
+        "registro"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Registro, análisis e informes de cambios de tratamiento antirretroviral, sin servidor.",
+      "problem": "Registrar de forma homogénea los cambios de TAR y sus motivos para analizarlos y estimar su impacto económico.",
+      "audience": "Farmacéuticos e investigadores en VIH.",
+      "features": [
+        "Registro diario con cinco variables manuales",
+        "Importación de histórico desde Excel",
+        "Análisis de tendencias, costes e informes",
+        "Seguimiento seudonimizado y copias en Excel/CSV"
+      ],
+      "ai": "ninguna",
+      "validation": "No aplica: herramienta de registro y análisis.",
+      "authorship": "Herramienta desarrollada por Ramón Morillo Verdugo.",
+      "updated": "2026-09-18",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "drugpersist",
+      "name": "DrugPersist",
+      "repo": "drugpersist",
+      "url": "https://ramonmorillo.es/drugpersist/",
+      "category": "resultados",
+      "areas": [
+        "Multipatología"
+      ],
+      "tags": [
+        "persistencia",
+        "Kaplan-Meier",
+        "datos de vida real"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Análisis de persistencia terapéutica en vida real con curvas de Kaplan-Meier a partir de un CSV seudonimizado.",
+      "problem": "Analizar la persistencia de tratamientos de forma reproducible sin herramientas estadísticas especializadas.",
+      "audience": "Farmacéuticos, investigadores y gestores.",
+      "features": [
+        "Curvas globales y por fármaco, grupo, área o centro",
+        "Persistencia a 3, 6, 12, 24 y 36 meses y mediana",
+        "Pacientes en riesgo y log-rank exploratorio",
+        "Conjunto de datos ficticio de ejemplo"
+      ],
+      "ai": "ninguna",
+      "validation": "No aplica: herramienta de análisis. El log-rank se presenta como exploratorio.",
+      "authorship": "Desarrollada por Ramón Morillo Verdugo.",
+      "updated": "2026-06-06",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "drugimid",
+      "name": "DrugPersist-IMID",
+      "repo": "DRUGIMID",
+      "url": "https://ramonmorillo.es/DRUGIMID/",
+      "category": "resultados",
+      "areas": [
+        "Inmunomediadas"
+      ],
+      "tags": [
+        "persistencia",
+        "inmunomediadas",
+        "Kaplan-Meier",
+        "seudonimización"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Registro de episodios terapéuticos y cálculo de persistencia en enfermedades inmunomediadas.",
+      "problem": "Seguir los cambios de tratamiento biológico y su persistencia con datos seudonimizados en el propio equipo.",
+      "audience": "Farmacéuticos de hospital de unidades de inmunomediadas.",
+      "features": [
+        "Seudonimización local del código de paciente",
+        "Persistencia a 3, 6, 12 y 24 meses y curva de Kaplan-Meier",
+        "Informes por periodo e importación/exportación JSON, CSV y Excel"
+      ],
+      "ai": "ninguna",
+      "validation": "No aplica: herramienta de registro y análisis.",
+      "authorship": "Herramienta desarrollada por Ramón Morillo Verdugo.",
+      "updated": "2026-06-10",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "evidencegap-radar",
+      "name": "EvidenceGap Radar",
+      "repo": "evidencegap-radar",
+      "url": "https://ramonmorillo.es/evidencegap-radar/",
+      "category": "evidencia",
+      "areas": [
+        "Multipatología"
+      ],
+      "tags": [
+        "evidencia",
+        "PubMed",
+        "ClinicalTrials.gov",
+        "PICO"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Exploración rápida de la evidencia disponible para una pregunta PICO en PubMed y ClinicalTrials.gov.",
+      "problem": "Saber en minutos si una pregunta clínica tiene evidencia publicada, ensayos en marcha o huecos de conocimiento.",
+      "audience": "Farmacéuticos, investigadores y comisiones.",
+      "features": [
+        "Consulta simultánea a PubMed, ClinicalTrials.gov y MeSH",
+        "Estrategia de búsqueda reproducible",
+        "Exportación CSV de resultados"
+      ],
+      "ai": "ninguna",
+      "aiNote": "Usa las API públicas de PubMed y ClinicalTrials.gov a través de un intermediario propio; no usa modelos de lenguaje.",
+      "validation": "Orienta sobre la evidencia disponible; no sustituye una revisión sistemática.",
+      "authorship": "Creado por Ramón Morillo Verdugo (febrero de 2026).",
+      "updated": "2026-10-27",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "rxplain",
+      "name": "RxPlain",
+      "repo": "rxplain",
+      "url": "https://ramonmorillo.es/rxplain/",
+      "category": "evidencia",
+      "areas": [
+        "Multipatología"
+      ],
+      "tags": [
+        "educación al paciente",
+        "infografía",
+        "CIMA"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Convierte un tratamiento complejo en una infografía priorizada para el paciente.",
+      "problem": "La información de un tratamiento complejo es difícil de entender y de priorizar para el paciente.",
+      "audience": "Farmacéuticos que preparan información para pacientes.",
+      "features": [
+        "Búsqueda de medicamentos en CIMA (AEMPS)",
+        "Objetivos, forma de toma, señales de alarma y precauciones",
+        "Impresión o guardado en PDF"
+      ],
+      "ai": "ninguna",
+      "validation": "El farmacéutico revisa y valida el contenido antes de entregarlo.",
+      "authorship": "Repositorio de Ramón Morillo Verdugo.",
+      "updated": "2026-06-06",
+      "docs": false,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "fharmacuentos",
+      "name": "FHarmacuentos",
+      "repo": "fharmacuentos",
+      "url": "https://ramonmorillo.es/fharmacuentos/",
+      "category": "evidencia",
+      "areas": [
+        "Pediatría"
+      ],
+      "tags": [
+        "pediatría",
+        "educación al paciente",
+        "motivación"
+      ],
+      "status": "disponible",
+      "access": "publico",
+      "summary": "Cuentos breves y motivacionales adaptados a la edad para acompañar a niños y adolescentes en su tratamiento.",
+      "problem": "Explicar a un niño su tratamiento o sus visitas al hospital con un lenguaje adecuado a su edad.",
+      "audience": "Farmacéuticos de consultas externas pediátricas y residentes.",
+      "features": [
+        "Generación de cuentos a partir de plantillas",
+        "Objetivo educativo definido por el profesional",
+        "Exportación a PDF"
+      ],
+      "ai": "ninguna",
+      "aiNote": "Funciona sin IA (plantillas). El código prevé un modo con IA que no está activo.",
+      "validation": "Apoyo educativo, no información clínica: cada cuento se revisa antes de entregarlo.",
+      "authorship": "Repositorio de Ramón Morillo Verdugo.",
+      "updated": "2026-09-28",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "ayudainvestigacion",
+      "name": "AyudaInvestigación",
+      "repo": "ayudainvestigacion",
+      "url": "https://ramonmorillo.es/ayudainvestigacion/",
+      "category": "evidencia",
+      "areas": [
+        "Metodología de la investigación"
+      ],
+      "tags": [
+        "metodología",
+        "protocolos",
+        "investigadores noveles"
+      ],
+      "status": "desarrollo",
+      "access": "publico",
+      "summary": "Asistente guiado para preparar el primer borrador de un proyecto de investigación (TFG, TFM, tesis o protocolo).",
+      "problem": "Los investigadores noveles necesitan estructurar pregunta, objetivos, diseño y variables antes de redactar.",
+      "audience": "Estudiantes e investigadores noveles.",
+      "features": [
+        "Flujo guiado de ocho pasos",
+        "Propuesta de diseño, variables y análisis por reglas metodológicas",
+        "Alertas metodológicas y éticas y checklist previo al envío"
+      ],
+      "ai": "ninguna",
+      "validation": "Versión 0.2 en desarrollo según su documentación.",
+      "authorship": "Creado por Ramón Morillo Verdugo.",
+      "updated": "2026-04-29",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "cmo-scientific-engine",
+      "name": "CMO Scientific Engine",
+      "repo": "CMO-Scientific-Engine",
+      "url": "https://ramonmorillo.es/CMO-Scientific-Engine/",
+      "category": "evidencia",
+      "areas": [
+        "Metodología de la investigación"
+      ],
+      "tags": [
+        "redacción científica",
+        "CMO",
+        "manuscritos"
+      ],
+      "status": "desarrollo",
+      "access": "publico",
+      "summary": "Prototipo en el navegador para estructurar borradores de artículos a partir de una descripción del proyecto.",
+      "problem": "Pasar de una idea de estudio a la estructura de un manuscrito con un panel de rigor.",
+      "audience": "Investigadores en atención farmacéutica.",
+      "features": [
+        "Tipos de artículo: original, revisiones narrativa y de alcance, conceptual, editorial",
+        "Español e inglés",
+        "Panel de auditoría y rigor"
+      ],
+      "ai": "ninguna",
+      "validation": "Versión MVP según su documentación.",
+      "authorship": "Repositorio de Ramón Morillo Verdugo.",
+      "updated": "2026-03-26",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "pidefar",
+      "name": "PIDEFAR",
+      "repo": "pidefar",
+      "url": null,
+      "category": "gestion",
+      "areas": [
+        "Gestión del servicio"
+      ],
+      "tags": [
+        "solicitudes de medicamentos",
+        "suministro",
+        "CIMA"
+      ],
+      "status": "disponible",
+      "access": "interno",
+      "summary": "Gestión de solicitudes de medicamentos entre las unidades y el servicio de farmacia.",
+      "problem": "Centralizar solicitudes, prioridades y problemas de suministro en un único circuito.",
+      "audience": "Personal del servicio de farmacia y unidades solicitantes.",
+      "features": [
+        "Solicitudes con prioridad y fecha de necesidad",
+        "Búsqueda de medicamentos en CIMA",
+        "Seguimiento por estado y problemas de suministro"
+      ],
+      "ai": "ninguna",
+      "validation": "No aplica.",
+      "authorship": "Repositorio de Ramón Morillo Verdugo.",
+      "updated": "2026-10-14",
+      "docs": false,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "guardias",
+      "name": "Acta de Guardias",
+      "repo": "actadeguardias",
+      "url": null,
+      "category": "gestion",
+      "areas": [
+        "Gestión del servicio"
+      ],
+      "tags": [
+        "guardias",
+        "incidencias",
+        "Google Apps Script"
+      ],
+      "status": "disponible",
+      "access": "interno",
+      "summary": "Registro y análisis de incidencias de los partes de guardia sobre Google Workspace.",
+      "problem": "Dejar constancia ordenada de las incidencias de guardia y poder analizarlas.",
+      "audience": "Farmacéuticos del servicio.",
+      "features": [
+        "Partes e incidencias con roles de acceso",
+        "Adjuntos en Drive",
+        "Detección de datos sensibles"
+      ],
+      "ai": "ninguna",
+      "validation": "No aplica.",
+      "authorship": "Repositorio de Ramón Morillo Verdugo.",
+      "updated": "2026-05-18",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "sesiones-clinicas",
+      "name": "Sesiones clínicas",
+      "repo": "sesionesfarmacia",
+      "url": null,
+      "category": "gestion",
+      "areas": [
+        "Gestión del servicio"
+      ],
+      "tags": [
+        "sesiones clínicas",
+        "Google Apps Script"
+      ],
+      "status": "disponible",
+      "access": "interno",
+      "summary": "Organización del calendario de sesiones clínicas del servicio.",
+      "problem": "Planificar sesiones, ponentes y tipos de sesión con historial de cambios.",
+      "audience": "Personal del servicio de farmacia.",
+      "features": [
+        "Sesiones, profesionales y tipos de sesión",
+        "Historial de cambios"
+      ],
+      "ai": "ninguna",
+      "validation": "No aplica.",
+      "authorship": "Repositorio de Ramón Morillo Verdugo.",
+      "updated": "2026-05-05",
+      "docs": true,
+      "featured": false,
+      "page": null
+    },
+    {
+      "id": "antipcsk9",
+      "name": "Prescripción de anti-PCSK9",
+      "repo": "antipcsk9tool",
+      "url": null,
+      "category": "gestion",
+      "areas": [
+        "Riesgo cardiovascular"
+      ],
+      "tags": [
+        "protocolo de prescripción",
+        "anti-PCSK9",
+        "riesgo cardiovascular"
+      ],
+      "status": "disponible",
+      "access": "interno",
+      "summary": "Formulario estructurado de solicitud de anti-PCSK9 según el protocolo de un área de gestión sanitaria.",
+      "problem": "Comprobar indicación y optimización previa antes de solicitar un anti-PCSK9.",
+      "audience": "Médicos solicitantes y farmacéuticos del área.",
+      "features": [
+        "Secciones de solicitante, paciente, indicación y optimización previa"
+      ],
+      "ai": "ninguna",
+      "validation": "No aplica: formulario de protocolo local.",
+      "authorship": "Creado por Ramón Morillo Verdugo.",
+      "updated": "2026-06-02",
+      "docs": false,
+      "featured": false,
+      "page": null
+    }
+  ],
+  "excludedRepos": [
+    {
+      "repo": "ramonmorillo.github.io",
+      "reason": "Esta propia web."
+    },
+    {
+      "repo": "cmo-vih-app2",
+      "reason": "Versión 2 (marzo de 2026) sustituida por cmo-vih-app v3; se menciona en su ficha."
+    },
+    {
+      "repo": "cmocomunifar",
+      "reason": "Versión previa de IRIS (CMO-RCV Study); se menciona en la ficha de IRIS."
+    },
+    {
+      "repo": "estratificacionRCV",
+      "reason": "Repositorio vacío, sin commits."
+    },
+    {
+      "repo": "scientific-writing-hospital-pharmacy",
+      "reason": "Repositorio archivado de redacción científica (skill), no es una aplicación."
+    },
+    {
+      "repo": "herramientasfarmacia",
+      "reason": "Portal interno que agrupa herramientas ya catalogadas."
+    },
+    {
+      "repo": "farmahub360",
+      "reason": "Aplicación privada de gestión interna con autenticación (Vercel); no se describe públicamente."
+    },
+    {
+      "repo": "Liga",
+      "reason": "Proyecto personal sin relación profesional."
+    },
+    {
+      "repo": "pisobarbate",
+      "reason": "Proyecto personal sin relación profesional."
+    },
+    {
+      "repo": "clinicadelpiemorillo",
+      "reason": "Web de un tercero (consulta de podología), no es un proyecto propio de farmacia."
+    },
+    {
+      "repo": "markitdown-converter",
+      "reason": "Repositorio privado; no se publica."
+    },
+    {
+      "repo": "ubicacionesfh",
+      "reason": "Decisión del autor (04/11/2026): no debe aparecer en la web."
+    }
+  ]
+}
