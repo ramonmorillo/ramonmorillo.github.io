@@ -257,39 +257,6 @@
       "page": "hiv-prescribing-cascade-auditor"
     },
     {
-      "id": "mrci",
-      "name": "MRCI Local-First Calculator",
-      "repo": "MRCI",
-      "url": "https://ramonmorillo.es/MRCI/",
-      "category": "seguridad",
-      "areas": [
-        "Multipatología"
-      ],
-      "tags": [
-        "complejidad terapéutica",
-        "MRCI",
-        "polimedicación"
-      ],
-      "status": "disponible",
-      "access": "publico",
-      "summary": "Cálculo del índice de complejidad del régimen terapéutico (MRCI) con desglose por fármaco.",
-      "problem": "Cuantificar de forma transparente y reproducible la complejidad de un tratamiento.",
-      "audience": "Farmacéuticos e investigadores.",
-      "features": [
-        "Implementación clásica del MRCI (George et al., 2004) con subtotales por sección",
-        "Variante abreviada configurable y comparación entre motores",
-        "Informe imprimible e importación/exportación JSON y CSV"
-      ],
-      "ai": "reglas-texto",
-      "aiNote": "Lectura de texto heurística local, siempre con validación humana.",
-      "validation": "La variante abreviada requiere validación local antes de uso clínico o investigador, según el propio repositorio. Interfaz en inglés.",
-      "authorship": "Repositorio de Ramón Morillo Verdugo.",
-      "updated": "2026-04-08",
-      "docs": true,
-      "featured": false,
-      "page": null
-    },
-    {
       "id": "iris",
       "name": "IRIS CMO",
       "repo": "cmorcvtesis",
@@ -401,36 +368,6 @@
       "docs": true,
       "featured": true,
       "page": "coamo"
-    },
-    {
-      "id": "ayudaceia",
-      "name": "AYUDA CEIA",
-      "repo": "ayudaceia",
-      "url": null,
-      "category": "estudios",
-      "areas": [
-        "Ética de la investigación"
-      ],
-      "tags": [
-        "comité de ética",
-        "evaluación de protocolos"
-      ],
-      "status": "disponible",
-      "access": "interno",
-      "summary": "Apoyo a la evaluación ética de protocolos de investigación, de uso interno en un comité de ética.",
-      "problem": "Ordenar la lectura y el dictamen de protocolos con un procedimiento común.",
-      "audience": "Miembros de comités de ética de la investigación.",
-      "features": [
-        "Lectura guiada, evaluación, preguntas y dictamen",
-        "Casos guardados en el navegador y exportación a PDF"
-      ],
-      "ai": "ninguna",
-      "validation": "No aplica.",
-      "authorship": "Repositorio de Ramón Morillo Verdugo.",
-      "updated": "2026-02-18",
-      "docs": true,
-      "featured": false,
-      "page": null
     },
     {
       "id": "adhefar-hub",
@@ -752,6 +689,14 @@
     },
     {
       "repo": "antipcsk9tool",
+      "reason": "Decisión del autor (04/11/2026): no debe aparecer en la web."
+    },
+    {
+      "repo": "MRCI",
+      "reason": "Decisión del autor (04/11/2026): no debe aparecer en la web."
+    },
+    {
+      "repo": "ayudaceia",
       "reason": "Decisión del autor (04/11/2026): no debe aparecer en la web."
     }
   ]

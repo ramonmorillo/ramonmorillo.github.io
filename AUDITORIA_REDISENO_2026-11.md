@@ -98,4 +98,4 @@ Fuente encontrada: la propia página pública de la herramienta (sección «Reco
 ## 7. Decisiones del autor (04/11/2026, segunda revisión)
 
 - Portada: se retira la franja de cifras; la sección de problemas se sustituye por «Asistencia, docencia e investigación».
-- Catálogo reducido a 15 fichas. Las 10 herramientas de estratificación por patología se presentan solo a través del Hub de Estratificación CMO, que enumera las áreas que cubre. Se retiran también DrugPersist, DrugPersist-IMID, CMO Scientific Engine, cmodelta y las herramientas de gestión interna del servicio (PIDEFAR, Acta de Guardias, Sesiones clínicas, anti-PCSK9). Todas figuran en `excludedRepos` con el motivo.
+- Catálogo reducido a 13 fichas (también se retiran AYUDA CEIA y MRCI). Las 10 herramientas de estratificación por patología se presentan solo a través del Hub de Estratificación CMO, que enumera las áreas que cubre. Se retiran también DrugPersist, DrugPersist-IMID, CMO Scientific Engine, cmodelta y las herramientas de gestión interna del servicio (PIDEFAR, Acta de Guardias, Sesiones clínicas, anti-PCSK9). Todas figuran en `excludedRepos` con el motivo.
