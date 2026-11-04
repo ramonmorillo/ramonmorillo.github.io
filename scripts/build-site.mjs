@@ -177,24 +177,13 @@ function pageHome(d) {
   <figure class="portrait"><img src="/assets/ramon-morillo-retrato.webp" alt="Retrato de Ramón Morillo Verdugo" width="1122" height="1402" fetchpriority="high" decoding="async"></figure>
 </div></section>
 
-<section class="section" aria-labelledby="h-cifras" style="padding-top:0"><div class="wrap">
-  <h2 id="h-cifras" class="visually-hidden">Cifras del catálogo</h2>
-  <div class="facts">
-    <div><strong>${s.pub}</strong><span>herramientas de acceso abierto en el catálogo</span></div>
-    <div><strong>${s.cmo}</strong><span>aplicaciones de estratificación CMO por patología</span></div>
-    <div><strong>${s.studies}</strong><span>plataformas de estudios clínicos (acceso restringido)</span></div>
-    <div><strong>${res.meta.pubmedCount}</strong><span>registros en PubMed con autoría «Morillo-Verdugo R»</span></div>
-  </div>
-  <p class="facts-note">Las tres primeras cifras se calculan a partir del <a href="/proyectos/">catálogo</a>. PubMed: <a href="${esc(res.meta.pubmedUrl)}" target="_blank" rel="noopener noreferrer">búsqueda</a> del ${fmtDate(res.meta.pubmedCountDate)}.</p>
-</div></section>
-
-<section class="section" aria-labelledby="h-problema"><div class="wrap">
-  <div class="section-head split"><div><p class="kicker">Qué problema intento resolver</p><h2 id="h-problema">Los modelos de atención farmacéutica necesitan herramientas para llegar a la consulta.</h2></div>
-  <p>Un modelo de estratificación bien diseñado tiene poco efecto si en la consulta no hay tiempo para aplicarlo. Mi trabajo consiste en convertir criterios farmacéuticos explícitos en aplicaciones que se pueden examinar, probar y mejorar, y en investigar si funcionan.</p></div>
+<section class="section" aria-labelledby="h-ambitos"><div class="wrap">
+  <div class="section-head split"><div><p class="kicker">Ámbitos de trabajo</p><h2 id="h-ambitos">Asistencia, docencia e investigación.</h2></div>
+  <p>Tres actividades que se alimentan entre sí: la consulta plantea los problemas, la investigación comprueba las respuestas y la docencia las transmite. Las herramientas digitales nacen de ese recorrido.</p></div>
   <div class="grid g3">
-    <div class="panel"><h3>Estratificar con criterios explícitos</h3><p>Aplicaciones del modelo CMO por patología que muestran qué variable determina cada prioridad y qué intervención corresponde.</p><a class="arrow-link" href="/proyectos/ecosistema-cmo/">Ecosistema CMO</a></div>
-    <div class="panel"><h3>Hacer más seguros los tratamientos</h3><p>Revisión estructurada de cascadas de prescripción, complejidad terapéutica y cambios de tratamiento.</p><a class="arrow-link" href="/proyectos/?categoria=seguridad">Seguridad farmacoterapéutica</a></div>
-    <div class="panel"><h3>Medir para investigar</h3><p>Plataformas de estudio con datos seudonimizados, cuestionarios y exportación para el análisis.</p><a class="arrow-link" href="/investigacion/">Investigación</a></div>
+    <div class="panel"><h3>Asistencia</h3><p>Atención farmacéutica en el Servicio de Farmacia del Hospital Universitario de Valme, con especial dedicación a las consultas externas y al modelo CMO.</p><a class="arrow-link" href="/proyectos/ecosistema-cmo/">Ecosistema CMO</a></div>
+    <div class="panel"><h3>Docencia</h3><p>Profesor universitario y formador de especialistas en farmacia hospitalaria. Ponente en congresos y encuentros profesionales.</p><a class="arrow-link" href="/conferencias/">Conferencias</a></div>
+    <div class="panel"><h3>Investigación</h3><p>Estratificación de la atención farmacéutica, seguridad del tratamiento en personas con VIH, adherencia y resultados comunicados por los pacientes.</p><a class="arrow-link" href="/investigacion/">Investigación</a></div>
   </div>
 </div></section>
 
@@ -360,8 +349,8 @@ function pubItem(p) {
 
 function pageCmo(d) {
   const { cat } = d; const h = helpers(cat);
-  const strat = cat.tools.filter((t) => t.category === 'estratificacion' && t.access === 'publico' && !['hub-estratificacion-cmo', 'siaf-cmo', 'neumocmo'].includes(t.id));
-  const follow = ['neumocmo', 'adhefar-hub', 'cmodelta'].map((id) => h.byId[id]);
+  const AREAS = ['VIH', 'Riesgo cardiovascular', 'Respiratorio', 'Migraña', 'Inmunomediadas', 'Pediatría', 'Oncohematología', 'Coagulopatías congénitas', 'Hepatitis B y D', 'Esclerosis múltiple'];
+  const follow = ['neumocmo', 'adhefar-hub'].map((id) => h.byId[id]);
   const studies = ['iris', 'dermapex', 'coamo'].map((id) => h.byId[id]);
   const li = (t, note) => `<li><a href="${h.pageHref(t) || '/proyectos/#' + t.id}">${esc(t.name)} <em>${esc(note || t.areas[0])}</em></a></li>`;
   const body = `
@@ -378,7 +367,7 @@ function pageCmo(d) {
     <div class="eco-col base" role="listitem"><h3>1 · Marco conceptual</h3><p>Modelo de atención farmacéutica CMO · proyecto MAPEX-SEFH</p>
       <div class="dim"><span>Capacidad<small>estratificar para atender a cada paciente según sus necesidades</small></span><span>Motivación<small>alinear con el paciente los objetivos farmacoterapéuticos</small></span><span>Oportunidad<small>seguimiento continuo, más allá de la consulta presencial</small></span></div>
       <p style="margin:0">Obra colectiva de los grupos de trabajo de la SEFH.</p></div>
-    <div class="eco-col" role="listitem"><h3>2 · Estratificación</h3><p>${strat.length} aplicaciones, una por modelo publicado, reunidas en el Hub.</p><ul>${li(h.byId['hub-estratificacion-cmo'], 'acceso único')}${strat.map((t) => li(t)).join('')}</ul></div>
+    <div class="eco-col" role="listitem"><h3>2 · Estratificación</h3><p>Una herramienta por cada modelo publicado, reunidas en el Hub.</p><ul>${li(h.byId['hub-estratificacion-cmo'], 'acceso único')}${AREAS.map((a) => `<li><span>${a}</span></li>`).join('')}</ul></div>
     <div class="eco-col" role="listitem"><h3>3 · Seguimiento y consulta</h3><p>Entornos que integran estratificación, adherencia y educación.</p><ul>${follow.map((t) => li(t, h.stName(t.status))).join('')}</ul></div>
     <div class="eco-col" role="listitem"><h3>4 · Investigación</h3><p>Estudios con plataforma propia y acceso restringido.</p><ul>${studies.map((t) => li(t, t.areas[0])).join('')}<li><a href="/proyectos/hiv-prescribing-cascade-auditor/">HIV Cascade Auditor <em>VIH · seguridad</em></a></li></ul></div>
   </div>

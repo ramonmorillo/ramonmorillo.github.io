@@ -94,3 +94,8 @@ Fuente encontrada: la propia página pública de la herramienta (sección «Reco
 - **R5. DERMAPEX:** el README dice que la lógica clínica «aún no está implementada», pero el repositorio tiene commits del 03/11/2026. Ficha marcada «En desarrollo»; actualizar cuando cambie.
 - **R6. Conferencias:** solo hay tres participaciones documentadas en el repositorio. El resto de la trayectoria como ponente (incluida la del Congreso SEFH con neumoCMO) debe añadirse con su evidencia.
 - **R7. Código antiguo de la SPA** (`js/app.js`, `js/teaching.js`, `js/diagnostico.js`, `data/course-data.js`, `data/site-v5.js`, `data/teaching-programs.js`, `data/cases.js`, `data/github-route.js`, `data/tooling-current.js`, `css/components.css`, `css/professional.css`) ya no se carga desde ninguna página. Se conserva sin borrar; puede eliminarse tras aprobación.
+
+## 7. Decisiones del autor (04/11/2026, segunda revisión)
+
+- Portada: se retira la franja de cifras; la sección de problemas se sustituye por «Asistencia, docencia e investigación».
+- Catálogo reducido a 15 fichas. Las 10 herramientas de estratificación por patología se presentan solo a través del Hub de Estratificación CMO, que enumera las áreas que cubre. Se retiran también DrugPersist, DrugPersist-IMID, CMO Scientific Engine, cmodelta y las herramientas de gestión interna del servicio (PIDEFAR, Acta de Guardias, Sesiones clínicas, anti-PCSK9). Todas figuran en `excludedRepos` con el motivo.
