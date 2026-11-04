@@ -1,5 +1,7 @@
 # Web profesional: decisiones y próximos materiales
 
+> **Documento histórico.** Sustituido por [AUDITORIA_REDISENO_2026-11.md](AUDITORIA_REDISENO_2026-11.md) y el README.
+
 ## Objetivo
 
 La portada presenta a Ramón Morillo como docente y ponente de IA aplicada a farmacia hospitalaria. Los cursos, el aula y la biblioteca técnica permanecen accesibles desde rutas internas. `foco-3-octubre.html` y sus materiales son una unidad independiente y no deben modificarse en el rediseño.

@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "reviewedAt": "2026-11-04",
+    "pubmedQuery": "Morillo-Verdugo R[Author]",
+    "pubmedCount": 123,
+    "pubmedCountDate": "2026-11-04",
+    "pubmedUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Morillo-Verdugo+R%5BAuthor%5D&sort=date",
+    "note": "Selección editorial de publicaciones indexadas en PubMed relacionadas con las líneas de trabajo. El recuento procede de la búsqueda indicada y puede incluir registros duplicados (por ejemplo, artículos traducidos)."
+  },
+  "lines": [
+    {
+      "id": "cmo",
+      "title": "Modelo CMO y estratificación en atención farmacéutica",
+      "text": "Desarrollo conceptual del modelo Capacidad–Motivación–Oportunidad en el proyecto MAPEX de la SEFH, sus herramientas de estratificación por patología y la comprobación de su aplicabilidad en la práctica.",
+      "tools": ["hub-estratificacion-cmo", "cmo-cardiovascular", "cmo-respiratorio", "cmo-oncologia"],
+      "publications": ["41783120", "41545181", "40425401", "41387041", "42409716", "39512818", "41878094"]
+    },
+    {
+      "id": "vih",
+      "title": "VIH: seguridad del tratamiento y atención personalizada",
+      "text": "Seguridad farmacoterapéutica en personas que viven con VIH, en especial en mayores: cascadas de prescripción, alertas en tiempo real y aplicación del modelo CMO.",
+      "tools": ["hiv-cascade-auditor", "cmo-vih", "cambiostar"],
+      "publications": ["41230337", "41877854"]
+    },
+    {
+      "id": "resultados",
+      "title": "Adherencia, resultados y experiencia del paciente",
+      "text": "Medición de la adherencia y de los resultados y experiencias comunicados por los pacientes (PROM y PREM) en las consultas externas de farmacia hospitalaria.",
+      "tools": ["adhefar-hub", "drugpersist", "drugimid"],
+      "publications": ["42414207"]
+    },
+    {
+      "id": "estudios",
+      "title": "Estudios con plataforma digital propia",
+      "text": "Proyectos en los que la aplicación forma parte del diseño del estudio: recogida de datos seudonimizados, visitas, cuestionarios y exportación para el análisis.",
+      "tools": ["iris", "dermapex", "coamo"],
+      "publications": []
+    }
+  ],
+  "publications": [
+    {"pmid": "41783120", "doi": "10.2147/PPA.S591288", "title": "A Multidimensional Framework for Pharmaceutical Care to Enhance Medication Adherence and Patient Engagement: The CMO-MAPEX Model.", "authors": "Morillo-Verdugo R, Ibarra-Barrueta O, Martin Conde MT, et al.", "journal": "Patient Prefer Adherence", "year": 2026},
+    {"pmid": "41545181", "doi": "10.1136/ejhpharm-2025-004767", "title": "Stratification in pharmaceutical care: a concept analysis.", "authors": "Morillo-Verdugo R, McIntyre F, Contreras Macías E.", "journal": "Eur J Hosp Pharm", "year": 2026},
+    {"pmid": "42414207", "doi": "10.1016/j.farma.2026.05.008", "title": "MAPEX-SEFH guide for the implementation of patient-reported outcomes and experience in outpatient hospital pharmacy.", "authors": "Mercadal Orfila G, Collado Borrell R, Margusino Framiñan L, et al.", "journal": "Farm Hosp", "year": 2026},
+    {"pmid": "42409716", "doi": "10.1016/j.farma.2026.06.006", "title": "Concordance between the theoretical and real stratification of the ability-motivation-opportunity model in patients with cardiovascular pathologies.", "authors": "Solís-Martín C, Morillo-Verdugo R.", "journal": "Farm Hosp", "year": 2026},
+    {"pmid": "41877854", "doi": "10.2147/PPA.S569460", "title": "Impact of a CMO-Based Pharmaceutical Care Model on 3-HIT Criteria in Older People Living with HIV: The DIS3HIT Project.", "authors": "Roldán Galnares M, Morillo-Verdugo R, Robustillo-Cortes MLA, et al.", "journal": "Patient Prefer Adherence", "year": 2026},
+    {"pmid": "41878094", "doi": "10.3389/fpubh.2026.1772293", "title": "Capacity, motivation, and opportunity model-derived taxonomy of pharmacist-led interventions applicable to people self-managing cancer medication.", "authors": "Ribeiro J, Morillo-Verdugo R, Alves da Costa F.", "journal": "Front Public Health", "year": 2026},
+    {"pmid": "41230337", "doi": "10.2147/PPA.S549933", "title": "Implementation and Evaluation of a Real-Time Prescription Alert System to Optimize Antiretroviral Therapy and Medication Adherence in People Living with HIV. SANPAT PROJECT.", "authors": "Morillo-Verdugo R, Solis-Martin C, Marquez-Saavedra E, et al.", "journal": "Patient Prefer Adherence", "year": 2025},
+    {"pmid": "41387041", "doi": "10.1016/j.farma.2025.11.001", "title": "Risk stratification tool for pharmaceutical care in patients with cardiovascular disease.", "authors": "de Dios Lopez A, Vicente Escrig E, Sempere Serrano P, et al.", "journal": "Farm Hosp", "year": 2025},
+    {"pmid": "40425401", "doi": "10.1016/j.sapharm.2025.05.009", "title": "Stratification tools in pharmaceutical care using the capacity-motivation-opportunity framework: A scoping review.", "authors": "Morillo-Verdugo R, Romero-Murillo M, Solis-Martin C, et al.", "journal": "Res Social Adm Pharm", "year": 2025},
+    {"pmid": "39512818", "doi": "10.3389/fphar.2024.1461473", "title": "Transforming respiratory diseases management: a CMO-based hospital pharmaceutical care model.", "authors": "Zarate-Tamames B, Garin N, Calvin-Lamas M, et al.", "journal": "Front Pharmacol", "year": 2024}
+  ]
+}

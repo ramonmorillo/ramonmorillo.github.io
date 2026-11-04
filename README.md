@@ -1,72 +1,74 @@
-# IA aplicada a la farmacia hospitalaria
+# ramonmorillo.es
 
-La portada pública presenta la formación, las conferencias y los proyectos de Ramón Morillo. El aula y la biblioteca técnica siguen disponibles en sus rutas. Véase [WEB_PROFESIONAL.md](WEB_PROFESIONAL.md) para la arquitectura editorial y los materiales pendientes antes del dominio propio.
+Web profesional de **Ramón Morillo Verdugo**: farmacia hospitalaria, investigación y herramientas digitales. Se publica con GitHub Pages en el dominio `ramonmorillo.es` (archivo `CNAME`).
 
-Curso creado y dirigido por **Ramón Morillo Verdugo**, farmacéutico hospitalario, investigador y profesor universitario, para la formación de profesionales farmacéuticos en el uso crítico, seguro y aplicado de la inteligencia artificial.
-
-Desarrollo y actualización técnica asistidos mediante herramientas de inteligencia artificial, bajo dirección y revisión del autor.
-
-## Versión y fechas
-
-- Creación original verificada: enero de 2026 (primer commit del repositorio: 2026-01-25).
-- Versión pública previa verificada: 2.0, marzo de 2026.
-- Rediseño integral: julio de 2026.
-- Última actualización: 2026-09-11.
-- Versión actual: 5.2.0.
-
-## Público destinatario
-
-Farmacéuticos hospitalarios, docentes, investigadores, responsables de innovación y otros profesionales sanitarios. La estructura permite ampliar rutas a farmacia comunitaria, atención primaria y estudiantes.
+Auditoría y decisiones del rediseño de noviembre de 2026: [AUDITORIA_REDISENO_2026-11.md](AUDITORIA_REDISENO_2026-11.md).
 
 ## Arquitectura
 
-Web estática compatible con GitHub Pages, sin backend, sin cuentas y sin dependencias obligatorias. Los cursos y sesiones docentes están en `data/teaching-programs.js`; la biblioteca técnica se mantiene en `data/course-data.js`; la experiencia del aula está en `js/teaching.js` y la navegación general en `js/app.js`.
+Sitio estático sin framework ni dependencias. Las páginas se **generan** a partir de datos estructurados y el HTML resultante se versiona en el repositorio, de modo que GitHub Pages lo sirve directamente, sin proceso de compilación en el servidor.
 
-## Propuesta profesional y estructura formativa
+| Archivo | Contenido |
+|---|---|
+| `data/catalogo.json` | Herramientas: categorías, estados, tipos de acceso, tipos de IA y una ficha por aplicación |
+| `data/conferencias.json` | Ponencias y participaciones en eventos |
+| `data/investigacion.json` | Líneas de investigación y publicaciones (PMID, DOI) |
+| `scripts/build-site.mjs` | Generador: escribe `index.html`, `proyectos/`, `investigacion/`, `conferencias/`, `sobre-mi/`, `contacto/`, `privacidad/`, `formacion/` (transición), `404.html`, `sitemap.xml` y `robots.txt` |
+| `scripts/validate-catalog.mjs` | Validación de datos y comprobación de que el HTML está al día |
+| `scripts/audit-github.mjs` | Contraste del catálogo con los repositorios públicos de GitHub (bajo demanda) |
+| `assets/css/site.css`, `assets/js/site.js` | Sistema de diseño y mejoras progresivas (búsqueda, filtros, menú móvil) |
 
-- Portada orientada al uso docente inmediato, con acceso a cursos, aula, herramientas y casos.
-- Tres cursos principales: IA práctica y segura; investigación, docencia y comunicación científica; y creación de herramientas.
-- Consultoría estructurada desde diagnóstico y priorización hasta evaluación, gobernanza e implantación.
-- Configurador local de propuestas para recomendar programa, alcance y preparar una solicitud estructurada sin almacenar datos.
-- Aula docente con 14 sesiones listas para impartir: apertura, objetivos, ideas clave, demostración, ejemplo farmacéutico, actividad y evidencia.
-- Ficha de trabajo descargable y casos prácticos relacionados en cada sesión.
-- Primera formación insignia lista para impartir: formatos, preparación, agenda presencial, proyecto final, transferencia y cuaderno completo del participante.
-- Programas transparentes con punto de partida, resultado esperado y productos concretos.
-- Laboratorio con acceso prioritario a las aplicaciones publicadas, no al código fuente.
-- Biblioteca técnica secundaria con 35 módulos para ampliar GitHub, Codex, Claude, NotebookLM y Claude Code.
+El contenido es legible sin JavaScript. Las páginas de los talleres (`foco-3-octubre.html`, `sevilla-14-octubre.html`, `santiago-16-noviembre.html`) y sus recursos son independientes y no se generan.
 
-- Nivel inicial: fundamentos, herramientas, privacidad, prompting y verificación.
-- Nivel intermedio: investigación profunda, PDF, evidencia, escritura, datos, hojas de cálculo, multimodalidad y flujos.
-- Nivel avanzado: agentes, herramientas conectadas, skills/MCP, desarrollo asistido, GitHub, Codex, Claude Code, evaluación y gobernanza.
-- Ruta de farmacia hospitalaria: consultas externas, atención farmacéutica, información de medicamentos, investigación, docencia, gestión, calidad, seguridad, farmacovigilancia, automatización y evaluación de aplicaciones IA.
-- 32 casos prácticos ficticios con escenario y tarea pública. Las soluciones, errores deliberados, procesos de verificación y rúbricas se mantienen en un kit docente privado.
+## Mantenimiento
 
-## Separación entre contenido público y material docente
+Requisito: Node.js 18 o superior.
 
-La versión pública actual contiene los módulos, actividades, casos y recursos destinados a participantes. Las soluciones, claves de respuesta, rúbricas, notas de facilitación y presentaciones docentes no deben almacenarse ni ocultarse mediante JavaScript en GitHub Pages: se conservan fuera de la rama pública y son de uso exclusivo del autor.
+### Añadir una herramienta
 
-Contacto profesional: [ramon.morillo.verdugo@gmail.com](mailto:ramon.morillo.verdugo@gmail.com).
+1. Añade un objeto a `tools` en `data/catalogo.json`. Campos obligatorios: `id` (estable, minúsculas y guiones), `name`, `repo`, `category`, `areas`, `tags`, `status`, `access`, `summary`, `problem`, `audience`, `features`, `ai`, `validation`, `authorship`, `updated`. Opcionales: `url`, `urlLabel`, `aiNote`, `registration`, `recognition`, `research`, `docs`, `featured`, `page`.
+2. Reglas: `access: "publico"` exige `url`; `access: "interno"` no admite `url`; las fichas de `category: "gestion"` son siempre internas; `updated` es la fecha del último commit, no de validación.
+3. Para una página propia, indica `"page": "nombre-de-ruta"` y se generará `/proyectos/nombre-de-ruta/`.
+4. Ejecuta:
 
-## Ejecución local
+```bash
+npm run build
+```
+
+```bash
+npm test
+```
+
+### Añadir una conferencia
+
+Añade un objeto a `events` en `data/conferencias.json` (`id`, `date` AAAA-MM-DD, `title`, `event`, `city`, `type`, `topics`; opcionales `end`, `venue`, `organizer`, `summary`, `href`, `programUrl`, `photo`, `photoAlt`, `visible`) y ejecuta `npm run build` y `npm test`. Solo participaciones con evidencia.
+
+### Revisar el catálogo frente a GitHub
+
+```bash
+npm run audit:github
+```
+
+```bash
+npm run audit:github -- --check-urls
+```
+
+Lista repositorios no catalogados, fichas desactualizadas y, con `--check-urls`, enlaces que no responden. No modifica nada.
+
+### Vista previa local
 
 ```bash
 python3 -m http.server 8765
 ```
 
-Abra `http://127.0.0.1:8765/`.
+Abre `http://127.0.0.1:8765/`. Las rutas son absolutas desde la raíz del dominio.
 
-## Validación de contenidos
+## Contenido heredado
 
-```bash
-npm run validate-content
-```
+La antigua plataforma formativa (SPA en `js/app.js`, `js/teaching.js` y `data/*.js`) ya no se carga desde ninguna página. Las páginas estáticas formativas (`modulos/`, `perfiles/`, `recursos/`) se conservan para no romper enlaces antiguos, marcadas `noindex`. Las rutas antiguas con almohadilla redirigen a las páginas nuevas o a `/formacion/`. `npm run validate-content` sigue validando los datos heredados.
 
-El script falla si detecta módulos o casos sin campos esenciales, feedback incompleto, rutas rotas, texto provisional o material docente reservado dentro de los datos públicos.
+## Autoría y licencias
 
-## Despliegue
+Textos: © Ramón Morillo Verdugo. El modelo CMO es obra colectiva de la SEFH. Cada herramienta tiene su propio repositorio y condiciones. Tipografías Inter y Source Serif 4: SIL Open Font License 1.1 (`assets/fonts/`). Desarrollo asistido por herramientas de IA bajo dirección y revisión del autor.
 
-GitHub Pages puede servir directamente la rama configurada, sin proceso de compilación. Las rutas son relativas y compatibles con `/IA-farmacia-formacion/`. Si se utiliza GitHub Actions, debe publicar exactamente el commit revisado y no una carpeta generada distinta.
-
-## Licencia, limitaciones y autoría
-
-Autoría principal: **Ramón Morillo Verdugo**. Licencia de uso: CC BY-NC-SA 4.0 salvo indicación distinta. El contenido es formativo y no sustituye juicio profesional, política institucional, asesoramiento jurídico, validación clínica ni fuentes oficiales actualizadas.
+Contacto: [ramon.morillo.verdugo@gmail.com](mailto:ramon.morillo.verdugo@gmail.com).
