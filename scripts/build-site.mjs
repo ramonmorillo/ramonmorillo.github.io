@@ -142,7 +142,7 @@ function toolCard(t, h) {
       <dt>Autoría</dt><dd>${esc(t.authorship)}</dd>
       ${t.registration ? `<dt>Registro</dt><dd>${esc(t.registration)}</dd>` : ''}
       ${t.recognition ? `<dt>Reconocimiento</dt><dd>${esc(t.recognition.title)}</dd>` : ''}
-      <dt>Último cambio en el repositorio</dt><dd><time datetime="${t.updated}">${fmtDate(t.updated)}</time></dd>
+      <dt>Última actualización</dt><dd><time datetime="${t.updated}">${fmtDate(t.updated)}</time></dd>
     </dl>
   </details>
   ${toolLinks(t, h)}
@@ -325,7 +325,7 @@ ${t.recognition ? `<section class="section"><div class="wrap"><div class="featur
     <div><dt>Autoría</dt><dd>${esc(t.authorship)}</dd></div>
     ${t.registration ? `<div><dt>Propiedad intelectual</dt><dd>${esc(t.registration)}</dd></div>` : ''}
     <div><dt>Etiquetas</dt><dd>${t.tags.map((x) => `<span class="tag">${esc(x)}</span>`).join(' ')}</dd></div>
-    <div><dt>Último cambio en el repositorio</dt><dd><time datetime="${t.updated}">${fmtDate(t.updated)}</time>. La fecha de un cambio no equivale a una publicación ni a una validación clínica.</dd></div>
+    <div><dt>Última actualización</dt><dd><time datetime="${t.updated}">${fmtDate(t.updated)}</time>. La fecha de actualización no equivale a una publicación ni a una validación clínica.</dd></div>
   </dl>
 </div></section>
 ${pubs.length ? `<section class="section"><div class="wrap"><p class="kicker">Publicaciones relacionadas por línea de investigación</p><h2>Producción científica vinculada</h2><ul class="pubs">${pubs.map(pubItem).join('')}</ul><p class="small muted" style="margin-top:var(--s-3)">Relación temática con la línea «${esc(lines[0].title)}». No implica que las publicaciones evalúen esta herramienta concreta.</p></div></section>` : ''}
