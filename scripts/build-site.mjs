@@ -259,7 +259,7 @@ function pageCatalog(d) {
 <section class="page-hero"><div class="wrap">
   <p class="kicker">Proyectos y herramientas</p>
   <h1>Catálogo de herramientas para la farmacia hospitalaria</h1>
-  <p class="lead">${s.total} fichas de aplicaciones desarrolladas a partir de repositorios públicos. Cada ficha distingue el estado de desarrollo, el tipo de acceso, el componente real de IA y la validación documentada.</p>
+  <p class="lead">${s.total} fichas de aplicaciones de desarrollo propio. Cada ficha distingue el estado de desarrollo, el tipo de acceso, el componente real de IA y la validación documentada.</p>
   <p><a class="arrow-link" href="/proyectos/ecosistema-cmo/">Ver cómo se relacionan las herramientas del ecosistema CMO</a></p>
   <p class="note">«Disponible» significa que la aplicación funciona y puede abrirse. No equivale a validación clínica ni a certificación como producto sanitario.</p>
 </div></section>
@@ -429,7 +429,7 @@ ${res.lines.map((l) => `<section class="section" id="linea-${l.id}"><div class="
   <div class="table-wrap"><table><caption class="visually-hidden">Proyectos de investigación con aplicación asociada</caption>
   <thead><tr><th scope="col">Proyecto</th><th scope="col">Contexto investigador documentado</th><th scope="col">Aplicación</th></tr></thead>
   <tbody>${studies.map((t) => `<tr><th scope="row"><a href="${h.pageHref(t) || '/proyectos/#' + t.id}">${esc(t.name)}</a></th><td>${esc(t.research || '—')}</td><td><span class="badge st-${t.status}">${h.stName(t.status)}</span> <span class="badge acc">${h.accName(t.access)}</span></td></tr>`).join('')}</tbody></table></div>
-  <p class="small muted" style="margin-top:var(--s-3)">Se incluyen solo los proyectos cuya relación con una aplicación está documentada en el repositorio correspondiente.</p>
+  <p class="small muted" style="margin-top:var(--s-3)">Se incluyen solo los proyectos cuya relación con una aplicación está documentada.</p>
 </div></section>`;
   return layout({ path: '/investigacion/', title: 'Investigación en atención farmacéutica, modelo CMO y VIH · Ramón Morillo', description: 'Líneas de investigación de Ramón Morillo Verdugo: modelo CMO y estratificación, seguridad en VIH, adherencia y PROM/PREM. Publicaciones con PMID y estudios con plataforma digital propia.', body });
 }
@@ -487,7 +487,7 @@ function pageAbout(d) {
     <div><dt>Modelo CMO</dt><dd>He participado en el desarrollo del modelo de atención farmacéutica Capacidad–Motivación–Oportunidad, una obra colectiva de los grupos de trabajo de la SEFH. <a href="/proyectos/ecosistema-cmo/">Ver el ecosistema CMO</a>.</dd></div>
     <div><dt>Investigación</dt><dd>Estratificación, seguridad farmacoterapéutica en VIH, adherencia y resultados comunicados por los pacientes; participación en estudios multicéntricos. <a href="/investigacion/">Ver líneas y publicaciones</a>.</dd></div>
     <div><dt>Docencia universitaria</dt><dd>Profesor universitario y formador de especialistas en farmacia hospitalaria.</dd></div>
-    <div><dt>Desarrollo tecnológico</dt><dd>${s.total} herramientas catalogadas a partir de mis repositorios públicos; dos programas inscritos en el Registro de la Propiedad Intelectual con autoría compartida. <a href="/proyectos/">Ver el catálogo</a>.</dd></div>
+    <div><dt>Desarrollo tecnológico</dt><dd>${s.total} herramientas propias catalogadas; dos programas inscritos en el Registro de la Propiedad Intelectual con autoría compartida. <a href="/proyectos/">Ver el catálogo</a>.</dd></div>
   </dl>
 </div></section>
 <section class="section"><div class="wrap narrow">
