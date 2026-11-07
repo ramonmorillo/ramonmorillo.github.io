@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-07 · Santiago 16-nov: Preparador de consulta CMO
+
+- Nueva tarjeta «05 · Regalo del taller» en «Herramientas creadas siguiendo esta ruta» de `santiago-16-noviembre.html`, con enlaces a la herramienta (`/preparadorconsulta/`) y a una hoja de consulta de ejemplo con paciente ficticio.
+
 ## 2026-10-16 · Diagnóstico IA publicado
 
 - Validado por el autor con las opciones por defecto. Enlaces desde la portada (bloque «Hablemos») y desde la página de contacto.
