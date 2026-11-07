@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-07 · Santiago 16-nov: Preparador de consulta CMO, versión web
+
+- La tarjeta «05 · Regalo del taller» enlaza ahora a la versión web gratuita (funciona en el navegador, sin cuenta ni envío de datos). Se retira el enlace a la hoja de ejemplo: la herramienta trae pacientes ficticios para probarla.
+
 ## 2026-11-07 · Santiago 16-nov: Preparador de consulta CMO
 
 - Nueva tarjeta «05 · Regalo del taller» en «Herramientas creadas siguiendo esta ruta» de `santiago-16-noviembre.html`, con enlaces a la herramienta (`/preparadorconsulta/`) y a una hoja de consulta de ejemplo con paciente ficticio.
