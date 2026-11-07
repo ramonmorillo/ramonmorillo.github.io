@@ -65,9 +65,11 @@
     {
       "id": "sevilla-2026-11-12",
       "date": "2026-11-12",
+      "end": "2026-11-12T19:00",
       "title": "Jornada IA en Farmacia Hospitalaria",
       "event": "Jornada «IA en Farmacia Hospitalaria»",
       "city": "Sevilla",
+      "organizer": "Almirall",
       "type": "Ponencia",
       "topics": ["ia"],
       "summary": "Página en preparación.",
@@ -78,9 +80,11 @@
     {
       "id": "barcelona-2026-11-18",
       "date": "2026-11-18",
+      "end": "2026-11-18T16:30",
       "title": "Taller de estratificación",
       "event": "Curso RUTIMPEX",
       "city": "Barcelona",
+      "organizer": "Hospital Universitari Germans Trias i Pujol (Badalona)",
       "type": "Taller",
       "topics": ["cmo", "atencion"],
       "summary": "Página en preparación.",
