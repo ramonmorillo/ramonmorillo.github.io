@@ -445,7 +445,7 @@ function pageConferences(d) {
 <section class="page-hero"><div class="wrap">
   <p class="kicker">Conferencias</p>
   <h1>Ponencias, congresos y participaciones científicas</h1>
-  <p class="lead">Intervenciones como ponente sobre inteligencia artificial, innovación y atención farmacéutica. Cada entrada enlaza a la información o los materiales publicados del evento.</p>
+  <p class="lead">Intervenciones como ponente o director de cursos sobre inteligencia artificial, innovación y atención farmacéutica. Cada entrada enlaza a la información o los materiales publicados del evento.</p>
 </div></section>
 <section class="section" style="padding-top:var(--s-6)"><div class="wrap" data-talks>
   ${usedTopics.length > 1 ? `<div class="chips" role="group" aria-label="Filtrar por temática" style="margin-bottom:var(--s-6)"><button type="button" class="chip" data-topic-chip="" aria-pressed="true">Todas</button>${usedTopics.map((t) => `<button type="button" class="chip" data-topic-chip="${t.id}" aria-pressed="false">${esc(t.name)}</button>`).join('')}</div>` : ''}
@@ -456,7 +456,7 @@ function pageConferences(d) {
       <div>
         <p class="upcoming"${new Date(e.end || e.date) > now ? '' : ' hidden'}>Próximamente</p>
         <h3>${esc(e.title)}</h3>
-        <p class="ev">${esc(e.event)} · ${esc(e.type)}${e.venue ? ' · ' + esc(e.venue) : ''}${e.organizer ? ' · Organiza: ' + esc(e.organizer) : ''}</p>
+        <p class="ev">${esc(e.event)} · ${esc(e.type)}${e.role ? ' · ' + esc(e.role) : ''}${e.venue ? ' · ' + esc(e.venue) : ''}${e.organizer ? ' · Organiza: ' + esc(e.organizer) : ''}</p>
         ${e.summary ? `<p>${esc(e.summary)}</p>` : ''}
         <div class="tags" style="margin-bottom:var(--s-3)">${e.topics.map((t) => `<span class="tag">${esc(topicName(t))}</span>`).join(' ')}</div>
         <div class="actions">${e.href ? `<a class="arrow-link" href="${esc(e.href)}">${esc(e.hrefLabel || 'Más información')}</a>` : ''}${e.programUrl ? ext(e.programUrl, 'Programa del evento') : ''}</div>
