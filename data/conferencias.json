@@ -1,7 +1,7 @@
 {
   "meta": {
     "reviewedAt": "2026-11-04",
-    "note": "Añadir solo participaciones con evidencia (programa, página del evento o material propio). Campos obligatorios: id, date (AAAA-MM-DD), title, event, city, type, topics. Opcionales: end (fecha-hora de fin), venue, organizer, href, hrefLabel, photo, photoAlt, programUrl, summary, visible."
+    "note": "Añadir solo participaciones con evidencia (programa, página del evento o material propio). Campos obligatorios: id, date (AAAA-MM-DD), title, event, city, type, topics. Opcionales: end (fecha-hora de fin), role (papel: p. ej. Ponente, Director de la jornada), venue, organizer, href, hrefLabel, photo, photoAlt, programUrl, summary, visible."
   },
   "topics": [
     {"id": "ia", "name": "Inteligencia artificial"},
@@ -11,7 +11,7 @@
     {"id": "seguridad", "name": "Seguridad farmacoterapéutica"},
     {"id": "digital", "name": "Transformación digital"}
   ],
-  "types": ["Ponencia", "Sesión práctica", "Taller", "Mesa redonda", "Comunicación"],
+  "types": ["Ponencia", "Sesión práctica", "Taller", "Mesa redonda", "Comunicación", "Jornada"],
   "events": [
     {
       "id": "foco-vih-2026",
@@ -60,6 +60,40 @@
       "summary": "Herramientas esenciales de IA para la práctica farmacéutica y creación de herramientas propias, con materiales ficticios.",
       "href": "/santiago-16-noviembre.html",
       "hrefLabel": "Página y materiales para asistentes",
+      "visible": true
+    },
+    {
+      "id": "sevilla-2026-11-12",
+      "date": "2026-11-12",
+      "end": "2026-11-12T19:00",
+      "title": "Jornada IA en Farmacia Hospitalaria",
+      "event": "«IA en Farmacia Hospitalaria»",
+      "city": "Sevilla",
+      "venue": "Hotel AC Ciudad de Sevilla",
+      "organizer": "Almirall",
+      "role": "Director de la jornada",
+      "type": "Jornada",
+      "topics": ["ia"],
+      "summary": "Página en preparación.",
+      "href": "/sevilla-12-noviembre.html",
+      "hrefLabel": "Página de la jornada",
+      "visible": true
+    },
+    {
+      "id": "badalona-2026-11-18",
+      "date": "2026-11-18",
+      "end": "2026-11-18T16:30",
+      "title": "Taller de estratificación",
+      "event": "Curso RUTIMPEX",
+      "city": "Badalona",
+      "venue": "Facultad de Medicina de la UAB, Campus Can Ruti",
+      "organizer": "Hospital Universitari Germans Trias i Pujol",
+      "role": "Ponente",
+      "type": "Taller",
+      "topics": ["cmo", "atencion"],
+      "summary": "Página en preparación.",
+      "href": "/badalona-18-noviembre.html",
+      "hrefLabel": "Página del taller",
       "visible": true
     }
   ]
