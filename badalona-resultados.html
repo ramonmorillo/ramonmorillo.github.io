@@ -35,9 +35,10 @@ button{font:inherit;cursor:pointer;border:1px solid var(--accent);background:tra
 <div class="wrap">
   <div class="row">
     <div><div class="eyebrow">Taller de estratificación · RUTIMPEX · Badalona</div><h1>Panel en directo</h1></div>
-    <div><button type="button" id="dis">Mostrar diseño docente</button></div>
+    <div class="row" style="gap:8px"><button type="button" id="dis">Mostrar diseño docente</button><button type="button" id="reset">Reiniciar panel</button></div>
   </div>
   <p class="muted" id="estado">Conectando…</p>
+  <p class="muted" id="desde"></p>
 
   <section class="card">
     <h2>Calibración individual</h2>
@@ -978,9 +979,41 @@ resolucion:`
 const CORTO = {1:"N1 · máxima", 2:"N2 · intermedio", 3:"N3 · basal"};
 const DISENO = n => n===1 ? "N2 → N1 → ¿N1 o N2? (debate)" : "N1 → N1 → N1";
 const chip = (r) => r && r.nivel ? `<span class="chip n${r.nivel}">${CORTO[r.nivel]}</span>${r.confianza?` <span class="muted">(${r.confianza})</span>`:""}` : `<span class="muted">—</span>`;
-document.getElementById("dis").onclick = e => { document.body.classList.toggle("showdis"); e.target.textContent = document.body.classList.contains("showdis") ? "Ocultar diseño docente" : "Mostrar diseño docente"; };
+// ===== Controles del docente =====
+// Clave visible en el código fuente: es un freno para la sala, no seguridad.
+const CLAVE_DOCENTE = "VALME";
+let docenteOK = false;
+function pedirClave(){
+  if(docenteOK) return true;
+  const c = prompt("Clave del docente:");
+  if(c && c.trim().toUpperCase() === CLAVE_DOCENTE){ docenteOK = true; return true; }
+  if(c !== null) alert("Clave incorrecta.");
+  return false;
+}
+const kReset = "panel_reset_" + TALLER;
+const getReset = () => { try{ return +localStorage.getItem(kReset) || 0; }catch(e){ return 0; } };
+function pintarDesde(){
+  const t = getReset();
+  document.getElementById("desde").textContent = t ? "Contando solo los votos emitidos desde el " + new Date(t).toLocaleString("es-ES") + " (reinicio en este navegador)." : "Contando todos los votos registrados.";
+}
+let ultimas = [];
+document.getElementById("dis").onclick = e => {
+  if(!document.body.classList.contains("showdis") && !pedirClave()) return;
+  document.body.classList.toggle("showdis");
+  e.target.textContent = document.body.classList.contains("showdis") ? "Ocultar diseño docente" : "Mostrar diseño docente";
+};
+document.getElementById("reset").onclick = () => {
+  if(!pedirClave()) return;
+  if(!confirm("¿Reiniciar el panel? Se dejarán de contar todos los votos anteriores a este momento. La hoja de Google no se borra.")) return;
+  try{ localStorage.setItem(kReset, String(Date.now())); }catch(e){ alert("Este navegador no permite guardar el reinicio (¿ventana privada?)."); return; }
+  pintarDesde(); render(ultimas);
+};
+pintarDesde();
 
-function render(rows){
+function render(todas){
+  ultimas = todas;
+  const t0 = getReset();
+  const rows = todas.filter(r => !t0 || new Date(r.created_at).getTime() > t0);
   // Calibración: último voto por sesión
   const cal = {};
   rows.filter(r=>r.etapa==="calibracion").forEach(r=>{ cal[r.sesion] = r; });
