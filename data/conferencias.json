@@ -1,7 +1,7 @@
 {
   "meta": {
     "reviewedAt": "2026-11-04",
-    "note": "Añadir solo participaciones con evidencia (programa, página del evento o material propio). Campos obligatorios: id, date (AAAA-MM-DD), title, event, city, type, topics. Opcionales: end (fecha-hora de fin), role (papel: p. ej. Ponente, Director del curso), venue, organizer, href, hrefLabel, photo, photoAlt, programUrl, summary, visible."
+    "note": "Añadir solo participaciones con evidencia (programa, página del evento o material propio). Campos obligatorios: id, date (AAAA-MM-DD), title, event, city, type, topics. Opcionales: end (fecha-hora de fin), role (papel: p. ej. Ponente, Director de la jornada), venue, organizer, href, hrefLabel, photo, photoAlt, programUrl, summary, visible."
   },
   "topics": [
     {"id": "ia", "name": "Inteligencia artificial"},
@@ -67,11 +67,11 @@
       "date": "2026-11-12",
       "end": "2026-11-12T19:00",
       "title": "Jornada IA en Farmacia Hospitalaria",
-      "event": "Jornada «IA en Farmacia Hospitalaria»",
+      "event": "«IA en Farmacia Hospitalaria»",
       "city": "Sevilla",
       "venue": "Hotel AC Ciudad de Sevilla",
       "organizer": "Almirall",
-      "role": "Director del curso",
+      "role": "Director de la jornada",
       "type": "Jornada",
       "topics": ["ia"],
       "summary": "Página en preparación.",

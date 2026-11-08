@@ -445,7 +445,7 @@ function pageConferences(d) {
 <section class="page-hero"><div class="wrap">
   <p class="kicker">Conferencias</p>
   <h1>Ponencias, congresos y participaciones científicas</h1>
-  <p class="lead">Intervenciones como ponente o director de cursos sobre inteligencia artificial, innovación y atención farmacéutica. Cada entrada enlaza a la información o los materiales publicados del evento.</p>
+  <p class="lead">Intervenciones como ponente o director de jornadas sobre inteligencia artificial, innovación y atención farmacéutica. Cada entrada enlaza a la información o los materiales publicados del evento.</p>
 </div></section>
 <section class="section" style="padding-top:var(--s-6)"><div class="wrap" data-talks>
   ${usedTopics.length > 1 ? `<div class="chips" role="group" aria-label="Filtrar por temática" style="margin-bottom:var(--s-6)"><button type="button" class="chip" data-topic-chip="" aria-pressed="true">Todas</button>${usedTopics.map((t) => `<button type="button" class="chip" data-topic-chip="${t.id}" aria-pressed="false">${esc(t.name)}</button>`).join('')}</div>` : ''}
