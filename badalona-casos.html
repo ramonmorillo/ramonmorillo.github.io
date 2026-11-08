@@ -1,0 +1,1247 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casos de estratificación · RUTIMPEX</title>
+<style>
+:root{
+  --bg:#f6f5f2; --card:#ffffff; --ink:#1d2327; --muted:#5d666d; --line:#e2e0da;
+  --accent:#0f6e6a; --accent-soft:#e3f1ef; --warn:#9a5b00; --warn-soft:#fbf0dc; --lock:#8a8f94;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15191b; --card:#1e2427; --ink:#e7eaec; --muted:#9aa4aa; --line:#30383c;
+    --accent:#4fb8b1; --accent-soft:#1d3634; --warn:#e3a94a; --warn-soft:#3a2f1c; --lock:#6c7479;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:880px;margin:0 auto;padding:24px 16px 80px}
+header h1{font-size:1.6rem;margin:.2rem 0 .3rem;line-height:1.2}
+header p{margin:0;color:var(--muted)}
+.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
+section.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin:18px 0}
+h2{font-size:1.15rem;margin:0 0 .6rem}
+h3{font-size:1rem;margin:1.1rem 0 .4rem}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--accent-soft);color:var(--accent);margin:0 6px 6px 0}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.tablewrap{overflow-x:auto}
+pre{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:.82rem;overflow-x:auto;white-space:pre}
+button{font:inherit;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:9px;padding:8px 14px}
+button.ghost{background:transparent;color:var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.seg button[aria-pressed="false"]{background:transparent;color:var(--accent)}
+.note{border-left:3px solid var(--warn);background:var(--warn-soft);padding:10px 14px;border-radius:6px;font-size:.92rem}
+.quote{border-left:3px solid var(--accent);padding:6px 14px;font-style:italic;margin:12px 0}
+.locked{color:var(--lock)}
+.lockbox{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.lockbox input{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);min-width:0;flex:1 1 160px}
+.hidden{display:none !important}
+.q{border:1px solid var(--line);border-radius:10px;margin:8px 0;overflow:hidden}
+.q button.qbtn{width:100%;text-align:left;background:transparent;color:var(--ink);border:0;border-radius:0;padding:11px 14px;display:flex;justify-content:space-between;gap:10px}
+.q .ans{padding:0 14px 12px;font-style:italic}
+.q.open{border-color:var(--accent)}
+.counter{font-weight:700;color:var(--accent)}
+textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);min-height:60px}
+label.f{display:block;font-weight:600;font-size:.9rem;margin:12px 0 4px}
+.small{font-size:.86rem;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.casecard{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.casecard:hover{border-color:var(--accent)}
+.casecard strong{display:block;margin:2px 0 4px}
+.pathgroup h3{margin:20px 0 8px;font-size:.95rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.vote{background:var(--accent-soft);border-radius:10px;padding:10px 12px}
+.opt{display:inline-flex;gap:6px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:.92rem}
+select{font:inherit;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.ficha{border-top:1px dashed var(--line);margin-top:16px;padding-top:6px}
+footer{margin-top:30px;color:var(--muted);font-size:.85rem}
+@media print{.noprint{display:none !important}body{background:#fff}section.card{border:0}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+// ===== CONFIGURACIÓN DEL DOCENTE =====
+// Códigos que proyecta el docente. Son visibles en el código fuente:
+// ordenan la dinámica, no son seguridad. Un código abre esa etapa en TODOS los casos.
+const CODES = { v2:"CANRUTI", v3:"GERMANS", res:"BADALONA" };
+const MAX_Q = 4;
+// Panel en directo: URL de la aplicación web de Google Apps Script (termina en /exec). Si queda vacía, el envío se desactiva.
+const PANEL_URL = "https://script.google.com/macros/s/AKfycbwyM-51QixaviNTTMYr8443RJ3d95PP_D8Vo4HDQ4CDr92MAOFhBLgR_SQttr2i3k49/exec";
+const TALLER = "badalona-2026";   // cambiadlo para cada edición del taller: separa los datos
+const NIVELES = {1:"Nivel 1 · máxima complejidad", 2:"Nivel 2 · intermedio", 3:"Nivel 3 · basal"};
+const HUB = "https://ramonmorillo.es/hub-estratificacionCMO/";
+const PREP = "https://ramonmorillo.es/preparadorconsulta/";
+// =====================================
+const CASES = [];
+</script>
+<script>
+// ================= ONCOLOGÍA =================
+CASES.push({
+id:"onco-1", pat:"Oncología", n:1, nombre:"Mercedes", edad:"58 años",
+resumen:"Cáncer de mama metastásico, recién iniciado tratamiento con un antineoplásico oral cíclico.",
+diseno:"Basal: nivel intermedio (con duda razonable de máxima complejidad) → visita 2: se complica y pasa a máxima → visita 3: impacto de las intervenciones.",
+questions:[
+ ["¿Quién organiza la medicación en casa?","Mi marido, Paco. Él lleva el calendario de los días de descanso y me da la cápsula con el desayuno. Yo me fío de él."],
+ ["¿Sabe qué hacer si tiene fiebre?","Me lo explicasteis: si paso de 38 llamo al hospital de día. Lo tengo apuntado en la nevera."],
+ ["¿Toma algo por su cuenta, productos naturales o infusiones?","De momento nada. Una amiga me ha hablado de unas cápsulas de una planta para el ánimo, pero no las he comprado."],
+ ["¿Cómo está de ánimo?","Con altibajos. Hay días que me cuesta mucho, sobre todo los de los análisis."],
+ ["¿Ha tenido algún olvido?","No. Paco me la da y la apunta en el calendario."],
+ ["¿Cómo se maneja con los días de descanso del tratamiento?","Los tenemos marcados. Al principio me lié, pero ya no."],
+ ["¿Le cuesta venir al hospital?","Vivimos a 40 minutos. Me trae Paco en el coche."],
+ ["¿Qué espera del tratamiento?","Que me frene la enfermedad. Sé que no es para curarme, pero quiero estar bien el máximo tiempo posible."]
+],
+visits:[
+{titulo:"Visita basal", fecha:"09/03/2026", html:`
+<h3>Datos generales</h3>
+<p>Mujer de 58 años, maestra jubilada. Cáncer de mama RH+/HER2− con metástasis óseas, diagnosticado en 2025. Vive con su marido (Paco, 63 años), que la acompaña a las consultas. Tiene una hija que vive en otra ciudad. ECOG 1.</p>
+<h3>Tratamiento</h3>
+<ul>
+<li><strong>Palbociclib 125 mg</strong>, 1 cápsula/24 h los días 1–21 de cada ciclo de 28 días (hospital). Lo inició el 12/01/2026 (actualmente en el ciclo 3).</li>
+<li>Letrozol 2,5 mg/24 h (atención primaria).</li>
+<li>Ácido zoledrónico IV cada 12 semanas (hospital de día).</li>
+<li>Enalapril 10 mg/24 h · Levotiroxina 75 µg/24 h · Omeprazol 20 mg/24 h · Calcio + vitamina D/24 h.</li>
+</ul>
+<h3>Analítica (día 1 del ciclo 3)</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Neutrófilos</td><td>1.300/µL (neutropenia grado 2)</td></tr>
+<tr><td>Hemoglobina</td><td>11,8 g/dL</td></tr>
+<tr><td>Plaquetas</td><td>160.000/µL</td></tr>
+<tr><td>Creatinina · TSH</td><td>Normales</td></tr></table></div>`,
+dsp:[["2026-01-12","CDK4/6","palbociclib 125 mg",28],["2026-02-09","CDK4/6","palbociclib 125 mg",28]],
+notas:`## 2026-01-12
+Inicio de palbociclib. Educación sobre la pauta 21/7 y los signos de alarma. Se entrega calendario. Acude con su marido, que toma notas.
+## 2026-02-09
+Ciclo 2. Neutropenia grado 2 sin fiebre. Oncología mantiene la dosis. Buena tolerancia digestiva.`,
+cita:"Estoy algo agobiada con tanta pastilla y tanto análisis, pero mi marido me lo lleva todo apuntado."},
+{titulo:"Visita 2", fecha:"01/06/2026", html:`
+<h3>Lo ocurrido desde la visita basal</h3>
+<ul>
+<li>06/04: neutropenia grado 3 en el día 15 del ciclo 3. Oncología interrumpió el ciclo y reinició el ciclo 4 con <strong>palbociclib 100 mg</strong>. Se le indicó devolver las cápsulas de 125 mg que le sobraron.</li>
+<li>Mayo: su marido estuvo ingresado 3 semanas por una cirugía cardiaca. Durante ese tiempo ella gestionó sola la medicación.</li>
+<li>Recogió el ciclo de mayo con 2 semanas de retraso.</li>
+</ul>
+<h3>Analítica</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Neutrófilos</td><td><strong>950/µL</strong> (grado 3)</td></tr>
+<tr><td>Hemoglobina</td><td>11,2 g/dL</td></tr></table></div>
+<h3>Lo que se observa en la consulta</h3>
+<p>Trae su bolsa de medicación. Contiene un envase de palbociclib 100 mg y <strong>un envase de palbociclib 125 mg con 4 cápsulas</strong>.</p>`,
+dsp:[["2026-01-12","CDK4/6","palbociclib 125 mg",28],["2026-02-09","CDK4/6","palbociclib 125 mg",28],["2026-03-09","CDK4/6","palbociclib 125 mg",28],["2026-04-06","CDK4/6","palbociclib 100 mg",28],["2026-05-18","CDK4/6","palbociclib 100 mg",28]],
+notas:`## 2026-03-09
+Ciclo 3. Neutropenia grado 2. Ánimo bajo. El marido gestiona la medicación.
+## 2026-04-06
+Neutropenia grado 3 en el día 15: ciclo interrumpido según oncología. Reinicia ciclo 4 a 100 mg. Se le indica devolver las cápsulas de 125 mg sobrantes.`,
+cita:"Han sido semanas muy malas. Paco en el hospital y yo sola con todo. Una amiga me trajo unas cápsulas de hierba de San Juan para los nervios, y la verdad es que duermo mejor. Las pastillas me las tomaba de la caja que tuviera más a mano."},
+{titulo:"Visita 3", fecha:"07/09/2026", html:`
+<h3>Intervenciones registradas tras la visita 2</h3>
+<ul>
+<li>Retirada de la hierba de San Juan, consensuada con oncología.</li>
+<li>Recogida del envase de 125 mg. En casa solo queda una presentación.</li>
+<li>Nuevo calendario visual con una sola dosis. Lo revisa también su hija, que pasa a ser contacto de referencia.</li>
+<li>Derivación a psicooncología.</li>
+<li>Llamada de telefarmacia a los 7 días y envío domiciliario mientras su marido se recuperaba.</li>
+</ul>
+<h3>Evolución</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Neutrófilos</td><td>1.250/µL (grado 2, estable en los 3 últimos ciclos)</td></tr>
+<tr><td>Recogidas</td><td>Puntuales desde junio</td></tr>
+<tr><td>Psicooncología</td><td>En seguimiento; refiere mejoría del ánimo</td></tr>
+<tr><td>Situación familiar</td><td>Marido recuperado</td></tr></table></div>`,
+dsp:[["2026-04-06","CDK4/6","palbociclib 100 mg",28],["2026-05-18","CDK4/6","palbociclib 100 mg",28],["2026-06-15","CDK4/6","palbociclib 100 mg",28],["2026-07-13","CDK4/6","palbociclib 100 mg",28],["2026-08-10","CDK4/6","palbociclib 100 mg",28]],
+notas:`## 2026-06-01
+Errores de dosis por convivencia de dos presentaciones durante el ingreso del marido. Toma hierba de San Juan. Neutropenia grado 3.
+## 2026-06-08
+Telefarmacia: hierba de San Juan retirada; envase de 125 mg recogido. Toma correcta según el calendario.`,
+cita:"Ahora la llevo yo y Paco me revisa. Con una sola caja no hay forma de confundirse. Y hablar con la psicóloga me está ayudando."}
+],
+resolucion:`
+<h3>Visita basal: ¿intermedio o máxima complejidad?</h3>
+<p><strong>Lo que empuja hacia máxima:</strong> enfermedad metastásica, inicio reciente de un antineoplásico oral con pauta cíclica, neutropenia, polimedicación y ánimo bajo.</p>
+<p><strong>Lo que lo sostiene en intermedio:</strong> buena capacidad (alfabetización alta, entiende la pauta y los signos de alarma), motivación realista, adherencia completa y apoyo familiar sólido.</p>
+<p><strong>La señal que había que ver:</strong> toda la gestión de la medicación depende de una sola persona (pregunta 1), y ya había interés por una planta "para el ánimo" (pregunta 3). Son fragilidades de Oportunidad y de seguridad que no alteran el nivel basal, pero que justificaban acortar el seguimiento.</p>
+<h3>Visita 2: por qué se complica</h3>
+<ul>
+<li><strong>Error de dosis:</strong> convivencia de dos presentaciones (125 y 100 mg) sin un cuidador que las controle. Es coherente con una neutropenia de grado 3 recurrente.</li>
+<li><strong>Interacción:</strong> la hierba de San Juan es un inductor potente del CYP3A4. Con palbociclib debe evitarse, porque puede reducir la exposición y la eficacia (comprobad la redacción vigente de la ficha técnica en CIMA).</li>
+<li><strong>Trampa del PDC:</strong> la recogida tardía de mayo baja el PDC, pero el problema principal no es la cantidad tomada, sino <em>qué</em> cápsula se tomaba.</li>
+<li>Pérdida transitoria del apoyo (Oportunidad) y empeoramiento del ánimo (Motivación). Son motivos esperables de reestratificación a máxima complejidad.</li>
+</ul>
+<h3>Visita 3: impacto de las intervenciones</h3>
+<p>Todas las intervenciones actúan sobre los problemas detectados: una sola presentación, retirada del inductor, red de apoyo ampliada y abordaje del ánimo. Hay estabilidad hematológica y adherencia. <strong>Pregunta para el grupo:</strong> ¿se mantiene en máxima o vuelve a intermedio? ¿Qué criterio y qué plazo usaríais para bajar de nivel?</p>
+<h3>Mensajes clave</h3>
+<ol><li>Un buen nivel basal no es una garantía: hay que identificar de quién depende la estabilidad del paciente.</li>
+<li>Los cambios de dosis con presentaciones distintas son un momento de riesgo previsible.</li>
+<li>Preguntar por productos naturales debe ser sistemático en pacientes con antineoplásicos orales.</li></ol>`
+});
+
+CASES.push({
+id:"onco-2", pat:"Oncología", n:2, nombre:"Antonio", edad:"76 años",
+resumen:"Mieloma múltiple. Inicia tratamiento oral combinado en un contexto clínico y social complejo.",
+diseno:"Máxima complejidad desde la visita basal → visitas 2 y 3: intervenciones farmacéuticas y su impacto.",
+questions:[
+ ["¿Cómo organiza las pastillas?","Las tengo en la mesa de la cocina, cada una en su caja. Me guío por los colores."],
+ ["¿Sabe qué días toma la dexametasona?","Los lunes, creo. ¿O era los martes? Mi hija me lo apunta cuando viene."],
+ ["¿Cómo se pone la insulina?","Por la mañana. Si me noto el azúcar bajo, ese día no me la pongo."],
+ ["¿Quién le ayuda en casa?","Mi hija Lucía viene los fines de semana. Entre semana estoy solo desde que murió mi mujer."],
+ ["¿Ha tenido alguna caída?","Una en invierno, en el baño, de madrugada."],
+ ["¿Qué sabe de su enfermedad y de la lenalidomida?","Que es un cáncer de la sangre y que esta pastilla es como una quimioterapia. Me da miedo tocarla."],
+ ["¿Cómo viene al hospital?","En autobús. Entre ida y vuelta, dos horas."],
+ ["¿Toma algo más que no le hayan recetado?","Un jarabe para la tos que me dieron en la farmacia del barrio."]
+],
+visits:[
+{titulo:"Visita basal", fecha:"02/03/2026", html:`
+<h3>Datos generales</h3>
+<p>Varón de 76 años, viudo, vive solo. Trabajó como albañil y tiene un nivel de alfabetización bajo. Neurología describe un deterioro cognitivo leve. Una hija vive a 60 km. Mieloma múltiple de diagnóstico reciente, no candidato a trasplante.</p>
+<h3>Tratamiento (inicio hoy del ciclo 1)</h3>
+<ul>
+<li><strong>Lenalidomida 10 mg</strong>, días 1–21 de cada ciclo de 28 días (dosis ajustada a función renal, según hematología).</li>
+<li><strong>Dexametasona 20 mg semanal</strong> (días 1, 8, 15 y 22).</li>
+<li>AAS 100 mg/24 h (tromboprofilaxis).</li>
+<li>Insulina glargina 18 UI/24 h · Metformina 850 mg/24 h.</li>
+<li>Amlodipino 5 mg · Furosemida 40 mg · Alopurinol 100 mg · Omeprazol 20 mg · Tamsulosina 0,4 mg · Lorazepam 1 mg (noche) · Paracetamol 1 g/8 h si dolor.</li>
+</ul>
+<h3>Analítica</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Creatinina · ClCr (Cockcroft-Gault)</td><td>1,6 mg/dL · 42 mL/min</td></tr>
+<tr><td>HbA1c</td><td>8,4 %</td></tr>
+<tr><td>Neutrófilos · Plaquetas</td><td>1.600/µL · 120.000/µL</td></tr>
+<tr><td>Hemoglobina</td><td>10,1 g/dL</td></tr></table></div>`,
+dsp:[["2026-03-02","IMiD","lenalidomida 10 mg",28]],
+notas:`## 2026-03-02
+Inicio de lenalidomida + dexametasona. Primera visita a la consulta de Farmacia. Acude con su hija.`,
+cita:"Yo me tomo lo que me digan, pero tantas cajas me lían."},
+{titulo:"Visita 2", fecha:"27/04/2026", html:`
+<h3>Intervenciones registradas en la visita basal</h3>
+<ul>
+<li>Sistema personalizado de dosificación (SPD) semanal preparado por su farmacia comunitaria, en coordinación con la consulta.</li>
+<li>Calendario de colores de lenalidomida y dexametasona. Formación telefónica a la hija.</li>
+<li>Coordinación con atención primaria para ajustar la insulina en los días de dexametasona.</li>
+<li>Propuesta a atención primaria de revisar el lorazepam (riesgo de caídas).</li>
+<li>Telefarmacia con envío domiciliario desde el ciclo 2, y llamada semanal durante el ciclo 1.</li>
+</ul>
+<h3>Evolución</h3>
+<ul>
+<li>Glucemias capilares: 140–190 mg/dL (antes, 180–260 tras la dexametasona). Sin caídas.</li>
+<li><strong>Día 10 del ciclo 2:</strong> fiebre de 38,3 °C. No llamó. Esperó a que llegara su hija el fin de semana. Ingresó 3 días por neutropenia febril (neutrófilos 900/µL). Hematología interrumpió el ciclo según la ficha técnica.</li>
+<li>El AAS no estaba incluido en el SPD (quedó en una caja aparte) y no lo ha tomado en todo el ciclo 2.</li>
+</ul>`,
+dsp:[["2026-03-02","IMiD","lenalidomida 10 mg",28],["2026-03-30","IMiD","lenalidomida 10 mg",28]],
+notas:`## 2026-03-02
+Inicio. SPD, calendario, coordinación con atención primaria y telefarmacia.
+## 2026-03-23
+Llamada semanal: toma correcta. Glucemias mejor.`,
+cita:"Tuve fiebre un día, pero pensé que era un catarro. No quería molestar, así que esperé a que viniera Lucía."},
+{titulo:"Visita 3", fecha:"20/07/2026", html:`
+<h3>Intervenciones registradas tras la visita 2</h3>
+<ul>
+<li>Teleasistencia domiciliaria (botón de aviso), gestionada con servicios sociales.</li>
+<li>Tarjeta de signos de alarma en la nevera, con teléfono directo, y repaso con <em>teach-back</em>.</li>
+<li>AAS incorporado al SPD.</li>
+<li>Visita semanal de enfermería de atención primaria durante los días 1–21.</li>
+<li>Retirada progresiva del lorazepam, pactada con atención primaria.</li>
+</ul>
+<h3>Evolución</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Ciclos 3–5</td><td>Sin incidencias ni fiebre</td></tr>
+<tr><td>Respuesta</td><td>Respuesta parcial según hematología</td></tr>
+<tr><td>HbA1c</td><td>7,6 %</td></tr>
+<tr><td>Caídas · ingresos</td><td>Ninguno</td></tr>
+<tr><td>Lorazepam</td><td>Reducido a 0,5 mg</td></tr></table></div>`,
+dsp:[["2026-03-02","IMiD","lenalidomida 10 mg",28],["2026-03-30","IMiD","lenalidomida 10 mg",28],["2026-05-04","IMiD","lenalidomida 10 mg",28],["2026-06-01","IMiD","lenalidomida 10 mg",28],["2026-06-29","IMiD","lenalidomida 10 mg",28]],
+notas:`## 2026-04-27
+Neutropenia febril no comunicada. AAS fuera del SPD. Se plantean teleasistencia, tarjeta de alarma y SPD completo.`,
+cita:"Ahora si me pasa algo aprieto el botón. Y la enfermera viene los martes."}
+],
+resolucion:`
+<h3>Visita basal: por qué es máxima complejidad</h3>
+<p>Los factores coinciden en las tres dimensiones. <strong>Capacidad:</strong> deterioro cognitivo leve, baja alfabetización, régimen de 12 fármacos con pautas cíclicas y semanales. <strong>Motivación:</strong> buena disposición, pero miedo al fármaco. <strong>Oportunidad:</strong> vive solo, tiene apoyo solo el fin de semana y vive lejos del hospital. A esto se suma la complejidad clínica: ajuste renal, diabetes desestabilizada por la dexametasona y riesgo trombótico y de caídas.</p>
+<p><strong>Señales de las preguntas:</strong> autoajuste de la insulina (pregunta 3), confusión con el día de la dexametasona (pregunta 2) y un jarabe no identificado (pregunta 8) que hay que revisar.</p>
+<h3>Visita 2: las intervenciones funcionan, pero se ve un hueco</h3>
+<p>La glucemia mejora y no hay caídas. Pero el SPD dejó fuera un fármaco (el AAS) y la educación sobre signos de alarma no se tradujo en una conducta real (no llamó con fiebre). <strong>Interpretación:</strong> en pacientes que viven solos, la educación necesita comprobación (<em>teach-back</em>) y un canal que no dependa de su iniciativa.</p>
+<h3>Visita 3: impacto</h3>
+<p>Sin incidencias, con mejor control glucémico y reducción de fármacos de riesgo. <strong>Pregunta para el grupo:</strong> los resultados son buenos, ¿se baja de nivel? El criterio docente es que <strong>no</strong>: los factores estructurales (vivir solo, deterioro cognitivo, régimen complejo) persisten, y los buenos resultados <em>dependen</em> de la intensidad de la atención. Bajar de nivel podría deshacer lo conseguido.</p>
+<h3>Mensajes clave</h3>
+<ol><li>El nivel refleja la necesidad de atención, no solo los resultados.</li>
+<li>Un SPD es tan seguro como lo completo que sea. Hay que revisar la conciliación con lo que se incluye.</li>
+<li>La educación sin comprobación no cambia la conducta en situaciones de alarma.</li>
+<li>Verificad en la ficha técnica el ajuste renal de lenalidomida y el manejo de la neutropenia antes del taller.</li></ol>`
+});
+
+// ================= INMUNOMEDIADAS =================
+CASES.push({
+id:"inmuno-1", pat:"Inmunomediadas", n:1, nombre:"Laura", edad:"34 años",
+resumen:"Enfermedad de Crohn en tratamiento con un anti-TNF subcutáneo, aparentemente bien controlada.",
+diseno:"Basal: nivel intermedio (con duda razonable de máxima complejidad) → visita 2: se complica y pasa a máxima → visita 3: impacto de las intervenciones.",
+questions:[
+ ["¿Tiene planes de embarazo?","Sí, queremos intentarlo pronto. He leído en un foro que con este tratamiento es peligroso, y eso me preocupa mucho."],
+ ["¿Cómo se administra la medicación?","La pluma en el muslo, los domingos. Me la pone mi pareja cuando me agobio."],
+ ["¿Fuma?","Unos ocho cigarrillos al día. Sé que es malo para el Crohn, lo intentaré dejar."],
+ ["¿Dónde busca información sobre su enfermedad?","En un grupo de Facebook de pacientes con Crohn. Ahí hay de todo."],
+ ["¿Se le ha pasado alguna dosis?","Una vez se me pasó el día y me la puse el lunes."],
+ ["¿Toma otros medicamentos?","Anticonceptivos, y a veces ibuprofeno para la regla."],
+ ["¿Cómo conserva la medicación?","En la nevera. Cuando viajo uso una neverita."],
+ ["¿Cómo lleva la enfermedad en el trabajo?","Bien. Soy administrativa y mi jefa lo sabe."]
+],
+visits:[
+{titulo:"Visita basal", fecha:"16/03/2026", html:`
+<h3>Datos generales</h3>
+<p>Mujer de 34 años, administrativa, vive con su pareja. Enfermedad de Crohn ileal diagnosticada en 2024. Un ingreso por brote en 2025. Azatioprina suspendida por intolerancia digestiva. Fumadora.</p>
+<h3>Tratamiento</h3>
+<ul>
+<li><strong>Adalimumab (biosimilar) 40 mg sc cada 14 días</strong> (hospital), desde septiembre de 2025.</li>
+<li>Anticonceptivo oral combinado.</li>
+</ul>
+<h3>Analítica</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>PCR</td><td>2 mg/L</td></tr>
+<tr><td>Calprotectina fecal</td><td>80 µg/g</td></tr>
+<tr><td>Niveles de adalimumab</td><td>8 µg/mL; anticuerpos negativos</td></tr>
+<tr><td>Hemoglobina · ferritina</td><td>Normales</td></tr></table></div>`,
+dsp:[["2025-09-22","anti-TNF","adalimumab 40 mg (2 plumas)",28],["2025-10-20","anti-TNF","adalimumab 40 mg (2 plumas)",28],["2025-11-17","anti-TNF","adalimumab 40 mg (2 plumas)",28],["2025-12-15","anti-TNF","adalimumab 40 mg (2 plumas)",28],["2026-01-12","anti-TNF","adalimumab 40 mg (2 plumas)",28],["2026-02-09","anti-TNF","adalimumab 40 mg (2 plumas)",28]],
+notas:`## 2025-09-22
+Fin de inducción. Formación en autoadministración con pluma. Refiere miedo a las agujas.
+## 2025-12-15
+Bien. Ya se la administra ella, con ayuda de su pareja algunas veces.`,
+cita:"Bien, sin brotes. La inyección me sigue dando respeto, pero me la pongo."},
+{titulo:"Visita 2", fecha:"22/06/2026", html:`
+<h3>Lo ocurrido desde la visita basal</h3>
+<ul>
+<li>En abril dejó el anticonceptivo para buscar el embarazo y, por su cuenta, <strong>suspendió el adalimumab</strong> tras la dosis del 19/04.</li>
+<li>A finales de mayo, brote moderado: acudió a urgencias y digestivo pautó corticoide oral. Test de embarazo negativo.</li>
+<li>Sigue fumando.</li>
+</ul>
+<h3>Analítica</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>PCR</td><td><strong>28 mg/L</strong></td></tr>
+<tr><td>Calprotectina fecal</td><td><strong>950 µg/g</strong></td></tr>
+<tr><td>Hemoglobina</td><td>11,4 g/dL</td></tr></table></div>`,
+dsp:[["2026-01-12","anti-TNF","adalimumab 40 mg (2 plumas)",28],["2026-02-09","anti-TNF","adalimumab 40 mg (2 plumas)",28],["2026-03-09","anti-TNF","adalimumab 40 mg (2 plumas)",28],["2026-04-06","anti-TNF","adalimumab 40 mg (2 plumas)",28]],
+notas:`## 2026-03-16
+Estable. Remisión clínica y bioquímica. Fumadora.`,
+cita:"Dejé la inyección en abril porque queríamos buscar el embarazo, y en el foro decían que había que dejarla meses antes. No os lo dije porque me daba vergüenza. Y ahora estoy peor que nunca."},
+{titulo:"Visita 3", fecha:"28/09/2026", html:`
+<h3>Intervenciones registradas tras la visita 2</h3>
+<ul>
+<li>Entrevista centrada en sus dudas sobre el embarazo, con información sobre el tratamiento anti-TNF durante la gestación según las guías vigentes. Decisión compartida con digestivo y derivación a consulta preconcepcional.</li>
+<li>Reinicio del adalimumab según digestivo, con control de niveles y anticuerpos.</li>
+<li>Recomendación de evitar AINE. Ácido fólico preconcepcional.</li>
+<li>Derivación a deshabituación tabáquica.</li>
+<li>Fuentes de información fiables (asociación de pacientes) y canal de telefarmacia para dudas.</li>
+</ul>
+<h3>Evolución</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Situación clínica</td><td>Remisión clínica; corticoide retirado</td></tr>
+<tr><td>Calprotectina fecal</td><td>150 µg/g</td></tr>
+<tr><td>Tabaco</td><td>Reducido a 2 cigarrillos/día, en tratamiento</td></tr>
+<tr><td>Recogidas</td><td>Puntuales desde el reinicio</td></tr></table></div>`,
+dsp:[["2026-04-06","anti-TNF","adalimumab 40 mg (2 plumas)",28],["2026-07-06","anti-TNF","adalimumab 40 mg (2 plumas)",28],["2026-08-03","anti-TNF","adalimumab 40 mg (2 plumas)",28],["2026-08-31","anti-TNF","adalimumab 40 mg (2 plumas)",28]],
+notas:`## 2026-06-22
+Suspensión voluntaria por deseo gestacional e información de un foro. Brote. Se aborda el tema con digestivo.`,
+cita:"Ahora sé que puedo seguir con la inyección y buscar el embarazo. Lo hemos hablado todos juntos."}
+],
+resolucion:`
+<h3>Visita basal: ¿intermedio o máxima complejidad?</h3>
+<p><strong>Lo que empuja hacia máxima:</strong> paciente joven con un biológico reciente, ingreso previo, miedo a las agujas, tabaquismo y uso de foros como fuente de información.</p>
+<p><strong>Lo que lo sostiene en intermedio:</strong> remisión clínica y bioquímica, adherencia completa, buena capacidad y apoyo de su pareja.</p>
+<p><strong>La señal que había que ver:</strong> el deseo gestacional cercano combinado con información errónea (preguntas 1 y 4). Es un predictor claro de suspensión voluntaria. Además, el ibuprofeno (pregunta 6) es un factor de riesgo de brote en la enfermedad inflamatoria intestinal.</p>
+<h3>Visita 2: por qué se complica</h3>
+<p>Suspensión no comunicada, brote, corticoide y PDC desplomado. El problema es de <strong>Motivación</strong> (creencias erróneas y vergüenza) y de <strong>Capacidad</strong> (información). No es un problema de acceso. Reestratificación esperable: máxima complejidad.</p>
+<h3>Visita 3: impacto</h3>
+<p>Las intervenciones atacan la causa (creencia errónea y fuente de información), no solo la conducta. <strong>Pregunta para el grupo:</strong> ¿la planificación del embarazo justifica mantener un nivel alto aunque esté en remisión?</p>
+<h3>Mensajes clave</h3>
+<ol><li>Preguntar por proyectos vitales (embarazo, viajes, cambios laborales) anticipa abandonos.</li>
+<li>Un PDC del 100 % en la basal no protege frente a una decisión futura del paciente.</li>
+<li>La información de compatibilidad con el embarazo debe ajustarse a las guías vigentes y decidirse con el especialista.</li></ol>`
+});
+
+CASES.push({
+id:"inmuno-2", pat:"Inmunomediadas", n:2, nombre:"Manuel", edad:"61 años",
+resumen:"Artritis psoriásica y psoriasis con biológico y metotrexato oral, en un contexto de comorbilidad y consumo de alcohol.",
+diseno:"Máxima complejidad desde la visita basal → visitas 2 y 3: intervenciones farmacéuticas y su impacto.",
+questions:[
+ ["¿Cómo se toma el metotrexato?","Seis pastillitas amarillas los lunes. Bueno, si me acuerdo; si no, el martes."],
+ ["¿Cuánto alcohol toma?","Unas cervecitas con los amigos, cuatro o cinco al día. Eso no es beber."],
+ ["¿Quién le ayuda con la medicación?","Mi mujer me prepara las pastillas, pero trabaja fuera y a veces no está."],
+ ["¿Cómo está de ánimo?","Desde que me quedé sin trabajo, muy bajo. Lo de la piel me da vergüenza."],
+ ["¿Cómo se pone la pluma?","A veces se me olvida sacarla antes de la nevera y me duele mucho."],
+ ["¿Qué toma para el dolor?","El tramadol y, cuando me duele mucho, ibuprofeno."],
+ ["¿Sabe para qué es el ácido fólico?","Para la sangre, creo. Me lo tomo junto con el metotrexato."],
+ ["¿Qué espera del tratamiento?","Que me deje de doler para poder buscar trabajo."]
+],
+visits:[
+{titulo:"Visita basal", fecha:"23/03/2026", html:`
+<h3>Datos generales</h3>
+<p>Varón de 61 años, en paro desde hace un año. Vive con su mujer, que trabaja fuera de casa varios días a la semana. Nivel de alfabetización bajo. Artritis psoriásica con psoriasis moderada desde 2019.</p>
+<h3>Tratamiento</h3>
+<ul>
+<li><strong>Secukinumab 150 mg sc mensual</strong> (hospital).</li>
+<li>Metotrexato oral 15 mg semanal (6 comprimidos de 2,5 mg) + ácido fólico 5 mg semanal (atención primaria).</li>
+<li>Metformina 850 mg/12 h · Sitagliptina 100 mg/24 h · Atorvastatina 20 mg · Enalapril 20 mg · Sertralina 100 mg · Tramadol 50 mg/8 h.</li>
+</ul>
+<h3>Comorbilidad y analítica</h3>
+<p>DM2, obesidad (IMC 36), HTA, esteatosis hepática y depresión. Consumo de alcohol referido.</p>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>GPT · GOT · GGT</td><td>68 · 52 · 140 U/L</td></tr>
+<tr><td>HbA1c</td><td>7,9 %</td></tr>
+<tr><td>Hemograma · FGe</td><td>Normal · &gt; 90 mL/min</td></tr></table></div>`,
+dsp:[["2025-10-06","anti-IL17","secukinumab 150 mg",28],["2025-11-10","anti-IL17","secukinumab 150 mg",28],["2025-12-15","anti-IL17","secukinumab 150 mg",28],["2026-01-26","anti-IL17","secukinumab 150 mg",28],["2026-03-02","anti-IL17","secukinumab 150 mg",28]],
+notas:`## 2025-10-06
+Refiere cansancio de "tanto pinchazo y tanta pastilla".
+## 2026-01-26
+Acude con retraso: se le olvidó la cita.`,
+cita:"Yo me pongo lo que me mandan, pero esto no me quita los dolores del todo."},
+{titulo:"Visita 2", fecha:"18/05/2026", html:`
+<h3>Intervenciones registradas en la visita basal</h3>
+<ul>
+<li>Día fijo para el metotrexato (lunes), con alarma en el móvil y ficha visual. Formación a su mujer.</li>
+<li>Consejo sobre el consumo de alcohol y derivación a atención primaria.</li>
+<li>Sacar la pluma de la nevera 30 minutos antes. Evitar el ibuprofeno.</li>
+<li>Recordatorio de citas y llamada a las 4 semanas.</li>
+</ul>
+<h3>Evolución</h3>
+<ul>
+<li>Recogidas del biológico regulares desde marzo.</li>
+<li><strong>Incidente:</strong> en atención primaria se renovó la receta electrónica del metotrexato y la pauta quedó transcrita como "cada 24 horas". Su mujer estuvo fuera una semana y él se tomó la dosis <strong>3 días seguidos</strong>.</li>
+<li>Llagas en la boca durante la última semana.</li>
+</ul>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Leucocitos</td><td><strong>2.900/µL</strong></td></tr>
+<tr><td>GPT</td><td>74 U/L</td></tr></table></div>`,
+dsp:[["2025-12-15","anti-IL17","secukinumab 150 mg",28],["2026-01-26","anti-IL17","secukinumab 150 mg",28],["2026-03-02","anti-IL17","secukinumab 150 mg",28],["2026-03-30","anti-IL17","secukinumab 150 mg",28],["2026-04-27","anti-IL17","secukinumab 150 mg",28]],
+notas:`## 2026-03-23
+Día fijo para el metotrexato, consejo sobre alcohol y técnica de la pluma. Su mujer recibe formación.`,
+cita:"Tenía llagas en la boca. Mi mujer estuvo fuera y me tomé las pastillas como ponía en el papel de la farmacia."},
+{titulo:"Visita 3", fecha:"14/09/2026", html:`
+<h3>Intervenciones registradas tras la visita 2</h3>
+<ul>
+<li>Contacto con atención primaria: pauta corregida en la receta electrónica.</li>
+<li>Notificación del error de medicación al sistema de notificación del centro.</li>
+<li>Cambio, de acuerdo con reumatología, a <strong>metotrexato subcutáneo 15 mg semanal</strong> en pluma (hospital): un solo acto semanal y sin comprimidos que contar.</li>
+<li>Derivación a hepatología (esteatosis + alcohol) y a la unidad de conductas adictivas, en coordinación con atención primaria.</li>
+<li>Seguimiento del estado de ánimo con atención primaria.</li>
+</ul>
+<h3>Evolución</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Leucocitos</td><td>5.800/µL</td></tr>
+<tr><td>GPT</td><td>45 U/L</td></tr>
+<tr><td>Alcohol</td><td>1–2 cervezas/día</td></tr>
+<tr><td>Piel y articulaciones</td><td>Mejoría según dermatología y reumatología</td></tr>
+<tr><td>Recogidas</td><td>Completas</td></tr></table></div>`,
+dsp:[["2026-03-30","anti-IL17","secukinumab 150 mg",28],["2026-04-27","anti-IL17","secukinumab 150 mg",28],["2026-05-25","anti-IL17","secukinumab 150 mg",28],["2026-06-22","anti-IL17","secukinumab 150 mg",28],["2026-07-20","anti-IL17","secukinumab 150 mg",28],["2026-08-17","anti-IL17","secukinumab 150 mg",28],["2026-06-01","MTX sc","metotrexato 15 mg pluma (4)",28],["2026-06-29","MTX sc","metotrexato 15 mg pluma (4)",28],["2026-07-27","MTX sc","metotrexato 15 mg pluma (4)",28],["2026-08-24","MTX sc","metotrexato 15 mg pluma (4)",28]],
+notas:`## 2026-05-18
+Error de pauta del metotrexato (diaria). Mucositis y leucopenia. Se notifica y se coordina con atención primaria y reumatología.`,
+cita:"Con la pluma de los lunes no hay pérdida. Y bebo bastante menos, la verdad."}
+],
+resolucion:`
+<h3>Visita basal: por qué es máxima complejidad</h3>
+<p><strong>Capacidad:</strong> baja alfabetización y desconocimiento del papel del ácido fólico. <strong>Motivación:</strong> depresión, vergüenza y expectativas de alivio no cubiertas. <strong>Oportunidad:</strong> el apoyo de su mujer es intermitente. A esto se suman la multimorbilidad, el consumo de alcohol con hepatopatía mientras toma metotrexato, el uso de AINE y un PDC irregular del biológico.</p>
+<p><strong>Señal clave (pregunta 1):</strong> "si me acuerdo, el martes". Indica un metotrexato semanal sin anclaje fijo, que es un fármaco de alto riesgo por errores de frecuencia.</p>
+<h3>Visita 2: las intervenciones funcionan, pero aparece un riesgo del sistema</h3>
+<p>Mejora la regularidad del biológico. Pero el error no depende del paciente: es un <strong>error de transcripción</strong> que se materializa cuando falta el apoyo. <strong>Interpretación:</strong> la seguridad del metotrexato oral depende de cada eslabón (prescripción, dispensación, cuidador).</p>
+<h3>Visita 3: impacto</h3>
+<p>La vía subcutánea semanal elimina el punto débil (contar comprimidos). La notificación mejora el sistema, y el abordaje del alcohol y la hepatopatía actúa sobre el riesgo de fondo. <strong>Pregunta para el grupo:</strong> ¿qué factores mantienen la máxima complejidad pese a la mejoría?</p>
+<h3>Mensajes clave</h3>
+<ol><li>El metotrexato semanal oral siempre merece una pregunta específica sobre cómo y qué día se toma.</li>
+<li>Las intervenciones deben cubrir también los fallos del sistema, no solo los del paciente.</li>
+<li>Simplificar la vía de administración puede ser la intervención más eficaz.</li></ol>`
+});
+
+</script>
+<script>
+// ================= RESPIRATORIO =================
+CASES.push({
+id:"resp-1", pat:"Respiratorio", n:1, nombre:"Elena", edad:"45 años",
+resumen:"Asma grave eosinofílica con buena respuesta inicial a un biológico.",
+diseno:"Basal: nivel intermedio (con duda razonable de máxima complejidad) → visita 2: se complica y pasa a máxima → visita 3: impacto de las intervenciones.",
+questions:[
+ ["¿Cómo usa el inhalador de mantenimiento?","Por la mañana y por la noche… bueno, ahora que estoy mejor, a veces solo por la noche."],
+ ["¿Puede enseñarme cómo lo usa?","[Se observa que no espira antes de inhalar y no hace apnea después de la inhalación.]"],
+ ["¿Qué cree que hace la inyección?","Es la que me cura el asma, ¿no? Con ella ya no harían falta tantos inhaladores."],
+ ["¿Hay algo en su entorno que le empeore el asma?","En el instituto hay obras este curso y hay mucho polvo. En casa tenemos un gato desde hace un año."],
+ ["¿Cuántas veces usa el inhalador de rescate?","Una o dos veces por semana."],
+ ["¿Toma otros medicamentos?","Ibuprofeno para la regla, como siempre."],
+ ["¿Cómo se administra el biológico?","Me la pongo yo en casa con la pluma, cada cuatro semanas. Sin problema."],
+ ["¿Cómo afecta el asma a su vida diaria?","Antes faltaba mucho al trabajo. Ahora mucho menos, y eso me anima."]
+],
+visits:[
+{titulo:"Visita basal", fecha:"02/03/2026", html:`
+<h3>Datos generales</h3>
+<p>Mujer de 45 años, profesora de secundaria. Vive con su marido y dos hijos. No fumadora. Asma grave eosinofílica con rinosinusitis crónica. En 2025 tuvo 3 ciclos de corticoide oral y un ingreso por crisis.</p>
+<h3>Tratamiento</h3>
+<ul>
+<li><strong>Mepolizumab 100 mg sc cada 4 semanas</strong> (hospital), desde noviembre de 2025.</li>
+<li>Budesonida/formoterol 160/4,5 µg, 2 inhalaciones cada 12 h (atención primaria).</li>
+<li>Montelukast 10 mg/24 h · Salbutamol a demanda.</li>
+</ul>
+<h3>Datos clínicos</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Eosinófilos (antes del biológico)</td><td>450/µL</td></tr>
+<tr><td>ACT</td><td>17 (antes del biológico: 12)</td></tr>
+<tr><td>Exacerbaciones desde el inicio</td><td>Ninguna</td></tr>
+<tr><td>FEV1</td><td>72 % del teórico</td></tr></table></div>`,
+dsp:[["2025-11-03","Biológico asma","mepolizumab 100 mg",28],["2025-12-01","Biológico asma","mepolizumab 100 mg",28],["2025-12-29","Biológico asma","mepolizumab 100 mg",28],["2026-01-26","Biológico asma","mepolizumab 100 mg",28],["2026-02-23","Biológico asma","mepolizumab 100 mg",28]],
+notas:`## 2025-11-03
+Inicio de mepolizumab. Formación con la pluma. Muy motivada.
+## 2026-01-26
+Refiere mejoría clara. Sin exacerbaciones.`,
+cita:"Desde la inyección noto mucha mejoría. Ya casi no uso el inhalador de rescate."},
+{titulo:"Visita 2", fecha:"01/06/2026", html:`
+<h3>Lo ocurrido desde la visita basal</h3>
+<ul>
+<li>Abril: <strong>exacerbación grave</strong>. Acudió a urgencias y recibió prednisona oral durante 7 días.</li>
+<li>El biológico se ha recogido y administrado sin incidencias.</li>
+</ul>
+<h3>Registro de dispensación en oficina de farmacia (receta electrónica)</h3>
+<div class="tablewrap"><table><tr><th>Medicamento</th><th>Envases retirados en los últimos 4 meses</th><th>Envases esperados con la pauta</th></tr>
+<tr><td>Budesonida/formoterol 160/4,5</td><td><strong>1</strong></td><td>4</td></tr>
+<tr><td>Salbutamol</td><td>3</td><td>—</td></tr></table></div>
+<p class="small">El Preparador de consulta solo ve las dispensaciones del hospital. Esta tabla no se incluye en el CSV.</p>
+<h3>Datos clínicos</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>ACT</td><td><strong>13</strong></td></tr>
+<tr><td>FEV1</td><td>64 % del teórico</td></tr></table></div>`,
+dsp:[["2026-01-26","Biológico asma","mepolizumab 100 mg",28],["2026-02-23","Biológico asma","mepolizumab 100 mg",28],["2026-03-23","Biológico asma","mepolizumab 100 mg",28],["2026-04-20","Biológico asma","mepolizumab 100 mg",28],["2026-05-18","Biológico asma","mepolizumab 100 mg",28]],
+notas:`## 2026-03-02
+Buena respuesta al biológico. Sin exacerbaciones.`,
+cita:"Con la inyección pensé que ya no necesitaba el inhalador. En abril me dio una crisis muy fuerte, justo después de tomarme un ibuprofeno por la regla."},
+{titulo:"Visita 3", fecha:"07/09/2026", html:`
+<h3>Intervenciones registradas tras la visita 2</h3>
+<ul>
+<li>Educación sobre el papel complementario del biológico, que no sustituye al tratamiento de mantenimiento.</li>
+<li>Técnica inhalatoria revisada con dispositivo placebo y comprobada en la consulta.</li>
+<li>Plan de acción por escrito.</li>
+<li>Recomendación de evitar AINE (alternativa: paracetamol) y comunicación a neumología para valorar enfermedad respiratoria exacerbada por AINE.</li>
+<li>Coordinación con atención primaria y ACT telemático mensual.</li>
+</ul>
+<h3>Evolución</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>ACT</td><td>22</td></tr>
+<tr><td>Exacerbaciones</td><td>Ninguna</td></tr>
+<tr><td>FEV1</td><td>76 % del teórico</td></tr>
+<tr><td>Mantenimiento (receta electrónica)</td><td>3 envases en 3 meses</td></tr></table></div>`,
+dsp:[["2026-03-23","Biológico asma","mepolizumab 100 mg",28],["2026-04-20","Biológico asma","mepolizumab 100 mg",28],["2026-05-18","Biológico asma","mepolizumab 100 mg",28],["2026-06-15","Biológico asma","mepolizumab 100 mg",28],["2026-07-13","Biológico asma","mepolizumab 100 mg",28],["2026-08-10","Biológico asma","mepolizumab 100 mg",28]],
+notas:`## 2026-06-01
+Abandono parcial del mantenimiento por creencia errónea. Exacerbación tras ibuprofeno. Mala técnica.`,
+cita:"Ahora entiendo que la inyección y el inhalador hacen cosas distintas. Hace meses que no me ahogo."}
+],
+resolucion:`
+<h3>Visita basal: ¿intermedio o máxima complejidad?</h3>
+<p><strong>Lo que empuja hacia máxima:</strong> asma grave, exacerbaciones e ingreso en el último año, biológico reciente y FEV1 reducido.</p>
+<p><strong>Lo que lo sostiene en intermedio:</strong> respuesta clara al biológico (ACT de 12 a 17, sin exacerbaciones), adherencia completa al biológico, buena capacidad y apoyo familiar.</p>
+<p><strong>Las señales que había que ver:</strong> uso irregular del mantenimiento (pregunta 1), técnica incorrecta (pregunta 2), la creencia de que el biológico sustituye a lo demás (pregunta 3) e ibuprofeno en una paciente con asma y rinosinusitis (pregunta 6).</p>
+<h3>Visita 2: la trampa del PDC</h3>
+<p>El PDC hospitalario es del 100 %, pero <strong>solo mide el biológico</strong>. La falta de adherencia está en el tratamiento de atención primaria, que solo aparece si se consulta la receta electrónica. La exacerbación se explica por el abandono del mantenimiento, la mala técnica y un posible desencadenante por AINE. Reestratificación esperable: máxima complejidad.</p>
+<h3>Visita 3: impacto</h3>
+<p>Control completo (ACT 22), sin exacerbaciones y con retiradas regulares del mantenimiento. <strong>Pregunta para el grupo:</strong> ¿qué indicador usaríais para decidir volver al nivel intermedio, y en qué plazo?</p>
+<h3>Mensajes clave</h3>
+<ol><li>Un biológico eficaz puede generar la falsa creencia de que el resto del tratamiento sobra.</li>
+<li>La adherencia debe valorarse en todo el tratamiento, no solo en lo que dispensa el hospital.</li>
+<li>Revisar la técnica inhalatoria y preguntar por AINE debe ser sistemático en el asma grave.</li></ol>`
+});
+
+CASES.push({
+id:"resp-2", pat:"Respiratorio", n:2, nombre:"Joaquín", edad:"74 años",
+resumen:"Fibrosis pulmonar idiopática con antifibrótico oral, anticoagulado y cuidador principal de su esposa.",
+diseno:"Máxima complejidad desde la visita basal → visitas 2 y 3: intervenciones farmacéuticas y su impacto.",
+questions:[
+ ["¿Cuántas cápsulas toma al día?","Las tomo cuando no tengo el estómago revuelto. Si tengo diarrea, ese día no me las tomo."],
+ ["¿Toma algo para la diarrea?","No sabía que podía tomar algo."],
+ ["¿Cómo come?","Poco. Se me ha quitado el hambre y he perdido peso."],
+ ["¿Quién le cuida?","Yo cuido de mi mujer, que tiene Alzheimer. A mí no me cuida nadie."],
+ ["¿Ha notado sangrados o moratones?","Me salen moratones con facilidad, y alguna vez sangro por la nariz."],
+ ["¿Cómo usa el oxígeno?","Solo cuando me ahogo mucho. Me da vergüenza salir con él a la calle."],
+ ["¿Qué entiende de su enfermedad?","Que los pulmones se me van endureciendo, y que esta pastilla lo frena pero no lo cura."],
+ ["¿Toma algo que no le hayan recetado?","Unas pastillas de ginkgo para la memoria que le compro a mi mujer. Yo también me las tomo."]
+],
+visits:[
+{titulo:"Visita basal", fecha:"16/02/2026", html:`
+<h3>Datos generales</h3>
+<p>Varón de 74 años, exfumador. Vive con su mujer, que tiene enfermedad de Alzheimer moderada; él es su cuidador principal. Su único hijo vive en otra ciudad. Fibrosis pulmonar idiopática diagnosticada en 2025.</p>
+<h3>Tratamiento</h3>
+<ul>
+<li><strong>Nintedanib 150 mg cada 12 h</strong> (hospital), desde noviembre de 2025.</li>
+<li>Oxígeno domiciliario en esfuerzo.</li>
+<li>Apixaban 5 mg/12 h (fibrilación auricular) · Bisoprolol 2,5 mg · Metformina 850 mg/12 h · Enalapril 10 mg · Tamsulosina 0,4 mg · Omeprazol 20 mg · Paracetamol a demanda.</li>
+</ul>
+<h3>Datos clínicos</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>FVC · DLCO</td><td>62 % · 38 % del teórico</td></tr>
+<tr><td>Peso</td><td>−4 kg en 3 meses (IMC 21)</td></tr>
+<tr><td>Deposiciones</td><td>4–5 al día, blandas</td></tr>
+<tr><td>Transaminasas · FGe</td><td>Normales · 68 mL/min</td></tr></table></div>`,
+dsp:[["2025-11-17","Antifibrótico","nintedanib 150 mg",30],["2025-12-22","Antifibrótico","nintedanib 150 mg",30],["2026-01-30","Antifibrótico","nintedanib 150 mg",30]],
+notas:`## 2025-11-17
+Inicio de nintedanib. Educación sobre efectos digestivos.
+## 2026-01-30
+Refiere diarrea. Recoge con retraso.`,
+cita:"Lo que me tiene peor es el estómago. Y tengo que estar pendiente de mi mujer todo el día."},
+{titulo:"Visita 2", fecha:"11/05/2026", html:`
+<h3>Intervenciones registradas en la visita basal</h3>
+<ul>
+<li>Pauta de loperamida según las recomendaciones de manejo de la diarrea por nintedanib, y consejo dietético con nutrición.</li>
+<li>Propuesta a neumología de reducir la dosis. Neumología pautó <strong>100 mg cada 12 h</strong> desde el 16/03.</li>
+<li>Retirada del ginkgo (riesgo hemorrágico con apixaban).</li>
+<li>Derivación a trabajo social: valoración de dependencia y centro de día para su mujer.</li>
+<li>Enfermería gestora de casos y telefarmacia con envío domiciliario.</li>
+</ul>
+<h3>Evolución</h3>
+<ul>
+<li>Deposiciones: 1–2 al día. Peso estable. Ya no omite dosis.</li>
+<li>Su mujer acude a un centro de día 3 días por semana. Su hijo llama a diario.</li>
+<li><strong>Nuevo:</strong> GPT 3 veces por encima del límite superior de la normalidad, sin bilirrubina elevada.</li>
+</ul>`,
+dsp:[["2025-11-17","Antifibrótico","nintedanib 150 mg",30],["2025-12-22","Antifibrótico","nintedanib 150 mg",30],["2026-01-30","Antifibrótico","nintedanib 150 mg",30],["2026-02-16","Antifibrótico","nintedanib 150 mg",30],["2026-03-16","Antifibrótico","nintedanib 100 mg",30],["2026-04-15","Antifibrótico","nintedanib 100 mg",30]],
+notas:`## 2026-02-16
+Omisiones por diarrea. Pérdida de peso. Ginkgo + apixaban. Sobrecarga del cuidador.`,
+cita:"Ya puedo salir un poco. Con la loperamida controlo, y mi mujer está mejor atendida."},
+{titulo:"Visita 3", fecha:"31/08/2026", html:`
+<h3>Intervenciones registradas tras la visita 2</h3>
+<ul>
+<li>Comunicación inmediata a neumología: interrupción de nintedanib durante 2 semanas y reintroducción a 100 mg/12 h tras normalizarse las transaminasas, según la ficha técnica.</li>
+<li>Calendario de controles hepáticos y educación sobre signos de alarma (ictericia, coluria).</li>
+<li>Seguimiento nutricional mantenido.</li>
+</ul>
+<h3>Evolución</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Transaminasas</td><td>Normales tras la reintroducción</td></tr>
+<tr><td>FVC</td><td>61 % (estable)</td></tr>
+<tr><td>Peso</td><td>+1 kg</td></tr>
+<tr><td>Situación del cuidador</td><td>Centro de día consolidado; dependencia reconocida</td></tr></table></div>`,
+dsp:[["2026-03-16","Antifibrótico","nintedanib 100 mg",30],["2026-04-15","Antifibrótico","nintedanib 100 mg",30],["2026-05-11","Antifibrótico","nintedanib 100 mg",30],["2026-06-29","Antifibrótico","nintedanib 100 mg",30],["2026-07-29","Antifibrótico","nintedanib 100 mg",30]],
+notas:`## 2026-05-11
+Diarrea controlada. Hipertransaminasemia de grado moderado. Se comunica a neumología.
+## 2026-05-12
+Neumología: interrupción temporal de nintedanib (hueco de dispensación esperado).`,
+cita:"Estoy más tranquilo. Sé lo que tengo que vigilar y a quién llamar."}
+],
+resolucion:`
+<h3>Visita basal: por qué es máxima complejidad</h3>
+<p>Enfermedad progresiva con antifibrótico mal tolerado (diarrea, pérdida de peso) y omisión de dosis. Anticoagulación con riesgo hemorrágico añadido (ginkgo, sangrados). Infrautilización del oxígeno por estigma. Y, sobre todo, <strong>Oportunidad</strong> muy comprometida: es cuidador principal sin apoyo propio.</p>
+<h3>Visita 2: impacto y nuevo problema</h3>
+<p>Las intervenciones resuelven la tolerancia y la sobrecarga del cuidador. Aparece hepatotoxicidad, un efecto conocido del fármaco que obliga a coordinar con neumología.</p>
+<h3>Visita 3: la trampa del PDC</h3>
+<p>El hueco de dispensación de mayo y junio es una <strong>interrupción pautada</strong>, no una falta de adherencia. Si el preparador lo marca como hueco, hay que interpretarlo con las notas.</p>
+<p><strong>Pregunta para el grupo:</strong> con la enfermedad estable y los problemas resueltos, ¿se mantiene la máxima complejidad? El criterio docente es que sí: enfermedad progresiva, fragilidad y una carga de cuidados que puede volver a romperse.</p>
+<h3>Mensajes clave</h3>
+<ol><li>La carga del cuidador es un factor de Oportunidad que se aborda con recursos sociales, no con educación.</li>
+<li>No todo hueco en el PDC es falta de adherencia: una interrupción pautada debe constar en las notas.</li>
+<li>Los productos de herbolario con anticoagulantes merecen siempre una pregunta.</li></ol>`
+});
+
+// ================= RIESGO CARDIOVASCULAR =================
+CASES.push({
+id:"rcv-1", pat:"Riesgo cardiovascular", n:1, nombre:"Javier", edad:"52 años",
+resumen:"Hipercolesterolemia familiar con infarto reciente. Inicia un iPCSK9, muy motivado tras el evento.",
+diseno:"Basal: nivel intermedio (con duda razonable de máxima complejidad) → visita 2: se complica y pasa a máxima → visita 3: impacto de las intervenciones.",
+questions:[
+ ["¿Ha dejado de fumar?","He bajado a cinco o seis al día. Dejarlo del todo me está costando mucho."],
+ ["¿Ha notado algún efecto molesto?","A veces me falta un poco el aire y me duelen las piernas. Lo achaco al infarto."],
+ ["¿Cómo se organiza con la medicación cuando viaja?","Llevo las cajas en la maleta. La inyección a veces se queda en la nevera de casa."],
+ ["¿Ha empezado la rehabilitación cardiaca?","Me dieron cita, pero con el trabajo no he podido ir."],
+ ["¿Hay antecedentes en su familia?","Mi padre murió de un infarto a los 50. A mis hijos no les han hecho ninguna prueba."],
+ ["¿Se le olvida alguna toma?","Las de la noche alguna vez, cuando ceno fuera por trabajo."],
+ ["¿Toma algo por su cuenta?","Levadura de arroz rojo, que me recomendó un cliente para el colesterol."],
+ ["¿Qué espera del tratamiento?","Volver a mi vida normal cuanto antes."]
+],
+visits:[
+{titulo:"Visita basal", fecha:"30/03/2026", html:`
+<h3>Datos generales</h3>
+<p>Varón de 52 años, comercial con viajes frecuentes. Casado, con dos hijos adolescentes. Hipercolesterolemia familiar heterocigota. IAM con elevación del ST en diciembre de 2025, con stent en la descendente anterior. Fumador (20 cigarrillos/día antes del infarto) y sedentario.</p>
+<h3>Tratamiento</h3>
+<ul>
+<li><strong>Evolocumab 140 mg sc cada 14 días</strong> (hospital), desde enero de 2026.</li>
+<li>Atorvastatina 80 mg · Ezetimiba 10 mg · AAS 100 mg · <strong>Ticagrelor 90 mg/12 h</strong> · Bisoprolol 2,5 mg · Ramipril 5 mg · Pantoprazol 20 mg.</li>
+</ul>
+<h3>Analítica</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>LDL antes del iPCSK9 (con estatina + ezetimiba)</td><td>118 mg/dL</td></tr>
+<tr><td>LDL actual</td><td>62 mg/dL (objetivo según cardiología: &lt; 55)</td></tr>
+<tr><td>CK · transaminasas</td><td>Normales</td></tr></table></div>`,
+dsp:[["2026-01-12","iPCSK9","evolocumab 140 mg (2 plumas)",28],["2026-02-09","iPCSK9","evolocumab 140 mg (2 plumas)",28],["2026-03-09","iPCSK9","evolocumab 140 mg (2 plumas)",28]],
+notas:`## 2026-01-12
+Inicio de evolocumab. Muy motivado tras el infarto. Formación con la pluma.
+## 2026-02-09
+Sin incidencias. Ha reducido el tabaco.`,
+cita:"Me he llevado un susto de muerte. Ahora hago todo lo que me dicen."},
+{titulo:"Visita 2", fecha:"06/07/2026", html:`
+<h3>Lo ocurrido desde la visita basal</h3>
+<ul>
+<li>Hace 3 semanas <strong>dejó el ticagrelor</strong> por su cuenta, por disnea.</li>
+<li>Hace un mes <strong>dejó la atorvastatina</strong> por dolores musculares. Sigue tomando la levadura de arroz rojo.</li>
+<li>Una dosis de evolocumab omitida durante un viaje.</li>
+<li>Fuma 10 cigarrillos al día. No ha empezado la rehabilitación cardiaca.</li>
+</ul>
+<h3>Analítica</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>LDL</td><td><strong>104 mg/dL</strong></td></tr>
+<tr><td>CK</td><td>Normal</td></tr></table></div>`,
+dsp:[["2026-01-12","iPCSK9","evolocumab 140 mg (2 plumas)",28],["2026-02-09","iPCSK9","evolocumab 140 mg (2 plumas)",28],["2026-03-09","iPCSK9","evolocumab 140 mg (2 plumas)",28],["2026-04-06","iPCSK9","evolocumab 140 mg (2 plumas)",28],["2026-05-04","iPCSK9","evolocumab 140 mg (2 plumas)",28],["2026-06-15","iPCSK9","evolocumab 140 mg (2 plumas)",28]],
+notas:`## 2026-03-30
+Motivado. Fuma 5–6 al día. Levadura de arroz rojo por su cuenta. Rehabilitación pendiente.`,
+cita:"Me ahogaba subiendo escaleras, leí que era por el ticagrelor y lo dejé. La atorvastatina también, me dolían mucho las piernas. No quería molestar al cardiólogo por eso."},
+{titulo:"Visita 3", fecha:"05/10/2026", html:`
+<h3>Intervenciones registradas tras la visita 2</h3>
+<ul>
+<li><strong>Contacto el mismo día con cardiología</strong>: doble antiagregación interrumpida antes de los 12 meses tras el stent. Cardiología cambió el antiagregante.</li>
+<li>Reintroducción de una estatina con control de CK, pautada por cardiología. Suspensión de la levadura de arroz rojo.</li>
+<li>Derivación a deshabituación tabáquica, con tratamiento farmacológico desde atención primaria.</li>
+<li>Rehabilitación cardiaca en horario de tarde.</li>
+<li>Plan de viaje: nevera portátil, recordatorios en el móvil y calendario de inyecciones.</li>
+<li>Recomendación de cribado familiar para sus hijos.</li>
+</ul>
+<h3>Evolución</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>LDL</td><td>48 mg/dL</td></tr>
+<tr><td>Tabaco</td><td>6 semanas sin fumar</td></tr>
+<tr><td>Antiagregación</td><td>Doble antiagregación completa con el nuevo fármaco, bien tolerada</td></tr>
+<tr><td>Hijos</td><td>Estudio genético solicitado</td></tr></table></div>`,
+dsp:[["2026-05-04","iPCSK9","evolocumab 140 mg (2 plumas)",28],["2026-06-15","iPCSK9","evolocumab 140 mg (2 plumas)",28],["2026-07-06","iPCSK9","evolocumab 140 mg (2 plumas)",28],["2026-08-03","iPCSK9","evolocumab 140 mg (2 plumas)",28],["2026-08-31","iPCSK9","evolocumab 140 mg (2 plumas)",28],["2026-09-28","iPCSK9","evolocumab 140 mg (2 plumas)",28]],
+notas:`## 2026-07-06
+Suspensión de ticagrelor y de estatina por su cuenta. Se contacta con cardiología el mismo día.`,
+cita:"Ahora, si algo me sienta mal, llamo antes de dejarlo. Y llevo seis semanas sin fumar."}
+],
+resolucion:`
+<h3>Visita basal: ¿intermedio o máxima complejidad?</h3>
+<p><strong>Lo que empuja hacia máxima:</strong> evento coronario reciente, polimedicación (8 fármacos), tabaquismo activo, LDL fuera de objetivo y antecedentes familiares.</p>
+<p><strong>Lo que lo sostiene en intermedio:</strong> motivación alta tras el evento, buena capacidad, apoyo familiar y adherencia completa al iPCSK9.</p>
+<p><strong>Las señales que había que ver:</strong> síntomas atribuidos al infarto que pueden ser efectos adversos (disnea por ticagrelor, mialgias por estatina; pregunta 2), la levadura de arroz rojo (monacolina, que duplica el mecanismo de la estatina; pregunta 7), los viajes y la rehabilitación no iniciada. La motivación tras un evento suele decaer.</p>
+<h3>Visita 2: por qué se complica</h3>
+<p>Suspensión del ticagrelor antes de los 12 meses tras el stent: <strong>riesgo de trombosis del stent</strong>. Requiere comunicación inmediata con cardiología, no esperar a la siguiente cita. Además: estatina suspendida, LDL fuera de objetivo y tabaquismo. Reestratificación esperable: máxima complejidad.</p>
+<h3>Visita 3: impacto</h3>
+<p>Doble antiagregación restablecida, LDL en objetivo, abstinencia tabáquica y cribado familiar en marcha. <strong>Pregunta para el grupo:</strong> ¿qué cambia en la intensidad del seguimiento al volver al nivel intermedio, si se vuelve?</p>
+<h3>Mensajes clave</h3>
+<ol><li>La alta motivación tras un evento agudo es un factor protector, pero inestable.</li>
+<li>Hay que preguntar activamente por síntomas que el paciente atribuye a su enfermedad.</li>
+<li>Algunas suspensiones requieren comunicación urgente, no solo reestratificación.</li></ol>`
+});
+
+CASES.push({
+id:"rcv-2", pat:"Riesgo cardiovascular", n:2, nombre:"Dolores", edad:"71 años",
+resumen:"Prevención secundaria con múltiples comorbilidades, polimedicación y aislamiento en el medio rural.",
+diseno:"Máxima complejidad desde la visita basal → visitas 2 y 3: intervenciones farmacéuticas y su impacto.",
+questions:[
+ ["¿Cómo distingue las pastillas?","Por el color y el tamaño. Veo poco; las letras de las cajas no las leo."],
+ ["¿Ha tenido bajadas de azúcar?","Sí, me tiemblo y sudo. Me como un caramelo y se me pasa."],
+ ["¿Quién le ayuda?","Una vecina pasa a verme. Mis hijos viven en Barcelona."],
+ ["¿Cómo se pone la inyección del colesterol?","Me la pone la enfermera del pueblo cuando puede venir."],
+ ["¿Cómo come?","Poco y a deshoras. Cocino un día para dos."],
+ ["¿Sabe para qué es cada medicamento?","La del corazón, la del azúcar… las demás no lo sé."],
+ ["¿Se pesa en casa?","No tengo báscula."],
+ ["¿Cómo viene al hospital?","En el autobús de los lunes, que es el único que hay."]
+],
+visits:[
+{titulo:"Visita basal", fecha:"09/03/2026", html:`
+<h3>Datos generales</h3>
+<p>Mujer de 71 años, viuda, vive sola en un pueblo a 70 km del hospital. Nivel de alfabetización bajo. Baja visión por retinopatía diabética. Peso 58 kg.</p>
+<h3>Antecedentes</h3>
+<p>IAM (2022), ictus isquémico (2024), DM2, ERC estadio 3b, insuficiencia cardiaca con FEVI del 40 % y fibrilación auricular. Intolerancia a estatinas. En los últimos 12 meses: 2 ingresos por insuficiencia cardiaca y 3 visitas a urgencias por hipoglucemia.</p>
+<h3>Tratamiento (14 fármacos)</h3>
+<ul>
+<li><strong>Alirocumab 150 mg sc cada 14 días</strong> (hospital).</li>
+<li>Metformina 850 mg/12 h · <strong>Glibenclamida 5 mg/24 h</strong> · <strong>Apixaban 2,5 mg/12 h</strong> · Sacubitrilo/valsartán 24/26 mg/12 h · Bisoprolol 5 mg · Furosemida 40 mg · Espironolactona 25 mg · Ezetimiba 10 mg · Omeprazol 20 mg · Lorazepam 1 mg · Alopurinol 100 mg · Paracetamol 1 g/8 h · Nitroglicerina sublingual a demanda.</li>
+</ul>
+<h3>Analítica</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Creatinina · FGe</td><td>1,4 mg/dL · 38 mL/min/1,73 m²</td></tr>
+<tr><td>Potasio</td><td>5,4 mEq/L</td></tr>
+<tr><td>HbA1c</td><td>6,4 %</td></tr>
+<tr><td>LDL</td><td>88 mg/dL</td></tr>
+<tr><td>NT-proBNP</td><td>2.100 pg/mL</td></tr></table></div>`,
+dsp:[["2025-09-15","iPCSK9","alirocumab 150 mg (2 plumas)",28],["2025-10-27","iPCSK9","alirocumab 150 mg (2 plumas)",28],["2025-12-15","iPCSK9","alirocumab 150 mg (2 plumas)",28],["2026-02-02","iPCSK9","alirocumab 150 mg (2 plumas)",28]],
+notas:`## 2025-10-27
+Recoge con retraso. Depende de la enfermera del pueblo para la administración.
+## 2026-02-02
+Refiere mareos y temblores frecuentes.`,
+cita:"Hija, yo me tomo lo que me ponen, pero con tantas pastillas no sé ni lo que tomo."},
+{titulo:"Visita 2", fecha:"08/06/2026", html:`
+<h3>Intervenciones registradas en la visita basal</h3>
+<ul>
+<li>Propuesta a atención primaria: retirada de la glibenclamida (inadecuada en la ERC, con hipoglucemias) y ajuste de la metformina al FGe. Aceptadas.</li>
+<li>Propuesta a cardiología de revisar la dosis de apixaban: con sus datos solo cumple 1 de los 3 criterios de reducción de dosis.</li>
+<li>SPD semanal en su farmacia comunitaria con letra grande y colores.</li>
+<li>Envío domiciliario del alirocumab, con administración programada por enfermería de atención primaria.</li>
+<li>Báscula y plan de autocontrol de la insuficiencia cardiaca (enfermería). Teleasistencia.</li>
+</ul>
+<h3>Evolución</h3>
+<ul>
+<li>Sin hipoglucemias desde la retirada de la glibenclamida. HbA1c 7,2 %.</li>
+<li>Alirocumab administrado puntualmente.</li>
+<li><strong>Nuevo:</strong> ha subido 3 kg en una semana, con edemas en los tobillos, y lo ha comunicado gracias a la báscula. Potasio 5,6 mEq/L.</li>
+</ul>`,
+dsp:[["2025-12-15","iPCSK9","alirocumab 150 mg (2 plumas)",28],["2026-02-02","iPCSK9","alirocumab 150 mg (2 plumas)",28],["2026-03-09","iPCSK9","alirocumab 150 mg (2 plumas)",28],["2026-04-06","iPCSK9","alirocumab 150 mg (2 plumas)",28],["2026-05-04","iPCSK9","alirocumab 150 mg (2 plumas)",28]],
+notas:`## 2026-03-09
+Hipoglucemias por glibenclamida en la ERC. Apixaban posiblemente infradosificado. SPD y báscula.`,
+cita:"Ahora tengo báscula. Esta semana he subido tres kilos y tengo los tobillos muy hinchados, así que llamé."},
+{titulo:"Visita 3", fecha:"21/09/2026", html:`
+<h3>Intervenciones registradas tras la visita 2</h3>
+<ul>
+<li>Comunicación el mismo día con la unidad de insuficiencia cardiaca: ajuste del diurético y de la espironolactona.</li>
+<li>Cardiología ajustó el apixaban a 5 mg/12 h tras la revisión.</li>
+<li>Retirada progresiva del lorazepam con atención primaria.</li>
+<li>Implicación de los hijos por videollamada para revisar el SPD.</li>
+</ul>
+<h3>Evolución</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Ingresos en los últimos 6 meses</td><td>Ninguno (frente a 2 en el año previo)</td></tr>
+<tr><td>Potasio</td><td>4,9 mEq/L</td></tr>
+<tr><td>Hipoglucemias</td><td>Ninguna</td></tr>
+<tr><td>LDL</td><td>61 mg/dL</td></tr>
+<tr><td>Número de fármacos</td><td>12</td></tr></table></div>`,
+dsp:[["2026-04-06","iPCSK9","alirocumab 150 mg (2 plumas)",28],["2026-05-04","iPCSK9","alirocumab 150 mg (2 plumas)",28],["2026-06-01","iPCSK9","alirocumab 150 mg (2 plumas)",28],["2026-06-29","iPCSK9","alirocumab 150 mg (2 plumas)",28],["2026-07-27","iPCSK9","alirocumab 150 mg (2 plumas)",28],["2026-08-24","iPCSK9","alirocumab 150 mg (2 plumas)",28]],
+notas:`## 2026-06-08
+Aumento de peso y edemas detectados por la paciente con la báscula. Hiperpotasemia. Se comunica a la unidad de insuficiencia cardiaca.`,
+cita:"Ya no he vuelto al hospital. Y con las pastillas en su cajita, no me equivoco."}
+],
+resolucion:`
+<h3>Visita basal: por qué es máxima complejidad</h3>
+<p>Las tres dimensiones están comprometidas. <strong>Capacidad:</strong> baja visión, baja alfabetización y desconocimiento de los fármacos. <strong>Oportunidad:</strong> vive sola, en el medio rural, depende de terceros para la administración y tiene transporte limitado. A esto se suman 14 fármacos, ingresos y visitas a urgencias de repetición e hiperpotasemia.</p>
+<p><strong>Problemas de la farmacoterapia detectables con los datos:</strong> glibenclamida en ERC 3b con hipoglucemias (y HbA1c del 6,4 %, demasiado baja para su fragilidad), apixaban posiblemente infradosificado (con edad 71, peso 58 kg y creatinina 1,4 solo cumple 1 de los 3 criterios de reducción; verificad los criterios en la ficha técnica) y lorazepam en una paciente con riesgo de caídas.</p>
+<h3>Visita 2: el valor de las intervenciones</h3>
+<p>Desaparecen las hipoglucemias. La báscula (una intervención de Capacidad) permite <strong>detectar precozmente</strong> una descompensación que antes acababa en ingreso. Es un buen ejemplo de intervención con impacto medible.</p>
+<h3>Visita 3: impacto</h3>
+<p>Sin ingresos en 6 meses, potasio normal, anticoagulación ajustada y menos fármacos. <strong>Pregunta para el grupo:</strong> ¿qué indicadores de resultado registraríais para demostrar este impacto ante la dirección?</p>
+<h3>Mensajes clave</h3>
+<ol><li>En la máxima complejidad, el valor está en la revisión completa de la farmacoterapia, no solo en la adherencia.</li>
+<li>Las intervenciones de autocontrol convierten al paciente en un detector precoz.</li>
+<li>Los huecos de PDC pueden deberse a la logística de administración, no a falta de voluntad (pregunta 4).</li></ol>`
+});
+
+
+</script>
+<script>
+// ================= VIH =================
+CASES.push({
+id:"vih-1", pat:"VIH", n:1, nombre:"Andrés", edad:"47 años",
+resumen:"Infección por VIH bien controlada durante años, con un cambio laboral reciente.",
+diseno:"Basal: nivel intermedio (con duda razonable de máxima complejidad) → visita 2: se complica y pasa a máxima → visita 3: impacto de las intervenciones.",
+questions:[
+ ["¿Cómo se toma la medicación en un día normal?","Antes, con el desayuno, siempre a la misma hora. Ahora depende del turno: cuando me levanto, que puede ser a las siete de la mañana o a las tres de la tarde."],
+ ["¿Se le ha olvidado alguna dosis en los últimos meses?","Olvidar, no. Bueno, cuando volví de Navidad a lo mejor algún día no me la tomé, hasta que vine a por más."],
+ ["En diciembre no vino a recoger medicación. ¿Cómo lo hizo?","Estuve en el pueblo, en Galicia. Fui al hospital de allí y me dieron para un mes. No pensé que hiciera falta decíroslo."],
+ ["¿Toma alguna otra medicación?","La del colesterol, que me da el médico de cabecera. Y algún ibuprofeno para la espalda."],
+ ["¿Qué significa para usted seguir con el tratamiento después de tantos años?","Diecisiete años ya… A veces estoy cansado de tener que acordarme todos los días, pero sé que es lo que me mantiene bien."],
+ ["¿Quién sabe en su entorno que tiene el VIH?","Mi pareja y mi hermana. En el trabajo nadie, ni falta que hace."],
+ ["¿Tiene dificultades para venir a recoger la medicación?","Con los turnos es más complicado. Si me dierais citas de tarde, algunas semanas me vendría mejor."],
+ ["¿Cómo está de ánimo?","Normal, cansado por los turnos. Las cosas en casa están un poco tensas, pero bueno."]
+],
+visits:[
+{titulo:"Visita basal", fecha:"16/03/2026", html:`
+<h3>Datos generales</h3>
+<p>Varón de 47 años. Infección por VIH desde 2009. Vive con su pareja, que conoce el diagnóstico. Hace 4 meses empezó a trabajar como encargado de almacén logístico, con <strong>turnos rotatorios</strong> (mañana, tarde y noche por semanas). Fumador de 10 cigarrillos/día.</p>
+<h3>Tratamiento</h3>
+<ul>
+<li><strong>Bictegravir/emtricitabina/tenofovir alafenamida</strong>, 1 comprimido/24 h desde 2021 (hospital).</li>
+<li>Atorvastatina 20 mg/24 h (atención primaria).</li>
+</ul>
+<h3>Analítica</h3>
+<div class="tablewrap"><table><tr><th>Fecha</th><th>Carga viral (copias/mL)</th><th>CD4 (cél/µL)</th><th>Otros</th></tr>
+<tr><td>03/2025</td><td>&lt; 50</td><td>640</td><td>FGe &gt; 90</td></tr>
+<tr><td>09/2025</td><td>&lt; 50</td><td>655</td><td>LDL 98 mg/dL</td></tr>
+<tr><td>03/2026</td><td>&lt; 50</td><td>620</td><td>FGe &gt; 90</td></tr></table></div>`,
+dsp:[["2025-09-15","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30],["2025-10-14","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30],["2025-11-13","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30],["2026-01-08","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30],["2026-02-09","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30]],
+notas:`## 2025-09-15
+Estable. Buena tolerancia. Toma el comprimido con el desayuno.
+## 2025-11-13
+Comenta que ha empezado un trabajo nuevo. Sin olvidos referidos.`,
+cita:"Todo bien, como siempre. No me he saltado ninguna pastilla, ya sabéis que yo en eso soy muy cumplidor."},
+{titulo:"Visita 2", fecha:"15/06/2026", html:`
+<h3>Lo ocurrido desde la visita basal</h3>
+<ul>
+<li>En abril <strong>se separó</strong> y ahora <strong>comparte piso con dos compañeros de trabajo que no conocen el diagnóstico</strong>.</li>
+<li>Tiene acidez por cenar a deshoras y toma <strong>almagato 2–3 veces al día</strong>, por su cuenta.</li>
+<li>Recogió la medicación de mayo con 12 días de retraso.</li>
+</ul>
+<h3>Analítica</h3>
+<div class="tablewrap"><table><tr><th>Fecha</th><th>Carga viral (copias/mL)</th><th>CD4 (cél/µL)</th></tr>
+<tr><td>06/2026</td><td><strong>112</strong></td><td>590</td></tr></table></div>
+<p class="small">Se ha solicitado repetir la carga viral; el resultado aún no está disponible.</p>`,
+dsp:[["2026-01-08","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30],["2026-02-09","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30],["2026-03-12","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30],["2026-04-13","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30],["2026-05-25","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30]],
+notas:`## 2026-03-16
+Turnos rotatorios. Hueco de dispensación en diciembre explicado por la recogida en otro hospital. Fatiga terapéutica leve.`,
+cita:"En el piso me la tomo en el baño, que no quiero que me vean el bote. Alguna vez me la he dejado en la taquilla del trabajo y me la he tomado al llegar. Y la acidez me está matando."},
+{titulo:"Visita 3", fecha:"21/09/2026", html:`
+<h3>Intervenciones registradas tras la visita 2</h3>
+<ul>
+<li>Separación de las tomas de bictegravir y del antiácido con aluminio/magnesio según la ficha técnica, con un anclaje de horario adaptado a cada turno.</li>
+<li>Comunicación a atención primaria para manejar la acidez sin antiácidos con cationes polivalentes.</li>
+<li>Pastillero neutro y estrategias de discreción. Citas de tarde.</li>
+<li>Derivación a apoyo psicológico y a una ONG de VIH (separación y estigma).</li>
+<li>Llamada de telefarmacia a las 2 semanas.</li>
+</ul>
+<h3>Evolución</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Carga viral</td><td>&lt; 50 copias/mL en 2 determinaciones consecutivas</td></tr>
+<tr><td>Recogidas</td><td>Puntuales desde julio</td></tr>
+<tr><td>Acidez</td><td>Controlada sin almagato</td></tr></table></div>`,
+dsp:[["2026-04-13","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30],["2026-05-25","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30],["2026-06-22","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30],["2026-07-22","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30],["2026-08-21","TAR","bictegravir/emtricitabina/tenofovir alafenamida",30]],
+notas:`## 2026-06-15
+Separación y piso compartido sin revelar el diagnóstico. Almagato sin separar de bictegravir. Carga viral de 112.`,
+cita:"Ya sé cuándo tomar cada cosa, aunque cambie de turno. Y hablar con la gente de la asociación me ha venido bien."}
+],
+resolucion:`
+<h3>Visita basal: ¿intermedio o máxima complejidad?</h3>
+<p><strong>Lo que empuja hacia máxima:</strong> turnos rotatorios que rompen la rutina, fatiga terapéutica tras 17 años, relato de cumplimiento poco autocrítico y un hueco de dispensación en diciembre.</p>
+<p><strong>Lo que lo sostiene en intermedio:</strong> carga viral indetectable mantenida, buena capacidad y pareja que conoce el diagnóstico.</p>
+<p><strong>La trampa del PDC:</strong> con las dispensaciones del hospital hay un hueco en diciembre que el preparador penaliza. La pregunta 3 revela una recogida en otro hospital. El PDC basado solo en registros propios infraestima la adherencia, pero el relato ("no me salto ninguna") tampoco se sostiene del todo (pregunta 2).</p>
+<p><strong>La señal que había que ver:</strong> "en casa las cosas están tensas" (pregunta 8). Anticipa la ruptura de la red de apoyo.</p>
+<h3>Visita 2: por qué se complica</h3>
+<ul>
+<li><strong>Oportunidad:</strong> pérdida del apoyo y convivencia sin revelar el diagnóstico, que condiciona dónde y cuándo se toma la medicación.</li>
+<li><strong>Interacción:</strong> los antiácidos con Al/Mg reducen la absorción de bictegravir. Hay que separar las tomas según la ficha técnica (verificad la redacción en CIMA).</li>
+<li><strong>Carga viral de 112:</strong> un valor aislado no distingue entre un repunte transitorio y un fracaso. Es coherente con la interacción y con las tomas irregulares. ¿Reestratificáis ya o esperáis a la repetición?</li>
+</ul>
+<h3>Visita 3: impacto</h3>
+<p>Las intervenciones actúan sobre la causa: la interacción, el anclaje del horario, la discreción y el apoyo psicosocial. Recupera la supresión virológica. <strong>Pregunta para el grupo:</strong> ¿vuelve a intermedio? ¿Qué vigilaríais?</p>
+<h3>Mensajes clave</h3>
+<ol><li>Los cambios vitales (trabajo, convivencia) son motivos de reestratificación aunque la carga viral siga indetectable.</li>
+<li>Preguntar por medicamentos sin receta, sobre todo antiácidos, es obligatorio con inhibidores de la integrasa.</li>
+<li>El estigma y la no revelación del diagnóstico son factores de Oportunidad y de Motivación con impacto directo en la adherencia.</li></ol>`
+});
+
+CASES.push({
+id:"vih-2", pat:"VIH", n:2, nombre:"Rosa", edad:"58 años",
+resumen:"Paciente con muchos años de tratamiento y resistencias, con un régimen potenciado, comorbilidad y exclusión residencial.",
+diseno:"Máxima complejidad desde la visita basal → visitas 2 y 3: intervenciones farmacéuticas y su impacto.",
+questions:[
+ ["¿Cómo se toma la medicación del VIH?","Por la mañana, cuando me acuerdo. En el albergue nos dan el desayuno a las ocho y a veces no llego."],
+ ["¿Cómo usa el inhalador?","El morado, dos veces al día, y a veces más si me ahogo."],
+ ["¿Dónde guarda la medicación?","En la taquilla del albergue. Alguna vez me han quitado cosas."],
+ ["¿Ha notado cambios en su cuerpo últimamente?","Se me ha puesto la cara redonda y tengo la tripa hinchada. Me da mucha vergüenza."],
+ ["¿Cómo duerme?","Muchísimo. Me cuesta levantarme, y a veces no llego a las citas por eso."],
+ ["¿Quién le ayuda?","La trabajadora social del albergue. Familia, no tengo."],
+ ["¿Qué espera de aquí a unos meses?","Tener un sitio mío y estar tranquila."],
+ ["¿Toma algo más?","El calcio y la vitamina D, cuando los tengo."]
+],
+visits:[
+{titulo:"Visita basal", fecha:"23/02/2026", html:`
+<h3>Datos generales</h3>
+<p>Mujer de 58 años. Infección por VIH desde 1994, con múltiples tratamientos previos y mutaciones de resistencia documentadas. Exusuaria de drogas por vía parenteral, abstinente desde 2010. VHC curado en 2017. Vive en un albergue municipal desde hace 5 meses, sin red familiar. Nivel de alfabetización bajo. Fumadora.</p>
+<h3>Tratamiento</h3>
+<ul>
+<li><strong>Darunavir/cobicistat 800/150 mg + dolutegravir 50 mg</strong>, cada 24 h (hospital).</li>
+<li><strong>Fluticasona/salmeterol 500/50 µg cada 12 h</strong> (EPOC; neumología).</li>
+<li><strong>Quetiapina 300 mg por la noche</strong> (psiquiatría).</li>
+<li>Calcio + vitamina D · Ácido alendrónico semanal · Omeprazol 20 mg.</li>
+</ul>
+<h3>Datos clínicos</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Carga viral · CD4</td><td><strong>230 copias/mL</strong> · 310/µL</td></tr>
+<tr><td>Glucosa en ayunas</td><td>168 mg/dL (previamente normal)</td></tr>
+<tr><td>FGe</td><td>58 mL/min/1,73 m²</td></tr>
+<tr><td>Exploración (infecciosas)</td><td>Facies redondeada, estrías abdominales y edemas</td></tr></table></div>`,
+dsp:[["2025-09-10","TAR","darunavir/cobicistat 800/150 mg",30],["2025-09-10","TAR","dolutegravir 50 mg",30],["2025-10-29","TAR","darunavir/cobicistat 800/150 mg",30],["2025-10-29","TAR","dolutegravir 50 mg",30],["2025-12-22","TAR","darunavir/cobicistat 800/150 mg",30],["2025-12-22","TAR","dolutegravir 50 mg",30],["2026-02-02","TAR","darunavir/cobicistat 800/150 mg",30],["2026-02-02","TAR","dolutegravir 50 mg",30]],
+notas:`## 2025-10-29
+Recoge con retraso. Refiere cambio de alojamiento.
+## 2025-12-22
+Carga viral detectable. No acudió a la cita anterior.`,
+cita:"Intento tomármelo todo, pero en el albergue es complicado. Y estoy hinchada y cansada todo el día."},
+{titulo:"Visita 2", fecha:"18/05/2026", html:`
+<h3>Intervenciones registradas en la visita basal</h3>
+<ul>
+<li>Comunicación a infecciosas y neumología de la <strong>interacción entre cobicistat y fluticasona</strong> (riesgo de síndrome de Cushing iatrogénico y de supresión suprarrenal). Neumología cambió el corticoide inhalado; la retirada fue progresiva, con valoración por endocrinología.</li>
+<li>Comunicación a psiquiatría de la interacción con quetiapina. Psiquiatría redujo la dosis según la ficha técnica.</li>
+<li>Infecciosas solicitó un nuevo test de resistencias.</li>
+<li>SPD semanal custodiado por la enfermería del albergue, coordinado con su trabajadora social.</li>
+<li>Dispensación cada 15 días con cita flexible.</li>
+</ul>
+<h3>Evolución</h3>
+<ul>
+<li>Carga viral &lt; 50 copias/mL. Glucosa 112 mg/dL. Los signos cushingoides están remitiendo. Duerme menos y acude a las citas.</li>
+<li><strong>Nuevo:</strong> a finales de abril tuvo que dejar el albergue (fin del plazo de estancia). Ahora vive con una amiga en otro barrio. Ha perdido la última recogida y el SPD.</li>
+</ul>`,
+dsp:[["2026-02-23","TAR","darunavir/cobicistat 800/150 mg",15],["2026-02-23","TAR","dolutegravir 50 mg",15],["2026-03-09","TAR","darunavir/cobicistat 800/150 mg",15],["2026-03-09","TAR","dolutegravir 50 mg",15],["2026-03-23","TAR","darunavir/cobicistat 800/150 mg",15],["2026-03-23","TAR","dolutegravir 50 mg",15],["2026-04-06","TAR","darunavir/cobicistat 800/150 mg",15],["2026-04-06","TAR","dolutegravir 50 mg",15],["2026-04-20","TAR","darunavir/cobicistat 800/150 mg",15],["2026-04-20","TAR","dolutegravir 50 mg",15]],
+notas:`## 2026-02-23
+Interacción de cobicistat con fluticasona (signos cushingoides) y con quetiapina. Carga viral detectable. Vive en un albergue. SPD custodiado.`,
+cita:"Me encontraba mucho mejor, pero tuve que irme del albergue. Con la mudanza perdí las pastillas y no sabía a quién llamar."},
+{titulo:"Visita 3", fecha:"14/09/2026", html:`
+<h3>Intervenciones registradas tras la visita 2</h3>
+<ul>
+<li>Coordinación entre trabajo social del hospital y una ONG de VIH: plaza en un piso de acogida.</li>
+<li>Telefarmacia con entrega en el piso de acogida, y un teléfono de referencia de la consulta.</li>
+<li>SPD reanudado con la educadora del piso.</li>
+<li>Derivación a deshabituación tabáquica.</li>
+</ul>
+<h3>Evolución</h3>
+<div class="tablewrap"><table><tr><th>Parámetro</th><th>Valor</th></tr>
+<tr><td>Carga viral · CD4</td><td>&lt; 50 copias/mL (2 determinaciones) · 380/µL</td></tr>
+<tr><td>Glucosa</td><td>Normal</td></tr>
+<tr><td>Signos cushingoides</td><td>Resueltos</td></tr>
+<tr><td>Entregas</td><td>Regulares desde junio</td></tr></table></div>`,
+dsp:[["2026-04-06","TAR","darunavir/cobicistat 800/150 mg",15],["2026-04-06","TAR","dolutegravir 50 mg",15],["2026-04-20","TAR","darunavir/cobicistat 800/150 mg",15],["2026-04-20","TAR","dolutegravir 50 mg",15],["2026-05-18","TAR","darunavir/cobicistat 800/150 mg",30],["2026-05-18","TAR","dolutegravir 50 mg",30],["2026-06-17","TAR","darunavir/cobicistat 800/150 mg",30],["2026-06-17","TAR","dolutegravir 50 mg",30],["2026-07-17","TAR","darunavir/cobicistat 800/150 mg",30],["2026-07-17","TAR","dolutegravir 50 mg",30],["2026-08-16","TAR","darunavir/cobicistat 800/150 mg",30],["2026-08-16","TAR","dolutegravir 50 mg",30]],
+notas:`## 2026-05-18
+Salida del albergue: pérdida de la medicación y del SPD. Se activan trabajo social y una ONG.`,
+cita:"Tengo una habitación mía y me traen las pastillas. Por fin estoy tranquila."}
+],
+resolucion:`
+<h3>Visita basal: por qué es máxima complejidad</h3>
+<p>Las tres dimensiones están comprometidas, con complejidad farmacoterapéutica alta. <strong>Capacidad:</strong> baja alfabetización y uso excesivo del inhalador. <strong>Motivación:</strong> vergüenza por los cambios corporales. <strong>Oportunidad:</strong> exclusión residencial, sin red familiar y con robos en la taquilla. A esto se suman la carga viral detectable con resistencias y un régimen potenciado con interacciones relevantes.</p>
+<p><strong>Lo que había que detectar:</strong> los signos cushingoides (pregunta 4 y exploración) y la hiperglucemia nueva son compatibles con la interacción entre cobicistat y fluticasona. La somnolencia excesiva (pregunta 5) es compatible con un aumento de la exposición a quetiapina. Ambas interacciones están descritas en las fichas técnicas (verificad la redacción vigente y las alternativas de corticoide inhalado).</p>
+<h3>Visita 2: impacto y nuevo problema</h3>
+<p>La resolución de las interacciones mejora la clínica, y la somnolencia (una barrera para acudir a las citas) desaparece. Pero la estabilidad dependía del albergue: al perderlo, se pierde la estructura de apoyo. <strong>Interpretación:</strong> las intervenciones farmacoterapéuticas funcionan, pero no protegen frente a los determinantes sociales.</p>
+<h3>Visita 3: impacto</h3>
+<p>Supresión virológica mantenida y entregas regulares gracias a la coordinación sociosanitaria. <strong>Pregunta para el grupo:</strong> ¿bajaríais de nivel? El criterio docente es que no: las resistencias, el régimen potenciado y la vulnerabilidad social persisten.</p>
+<h3>Mensajes clave</h3>
+<ol><li>Con un potenciador farmacocinético, cualquier fármaco nuevo (incluidos inhaladores y psicofármacos) debe revisarse por interacciones.</li>
+<li>Algunos síntomas que el paciente atribuye a otra causa son efectos de interacciones.</li>
+<li>En la exclusión social, la intervención clave suele ser la coordinación con recursos sociales.</li></ol>`
+});
+
+</script>
+<script>
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pick = (x, v) => (x && typeof x === "object" && !Array.isArray(x)) ? x[v] : x;
+const csvOf = rows => "fecha;grupo;medicamento;dias_suministro\n" + rows.slice().sort((a,b)=>a[0].localeCompare(b[0])).map(r=>r.join(";")).join("\n");
+const STAGE = [null, "v2", "v3"];
+const ETAPA = ["basal", "v2", "v3"];
+function sesion(){ let s = store.get("rut_sesion"); if(!s){ s = Math.random().toString(36).slice(2,12); store.set("rut_sesion", s); } return s; }
+async function enviar(rec, statusEl){
+  if(!PANEL_URL){ statusEl.textContent = "El panel en directo no está activado."; return; }
+  if(!rec.nivel){ statusEl.textContent = "Elegid un nivel antes de enviar."; return; }
+  statusEl.textContent = "Enviando…";
+  const body = JSON.stringify(Object.assign({ taller:TALLER, sesion:sesion() }, rec));
+  for(let intento=1; intento<=3; intento++){
+    try{
+      // Cuerpo en texto plano: petición simple, sin preflight CORS (necesario con Apps Script)
+      const r = await fetch(PANEL_URL, { method:"POST", body });
+      const j = await r.json();
+      if(j.ok){ statusEl.textContent = "Enviado ✓ (podéis reenviar si cambiáis de opinión: cuenta el último)"; return; }
+      throw new Error(j.error || "respuesta no válida");
+    }catch(e){
+      if(intento===3){ statusEl.textContent = "No se ha podido enviar. Probad de nuevo en unos segundos."; return; }
+      await new Promise(res=>setTimeout(res, 800*intento));
+    }
+  }
+}
+function voteHTML(name){
+  return `<div class="vote">
+    <div class="row">${[1,2,3].map(n=>`<label class="opt"><input type="radio" name="${name}" value="${n}"> ${NIVELES[n]}</label>`).join("")}</div>
+    <div class="row" style="margin-top:8px"><label class="small" for="${name}c">Seguridad en la decisión</label>
+      <select id="${name}c"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      <button type="button" data-send="${name}">Enviar al panel</button></div>
+    <p class="small status" id="${name}s"></p></div>`;
+}
+function voteValue(name){
+  const r = document.querySelector(`input[name="${name}"]:checked`);
+  const c = document.getElementById(name+"c").value;
+  return { nivel: r ? +r.value : null, confianza: c ? +c : null };
+}
+
+function copyBtn(id, label){ return `<button type="button" class="ghost noprint" data-copy="${id}">${label}</button>`; }
+
+function renderIndex(){
+  const groups = {};
+  CASES.forEach(c=>{ (groups[c.pat] = groups[c.pat] || []).push(c); });
+  const cards = Object.entries(groups).map(([pat, list])=>`
+    <div class="pathgroup"><h3>${esc(pat)}</h3><div class="grid">
+    ${list.map(c=>`<a class="casecard" href="#${c.id}"><span class="tag">Caso ${c.n}</span><strong>${esc(c.nombre)}, ${esc(c.edad)}</strong><span class="small">${esc(c.resumen)}</span></a>`).join("")}
+    </div></div>`).join("");
+  document.getElementById("app").innerHTML = `
+  <header>
+    <div class="eyebrow">Taller de estratificación · RUTIMPEX · Badalona, 18 de noviembre de 2026</div>
+    <h1>Casos para la práctica</h1>
+    <p>Casos ficticios con fines docentes. Cualquier parecido con pacientes reales es casual.</p>
+  </header>
+  <section class="card">
+    <h2>Cómo vamos a trabajar</h2>
+    <p>Cada equipo trabaja <strong>un caso</strong> a lo largo de <strong>tres visitas</strong>, con las mismas herramientas que en la consulta: la herramienta CMO de la patología (<a href="${HUB}" target="_blank" rel="noopener">Hub de Estratificación</a>) y el <a href="${PREP}" target="_blank" rel="noopener">Preparador de consulta</a>.</p>
+    <div class="tablewrap"><table>
+      <tr><th>Tiempo</th><th>Qué hacemos</th></tr>
+      <tr><td>Inicio</td><td><strong>Calibración individual</strong> (abajo): cada uno vota sin herramienta. Vemos la dispersión en el panel.</td></tr>
+      <tr><td>0–25'</td><td><strong>Visita basal.</strong> Leer la historia, abrir hasta ${MAX_Q} preguntas al paciente, estratificar y preparar la consulta.</td></tr>
+      <tr><td>25–45'</td><td><strong>Visita 2</strong> (código en pantalla). ¿Qué ha cambiado? ¿Reestratificáis? ¿Qué intervenciones proponéis?</td></tr>
+      <tr><td>45–60'</td><td><strong>Visita 3</strong> (código en pantalla). Comparad vuestras intervenciones con las realizadas y valorad su impacto.</td></tr>
+      <tr><td>60–75'</td><td><strong>Contraste por parejas:</strong> los dos equipos de la misma patología (caso 1 y caso 2) comparan su trayectoria.</td></tr>
+      <tr><td>75–90'</td><td><strong>Puesta en común</strong> y resolución razonada (código en pantalla).</td></tr>
+    </table></div>
+  </section>
+  <section class="card">
+    <span class="tag">Individual · 3 minutos</span>
+    <h2>Calibración: ¿qué nivel le asignaríais?</h2>
+    <p>Sin herramienta, solo con vuestro criterio. Votad cada uno desde vuestro dispositivo.</p>
+    <p class="quote">Mujer de 66 años con hepatitis B crónica, en tratamiento con entecavir desde hace 6 años y ADN-VHB indetectable. Diabetes tipo 2, HTA, fibrilación auricular anticoagulada e insuficiencia cardiaca, con un ingreso hace 8 meses. Toma 9 fármacos. Vive con su hija, que trabaja todo el día. Lee con dificultad, pero sabe para qué es cada pastilla. Reconoce que "alguna vez" olvida la del hígado "porque ya está curada". Acude puntualmente a todas las recogidas.</p>
+    ${voteHTML("calib")}
+  </section>
+  <section class="card">
+    <h2>Elegid el caso de vuestro equipo</h2>
+    <p class="small">El docente asigna un caso a cada equipo.</p>
+    ${cards}
+  </section>
+  <footer>Material formativo · Ramón Morillo Verdugo · Farmacia Hospitalaria, Hospital Universitario de Valme. No sustituye al juicio profesional.</footer>`;
+  document.querySelector('[data-send="calib"]').onclick = ()=>enviar(Object.assign({caso:"calibracion", etapa:"calibracion", preguntas:""}, voteValue("calib")), document.getElementById("calibs"));
+  window.scrollTo(0,0);
+}
+
+function renderCase(c){
+  const k = "rut_"+c.id+"_";
+  let v = store.get(k+"ver") || 1;
+  const opened = store.get(k+"q") || [];
+
+  const visitHTML = (vis, i) => {
+    const stage = STAGE[i];
+    const unlocked = !stage || store.get("rut_unlock_"+stage);
+    const lock = stage ? `
+      <div class="lockarea ${unlocked?'hidden':''}">
+        <p class="locked">🔒 Esta visita se abre cuando el docente proyecte el código.</p>
+        <div class="lockbox noprint"><input type="text" autocomplete="off" placeholder="Código" aria-label="Código" data-stage="${stage}"><button type="button" data-open="${stage}">Abrir</button></div>
+      </div>` : "";
+    return `
+    <section class="card" data-visit="${i}">
+      <span class="tag">${esc(vis.titulo)}</span><span class="tag warn">${esc(vis.fecha)}</span>
+      <h2>${esc(vis.titulo)}</h2>
+      ${lock}
+      <div class="content ${unlocked?'':'hidden'}">
+        ${pick(vis.html, v)}
+        <h3>Dispensaciones del hospital (últimos 180 días)</h3>
+        <p class="small">Copiad el bloque y pegadlo en la carga masiva del Preparador de consulta.</p>
+        <pre id="csv${i}">${esc(csvOf(vis.dsp))}</pre>
+        ${copyBtn("csv"+i, "Copiar dispensaciones")}
+        <h3>Notas de consultas previas</h3>
+        <pre id="notas${i}">${esc(vis.notas)}</pre>
+        ${copyBtn("notas"+i, "Copiar notas")}
+        <h3>Lo que dice el paciente</h3>
+        <p class="quote">«${esc(pick(vis.cita, v))}»</p>
+        <div class="ficha">
+          <h3>Ficha del equipo · ${esc(vis.titulo)}</h3>
+          <label class="f">Nivel CMO del equipo (se proyecta en el panel)</label>
+          ${voteHTML("v"+i)}
+          <label class="f">Justificación del nivel (¿habéis corregido el resultado de la herramienta por juicio clínico?)</label>
+          <textarea data-f="${i}a"></textarea>
+          <label class="f">Datos que más han pesado y datos que faltaban</label>
+          <textarea data-f="${i}b"></textarea>
+          <label class="f">${i===0 ? "Objetivos farmacoterapéuticos e intervenciones vinculadas al nivel" : i===1 ? "¿Reestratificáis? ¿Qué intervenciones proponéis y con quién coordináis?" : "¿Coinciden vuestras intervenciones con las realizadas? ¿Qué impacto observáis? ¿Mantenéis o cambiáis el nivel?"}</label>
+          <textarea data-f="${i}c"></textarea>
+        </div>
+      </div>
+    </section>
+    ${i===0 ? questionsHTML() : ""}`;
+  };
+
+  const questionsHTML = () => `
+    <section class="card" id="qsec">
+      <span class="tag">Visita basal</span>
+      <h2>Preguntas al paciente</h2>
+      <p>Podéis abrir <span class="counter" id="left"></span> preguntas más. Pensad antes qué información os falta para estratificar.</p>
+      <div id="questions"></div>
+      <p class="small noprint"><button type="button" class="ghost" id="resetQ">Reiniciar preguntas (solo con permiso del docente)</button></p>
+    </section>`;
+
+  const resUnlocked = store.get("rut_unlock_res");
+  document.getElementById("app").innerHTML = `
+  <p class="noprint"><a href="#">← Todos los casos</a></p>
+  <header>
+    <div class="eyebrow">${esc(c.pat)} · Caso ${c.n}</div>
+    <h1>${esc(c.nombre)}, ${esc(c.edad)}</h1>
+    <p>${esc(c.resumen)}</p>
+  </header>
+  <section class="card">
+    <h2>Cómo se trabaja este caso</h2>
+    <ol>
+      <li>Leed la visita basal y cargad las dispensaciones y las notas en el <a href="${PREP}" target="_blank" rel="noopener">Preparador de consulta</a>.</li>
+      <li>Elegid hasta <strong>${MAX_Q} preguntas</strong> al paciente. No se pueden cerrar.</li>
+      <li>Estratificad con la herramienta CMO de la patología (<a href="${HUB}" target="_blank" rel="noopener">Hub</a>) y rellenad la ficha.</li>
+      <li>Las visitas 2 y 3 y la resolución se abren con el código que proyecte el docente.</li>
+    </ol>
+    ${c.variants ? `<h3>Vuestra versión</h3><div class="row seg noprint"><button type="button" data-ver="1" aria-pressed="${v===1}">Versión 1</button><button type="button" data-ver="2" aria-pressed="${v===2}">Versión 2</button></div>` : ""}
+  </section>
+  ${c.visits.map(visitHTML).join("")}
+  <section class="card">
+    <span class="tag">Puesta en común</span>
+    <h2>Resolución razonada</h2>
+    <div class="lockarea ${resUnlocked?'hidden':''}">
+      <p class="locked">🔒 Se abre en la puesta en común.</p>
+      <div class="lockbox noprint"><input type="text" autocomplete="off" placeholder="Código" aria-label="Código" data-stage="res"><button type="button" data-open="res">Abrir</button></div>
+    </div>
+    <div class="content ${resUnlocked?'':'hidden'}">
+      <p class="note">La resolución recoge el criterio del equipo docente, no un estándar de referencia. <strong>Diseño del caso:</strong> ${esc(c.diseno)} El nivel exacto que asigne cada herramienta CMO debe contrastarse con el razonamiento.</p>
+      ${c.resolucion}
+    </div>
+  </section>
+  <div class="row noprint">
+    <button type="button" id="copyFicha">Copiar todas las fichas</button>
+    <button type="button" class="ghost" onclick="window.print()">Imprimir / PDF</button>
+  </div>
+  <footer>Caso ficticio con fines docentes · Ramón Morillo Verdugo · Farmacia Hospitalaria, Hospital Universitario de Valme.</footer>`;
+
+  function renderQ(){
+    const box = document.getElementById("questions");
+    const left = MAX_Q - opened.length;
+    document.getElementById("left").textContent = left;
+    box.innerHTML = "";
+    c.questions.forEach(([q,a],i)=>{
+      const isOpen = opened.includes(i);
+      const d = document.createElement("div");
+      d.className = "q" + (isOpen ? " open" : "");
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "qbtn";
+      b.innerHTML = `<span>${i+1}. ${esc(q)}</span><span>${isOpen ? "✓" : "＋"}</span>`;
+      b.disabled = !isOpen && left <= 0;
+      b.onclick = ()=>{ if(isOpen || opened.length >= MAX_Q) return; opened.push(i); store.set(k+"q", opened); renderQ(); };
+      d.appendChild(b);
+      if(isOpen){ const an = document.createElement("div"); an.className="ans"; an.textContent = "«"+pick(a, v)+"»"; d.appendChild(an); }
+      box.appendChild(d);
+    });
+  }
+  renderQ();
+  document.getElementById("resetQ").onclick = ()=>{ if(confirm("¿Reiniciar las preguntas abiertas?")){ opened.length=0; store.set(k+"q", opened); renderQ(); } };
+
+  c.visits.forEach((vis,i)=>{
+    const b = document.querySelector(`[data-send="v${i}"]`);
+    if(b) b.onclick = ()=>enviar(Object.assign({caso:c.id, etapa:ETAPA[i], preguntas:opened.map(x=>x+1).join(",")}, voteValue("v"+i)), document.getElementById(`v${i}s`));
+  });
+  document.querySelectorAll("[data-ver]").forEach(b=>b.onclick=()=>{ store.set(k+"ver", +b.dataset.ver); renderCase(c); });
+
+  document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{
+    const st = b.dataset.open;
+    const inp = document.querySelector(`input[data-stage="${st}"]`);
+    if(inp.value.trim().toUpperCase() === CODES[st]){ store.set("rut_unlock_"+st, true); const y = window.scrollY; renderCase(c); window.scrollTo(0,y); }
+    else alert("Código incorrecto.");
+  });
+
+  document.querySelectorAll("[data-copy]").forEach(btn=>btn.onclick=()=>{
+    const t = document.getElementById(btn.dataset.copy).textContent;
+    navigator.clipboard.writeText(t).then(()=>{ const o=btn.textContent; btn.textContent="Copiado ✓"; setTimeout(()=>btn.textContent=o,1500); });
+  });
+
+  document.querySelectorAll("textarea[data-f]").forEach(el=>{
+    el.value = store.get(k+"f"+el.dataset.f) || "";
+    el.oninput = ()=>store.set(k+"f"+el.dataset.f, el.value);
+  });
+
+  document.getElementById("copyFicha").onclick = ()=>{
+    let txt = `${c.pat} · Caso ${c.n} · ${c.nombre}${c.variants?" · Versión "+v:""}\n`;
+    c.visits.forEach((vis,i)=>{
+      txt += `\n== ${vis.titulo} ==\n`;
+      const vv = voteValue("v"+i);
+      txt += `Nivel: ${vv.nivel ? NIVELES[vv.nivel] : "—"} · Seguridad: ${vv.confianza || "—"}\n\n`;
+      document.querySelectorAll(`[data-visit="${i}"] textarea[data-f]`).forEach(ta=>{
+        const l = ta.previousElementSibling;
+        txt += (l ? l.textContent : "") + "\n" + ta.value + "\n\n";
+      });
+    });
+    navigator.clipboard.writeText(txt).then(()=>alert("Fichas copiadas."));
+  };
+  window.scrollTo(0,0);
+}
+
+function route(){
+  const id = location.hash.slice(1);
+  const c = CASES.find(x=>x.id===id);
+  c ? renderCase(c) : renderIndex();
+}
+window.addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
