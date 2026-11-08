@@ -1003,12 +1003,23 @@ function render(rows){
   }).join("");
 }
 
+function jsonp(url, ms=12000){
+  return new Promise((resolve, reject)=>{
+    const cb = "cb_" + Math.random().toString(36).slice(2);
+    const s = document.createElement("script");
+    const fin = ()=>{ delete window[cb]; s.remove(); clearTimeout(t); };
+    const t = setTimeout(()=>{ fin(); reject(new Error("sin respuesta")); }, ms);
+    window[cb] = d => { fin(); resolve(d); };
+    s.onerror = ()=>{ fin(); reject(new Error("no se pudo conectar")); };
+    s.src = url + "&callback=" + cb;
+    document.head.appendChild(s);
+  });
+}
 async function cargar(){
   const est = document.getElementById("estado");
   if(!PANEL_URL){ est.textContent = "El panel no está configurado (falta la URL de Apps Script)."; return; }
   try{
-    const r = await fetch(`${PANEL_URL}?taller=${encodeURIComponent(TALLER)}`);
-    const rows = await r.json();
+    const rows = await jsonp(`${PANEL_URL}?taller=${encodeURIComponent(TALLER)}`);
     if(!Array.isArray(rows)) throw new Error(rows.error || "respuesta no válida");
     render(rows);
     est.textContent = "Actualizado a las " + new Date().toLocaleTimeString("es-ES") + " · se refresca cada 8 segundos";
