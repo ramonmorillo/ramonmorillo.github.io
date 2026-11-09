@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-09 · Acceso con clave a los talleres de Sevilla (14-oct) y Santiago (16-nov)
+
+- `sevilla-14-octubre.html` y `santiago-16-noviembre.html` se publican cifradas (AES-256-GCM + PBKDF2-SHA-256, 600 000 iteraciones), con una pantalla de acceso con la identidad visual de cada taller. Cada página tiene su propia clave y una no abre la otra. Las URL no cambian.
+- Las fuentes en claro pasan a `_talleres/`, que Jekyll no publica: las páginas, sus materiales (`assets/<taller>/`, excepto la foto de Sevilla que usa `/conferencias/`) y los datos de los módulos (`data/menu-chatgpt.js`, `data/scispace-ejercicios.js`, `data/google-ia.js`). Las URL directas de esos materiales devuelven 404; tras desbloquear se descargan con su nombre original.
+- Nuevos `scripts/talleres-cifrar.mjs` (sin dependencias), `assets/js/taller-acceso.js` y `assets/css/taller-acceso.css`. Órdenes `npm run talleres`, `talleres:check` y `talleres:verify`. Las claves no se guardan en el repositorio: variable de entorno o `_talleres/claves.local.json` (en `.gitignore`).
+- `validate-google-ia.js` y `validate-recursos-ia.js` validan ahora las fuentes de `_talleres/`.
+- Documentación, procedimiento de cambio de clave y límites (el repositorio y su historial siguen siendo públicos en GitHub): `_talleres/README.md`.
+
 ## 2026-11-07 · Santiago 16-nov: Preparador de consulta CMO, versión web
 
 - La tarjeta «05 · Regalo del taller» enlaza ahora a la versión web gratuita (funciona en el navegador, sin cuenta ni envío de datos). Se retira el enlace a la hoja de ejemplo: la herramienta trae pacientes ficticios para probarla.

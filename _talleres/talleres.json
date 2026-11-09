@@ -1,0 +1,23 @@
+{
+  "_comentario": "Talleres con acceso restringido. Aquí NO van las claves: se leen de la variable de entorno indicada en «variableClave», de _talleres/claves.local.json (excluido de git) o se piden por teclado. Generar: npm run talleres. Comprobar: npm run talleres:check. Instrucciones: _talleres/README.md.",
+  "talleres": [
+    {
+      "id": "sevilla-14-octubre",
+      "variableClave": "CLAVE_SEVILLA",
+      "titulo": "Taller práctico de inteligencia artificial aplicada a la farmacia hospitalaria",
+      "ciudad": "Sevilla",
+      "fecha": "miércoles 14 de octubre de 2026",
+      "horario": "16:30 – 19:40",
+      "lugar": "Hotel AC Ciudad de Sevilla"
+    },
+    {
+      "id": "santiago-16-noviembre",
+      "variableClave": "CLAVE_SANTIAGO",
+      "titulo": "Taller práctico de inteligencia artificial aplicada a la farmacia hospitalaria",
+      "ciudad": "Santiago de Compostela",
+      "fecha": "lunes 16 de noviembre de 2026",
+      "horario": "16:00 – 19:00",
+      "lugar": "Complejo Universitario de Santiago"
+    }
+  ]
+}

@@ -23,16 +23,18 @@ for (const item of items) {
 }
 assert.equal(new Set(categories).size,categories.length);
 for (const category of categories) assert(items.some(t=>t.categories.includes(category)),`Categoría vacía: ${category}`);
+// Las páginas y recursos de los talleres con clave se validan en su fuente en claro (_talleres/), no en la versión cifrada.
+const fuente = p => fs.existsSync('_talleres/'+p) ? '_talleres/'+p : p;
 for (const file of ['diccionario-ia.html','herramientas-ia.html','sevilla-14-octubre.html','santiago-16-noviembre.html','encuesta-previa.html']) {
- const html=fs.readFileSync(file,'utf8');
+ const html=fs.readFileSync(fuente(file),'utf8');
  const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
  assert.equal(new Set(ids).size,ids.length,`IDs duplicados: ${file}`);
  for (const [,url] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
   if (/^(?:https?:|mailto:)/.test(url)) continue;
   const [path,hash]=url.split('#').map((x,i)=>i?x:x.split('?')[0]);const target=path||file;
-  assert(fs.existsSync(target),`${file}: ${url} no existe`);
+  assert(fs.existsSync(fuente(target)),`${file}: ${url} no existe`);
   // index.html usa un router de hash, no anclas estáticas.
-  if(hash && target!=='index.html') assert(fs.readFileSync(target,'utf8').includes(`id="${hash}"`),`${file}: ${url} no existe`);
+  if(hash && target!=='index.html') assert(fs.readFileSync(fuente(target),'utf8').includes(`id="${hash}"`),`${file}: ${url} no existe`);
  }
 }
 console.log(`OK: ${terms.length} términos, ${items.length} herramientas, ${categories.length} categorías y enlaces internos.`);

@@ -1,0 +1,30 @@
+/* Pantalla de acceso de los talleres con clave. Se apoya en las variables y clases de la hoja de cada taller
+   (css/sevilla-14-octubre.css, css/santiago-16-noviembre.css): --navy, --wine, --sun, --line, --muted, .event-hero… */
+.acceso-hero{min-height:calc(100vh - 230px);display:flex;align-items:center}
+main#contenido:has(.acceso-hero){padding:0}
+.acceso-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:3rem;align-items:center;padding:4.5rem 0}
+.acceso-evento,.acceso-tarjeta{min-width:0}
+.acceso-evento h1{overflow-wrap:break-word;font-size:clamp(2.1rem,4.4vw,4rem)}
+.acceso-tarjeta{background:#fff;color:var(--navy);border-radius:1.1rem;padding:clamp(1.4rem,3.5vw,2.2rem);box-shadow:0 20px 60px rgba(10,20,60,.28);border-top:6px solid var(--sun)}
+.acceso-marca{display:flex;align-items:center;gap:.55rem;margin:0;color:var(--wine);font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.acceso-icono{flex:0 0 auto;width:1.6rem;height:1.6rem;padding:.25rem;border-radius:50%;background:var(--soft);color:var(--navy)}
+.acceso-tarjeta h2{font-size:clamp(1.35rem,2.4vw,1.75rem);letter-spacing:-.03em;line-height:1.2;margin:.8rem 0 .5rem}
+.acceso-texto{color:var(--muted);margin:0 0 1.3rem;font-size:1rem}
+.acceso-form label{display:block;font-weight:800;font-size:.92rem;margin-bottom:.4rem}
+.acceso-usuario{display:none}
+.acceso-campo{display:flex;gap:.5rem}
+.acceso-campo input{flex:1;min-width:0;min-height:48px;font:inherit;font-size:1.05rem;padding:.6rem .8rem;border:1.5px solid #b9c2d6;border-radius:.5rem;color:var(--navy);background:#fff}
+.acceso-campo input:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-color:var(--navy)}
+.acceso-campo input[aria-invalid="true"]{border-color:#b3261e;background:#fff8f7}
+.acceso-ver{flex:0 0 auto;min-height:48px;min-width:5.5rem;font:inherit;font-size:.85rem;font-weight:800;border:1.5px solid var(--navy);background:#fff;color:var(--navy);border-radius:.5rem;padding:0 .8rem;cursor:pointer}
+.acceso-error{min-height:1.4em;margin:.45rem 0 .2rem;color:#b3261e;font-weight:700;font-size:.92rem}
+.acceso-error:empty{margin-bottom:0}
+.acceso-boton{width:100%;min-height:50px;font:inherit;font-weight:800;font-size:1rem;color:#fff;background:var(--navy);border:1px solid var(--navy);border-radius:.5rem;cursor:pointer;margin-top:.4rem}
+.acceso-boton:hover{background:var(--wine);border-color:var(--wine)}
+.acceso-boton:disabled{opacity:.7;cursor:progress}
+.acceso-estado{min-height:1.3em;margin:.55rem 0 0;color:var(--muted);font-size:.88rem}
+.acceso-aviso{background:#fbf3d6;border:1px solid #e9d68a;border-radius:.6rem;padding:.8rem 1rem;font-size:.92rem;color:#4a3a00;margin:0}
+.acceso-volver{margin:1.3rem 0 0;padding-top:1rem;border-top:1px solid var(--line);font-size:.9rem}
+.acceso-volver a{font-weight:800;text-decoration:none}.acceso-volver a:hover{text-decoration:underline}
+@media(max-width:780px){.acceso-hero{min-height:0}.acceso-grid{grid-template-columns:minmax(0,1fr);gap:1.8rem;padding:2.6rem 0 3rem}.acceso-evento .hero-meta{margin-bottom:0}}
+@media(max-width:380px){.acceso-campo{flex-direction:column}.acceso-ver{min-height:42px}}
