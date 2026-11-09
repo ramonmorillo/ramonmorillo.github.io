@@ -18,7 +18,9 @@ Sitio estático sin framework ni dependencias. Las páginas se **generan** a par
 | `scripts/audit-github.mjs` | Contraste del catálogo con los repositorios públicos de GitHub (bajo demanda) |
 | `assets/css/site.css`, `assets/js/site.js` | Sistema de diseño y mejoras progresivas (búsqueda, filtros, menú móvil) |
 
-El contenido es legible sin JavaScript. Las páginas de los talleres (`foco-3-octubre.html`, `sevilla-14-octubre.html`, `santiago-16-noviembre.html`) y sus recursos son independientes y no se generan.
+El contenido es legible sin JavaScript. Las páginas de los talleres (`foco-3-octubre.html`, `sevilla-14-octubre.html`, `santiago-16-noviembre.html`) y sus recursos son independientes y no se generan con `build-site.mjs`.
+
+**Talleres con clave**: `sevilla-14-octubre.html` y `santiago-16-noviembre.html` se publican cifradas (AES-256-GCM, una clave por taller) y requieren JavaScript. Sus fuentes en claro y materiales están en `_talleres/`, que GitHub Pages no publica. Para editarlas o cambiar una clave, consulta [_talleres/README.md](_talleres/README.md): `npm run talleres`, `npm run talleres:check` y `npm run talleres:verify`.
 
 ## Mantenimiento
 

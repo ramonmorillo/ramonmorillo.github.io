@@ -8,7 +8,10 @@
     "test": "node scripts/validate-catalog.mjs",
     "audit:github": "node scripts/audit-github.mjs",
     "validate-content": "node scripts/validate-content.js",
-    "validate-google-ia": "node scripts/validate-google-ia.js"
+    "validate-google-ia": "node scripts/validate-google-ia.js",
+    "talleres": "node scripts/talleres-cifrar.mjs",
+    "talleres:check": "node scripts/talleres-cifrar.mjs --check",
+    "talleres:verify": "node scripts/talleres-cifrar.mjs --verify"
   },
   "devDependencies": {}
 }
