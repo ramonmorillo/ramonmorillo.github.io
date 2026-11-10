@@ -57,6 +57,16 @@ Para añadir otro taller protegido, copia su página a `_talleres/<id>.html`, mu
 | `npm run talleres:verify` | Cada página se descifra con su clave, el contenido coincide con la fuente y la clave de un taller no abre el otro. | Sí |
 | `npm run validate-google-ia`, `node scripts/validate-recursos-ia.js` | Validadores previos; ahora leen las fuentes de `_talleres/`. | No |
 
+## Mantenimiento de las soluciones personalizadas de Santiago
+
+El apartado `#soluciones-personalizadas` está en la fuente `santiago-16-noviembre.html` de esta carpeta. Reutiliza los componentes `materials`, `lesson`, `lesson-extended` y los desplegables nativos del taller; no necesita estilos, scripts ni dependencias adicionales.
+
+Cada ficha mantiene un identificador `data-solucion` (`informe`, `pnt`, `stock`, `agenda`) y tres apartados: uso, construcción y reto. Los avisos `data-recurso="aplicacion|tutorial|prompts|repositorio"` son los puntos de incorporación de futuros recursos: sustituye cada aviso por un enlace con nombre descriptivo solo cuando el destino exista y esté comprobado. Conserva el estado «En preparación» hasta que la solución esté disponible y verificada. Los pasos comunes de construcción se mantienen una sola vez en `#soluciones-metodo`.
+
+Mantén los tutoriales, prompts y materiales que deban compartir la protección del taller dentro de `_talleres/`, siguiendo el mecanismo existente de incrustación de datos y recursos. Un enlace externo no hereda el cifrado ni el control de acceso de esta página.
+
+Después de editar, regenera **solo Santiago** con su clave actual mediante `npm run talleres -- santiago-16-noviembre`, y ejecuta `npm run talleres:check` y `npm run talleres:verify -- santiago-16-noviembre`. No uses una clave de prueba en la salida que se vaya a publicar. Sin la clave actual, la fuente puede revisarse y probarse en una copia temporal, pero la página pública permanece pendiente de regeneración.
+
 ## Límites de la protección (léelos)
 
 1. **El repositorio es público.** Las fuentes en claro de `_talleres/` y todo el historial de git (incluidas las versiones anteriores, sin cifrar, de estas páginas y sus materiales) se pueden leer en github.com. El cifrado impide acceder por la web (ramonmorillo.es), pero no por GitHub. Para cerrar esa vía sin coste no hay solución sencilla: habría que mover las fuentes a un repositorio privado y reescribir el historial del público, una operación destructiva que conviene decidir aparte. Publicar Pages desde un repositorio privado requiere un plan de pago de GitHub.
