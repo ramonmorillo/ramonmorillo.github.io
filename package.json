@@ -6,6 +6,7 @@
     "build": "node scripts/build-site.mjs",
     "validate": "node scripts/validate-catalog.mjs",
     "test": "node scripts/validate-catalog.mjs",
+    "test:farmainforme": "node --test tests/farmainforme.test.mjs",
     "audit:github": "node scripts/audit-github.mjs",
     "validate-content": "node scripts/validate-content.js",
     "validate-google-ia": "node scripts/validate-google-ia.js",
