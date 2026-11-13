@@ -237,7 +237,7 @@ Comprobación: explica cómo se calcula el PDC con las variables que propones.</
 
       <details>
         <summary><h4>Práctica adicional · Vibecoding con Claude: formulario de adherencia (15–20 min · para después)</h4></summary>
-        <p>Inspirada en el ejercicio de entrevista de adherencia del taller de Juan Mora. Objetivo: transformar una necesidad clínica sencilla en una herramienta HTML de uso exclusivamente docente. No sustituye el análisis de adherencia que ya realizamos en ChatGPT ni valida su utilización con pacientes.</p>
+        <p>Objetivo: transformar una necesidad clínica sencilla en una herramienta HTML de uso exclusivamente docente. No sustituye el análisis de adherencia que ya realizamos en ChatGPT ni valida su utilización con pacientes.</p>
         <div class="prompt"><strong>Prompt para Claude</strong><pre id="prompt-claude-vibecoding-adherencia">Actúa como desarrollador de herramientas docentes para Farmacia Hospitalaria.
 Crea una aplicación en un único archivo HTML (HTML, CSS y JavaScript integrados; sin librerías externas ni servidor) para practicar la revisión de dispensaciones de pacientes ficticios.
 
@@ -261,7 +261,7 @@ Antes de generar el código, resume las reglas e identifica posibles ambigüedad
 
       <details data-mora-exercise="true">
         <summary><h4>Docencia FIR · Autoevaluación con corrección trazable (10–15 min · opcional)</h4></summary>
-        <p>Adaptación docente del tipo de ejercicio trabajado por Juan Mora. Actividad opcional para construir con Claude, únicamente con material ficticio y validación profesional.</p>
+        <p>Actividad opcional para construir con Claude, únicamente con material ficticio y validación profesional.</p>
         <div class="prompt"><strong>Prompt para Claude</strong><pre id="prompt-claude-fir-auto">Actúa como tutor FIR y diseñador de evaluación formativa. Usa EXCLUSIVAMENTE el siguiente temario o fragmento de un PNT FICTICIO que pegaré al final.
 Crea 5 preguntas de opción múltiple con 4 alternativas y una única respuesta correcta. Incluye 2 preguntas de recuerdo, 2 de aplicación y 1 caso de decisión documental.
 Antes de mostrar las soluciones, ofrece únicamente las preguntas. Cuando responda con 1A, 2B, etc., corrige una a una con: acierto/error, respuesta correcta y cita textual exacta del fragmento que la respalda.
@@ -272,7 +272,7 @@ No asignes una nota de competencia clínica ni afirmes que la evaluación está 
       </details>
       <details data-mora-exercise="true">
         <summary><h4>PROA · Panel reproducible con datos ficticios (15–20 min · opcional)</h4></summary>
-        <p>Adaptación docente del tipo de ejercicio trabajado por Juan Mora. Actividad opcional para construir con Claude, únicamente con material ficticio y validación profesional.</p>
+        <p>Actividad opcional para construir con Claude, únicamente con material ficticio y validación profesional.</p>
         <div class="prompt"><strong>Prompt para Claude</strong><pre id="prompt-claude-proa-panel">Actúa como farmacéutico de hospital experto en PROA y desarrollador de cuadros de mando docentes.
 Crea una herramienta local en un archivo HTML, sin librerías externas, para introducir una tabla FICTICIA de consumo de antimicrobianos y estancias por periodo.
 Columnas: periodo, antimicrobiano, DDD consumidas, estancias. Calcula DDD/100 estancias = DDD × 100 / estancias; agrupa por periodo y antimicrobiano, sumando numeradores y denominadores ANTES de calcular la razón.
@@ -287,7 +287,7 @@ Antes de programar, resume reglas y casos de prueba.</pre><button type="button" 
       </details>
       <details data-mora-exercise="true">
         <summary><h4>Atención farmacéutica · Registro estructurado de intervenciones (15–20 min · opcional)</h4></summary>
-        <p>Adaptación docente del tipo de ejercicio trabajado por Juan Mora. Actividad opcional para construir con Claude, únicamente con material ficticio y validación profesional.</p>
+        <p>Actividad opcional para construir con Claude, únicamente con material ficticio y validación profesional.</p>
         <div class="prompt"><strong>Prompt para Claude</strong><pre id="prompt-claude-intervenciones">Actúa como farmacéutico de hospital y diseñador de una herramienta docente de registro de intervenciones farmacéuticas.
 Desarrolla en un único HTML (CSS y JavaScript incluidos) un formulario con los siguientes campos para CASOS FICTICIOS: código de caso, área asistencial, problema identificado, tipo de intervención, destinatario, estado [propuesta / aceptada / rechazada / pendiente] y fecha ficticia.
 Salida: listado editable, filtros por estado y área, recuento por estados y exportación CSV. No guardes datos en servidor ni localStorage, no incluyas datos identificativos ni recomiendes decisiones clínicas.
