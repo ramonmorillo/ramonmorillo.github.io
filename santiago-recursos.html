@@ -26,7 +26,7 @@ button:disabled{background:#90a0aa;cursor:not-allowed}.check{display:flex;gap:10
 <form id="solicitud" method="post" action="" novalidate>
 <label for="email">Correo electrónico</label>
 <input id="email" type="email" name="email" autocomplete="email" required placeholder="nombre@correo.com" disabled>
-<div class="check"><input type="checkbox" id="consent" name="consent" value="si" required disabled><label for="consent">He leído la <a href="/politica-privacidad.html" id="privacy">información sobre privacidad</a> y solicito recibir los materiales del taller por correo electrónico.</label></div>
+<div class="check"><input type="checkbox" id="consent" name="consent" value="si" required disabled><label for="consent">He leído la <a href="#privacidad" id="privacy">información sobre privacidad</a> y solicito recibir los materiales del taller por correo electrónico.</label></div>
 <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
 <input type="hidden" name="evento" value="santiago-16-noviembre-2026">
 <button type="submit" disabled id="send">Envío pendiente de activación</button>
@@ -37,7 +37,7 @@ button:disabled{background:#90a0aa;cursor:not-allowed}.check{display:flex;gap:10
 <section class="card"><h2>¿Qué recibirás?</h2>
 <p>Una selección de los contenidos ya publicados en el taller: prompting profesional, análisis de datos ficticios, creación y validación de herramientas, soluciones personalizadas, ejercicios y enlaces de consulta.</p>
 <p><a href="/santiago-16-noviembre.html">Acceder a la web del taller</a> (requiere la clave facilitada por el docente).</p>
-</section></main>
+</section><section class="card" id="privacidad"><h2>Información sobre privacidad</h2><p class="notice">Responsable: Ramón Morillo Verdugo. Finalidad: gestionar la solicitud y enviar los materiales del taller de Santiago. Base jurídica: solicitud y consentimiento expreso para la remisión del material. Los datos no se usarán para comunicaciones comerciales ni se publicarán. Podrás solicitar acceso, rectificación o supresión mediante el canal de contacto publicado en la web del responsable. Antes de activar el servicio se completarán aquí la dirección de contacto, el proveedor de correo, los destinatarios de los datos, el plazo de conservación y el resto de información exigida por la normativa.</p></section></main>
 <footer>Ramón Morillo Verdugo · Material docente · Uso de datos ficticios y revisión profesional obligatoria.</footer>
 <script>
 // Configure action only after publishing and testing a trusted mail endpoint.
