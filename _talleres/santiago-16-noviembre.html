@@ -259,6 +259,43 @@ Antes de generar el código, resume las reglas e identifica posibles ambigüedad
         <p><strong>Reto de mejora:</strong> añade preguntas estructuradas de entrevista motivacional y diferencia entre cobertura de dispensación y toma efectiva. Antes de reutilizarla en asistencia, define el indicador clínico válido, el periodo de observación, las fuentes de datos y el plan de validación.</p>
       </details>
 
+      <details data-mora-exercise="true">
+        <summary><h4>Docencia FIR · Autoevaluación con corrección trazable (10–15 min · opcional)</h4></summary>
+        <p>Adaptación docente del tipo de ejercicio trabajado por Juan Mora. Actividad opcional para construir con Claude, únicamente con material ficticio y validación profesional.</p>
+        <div class="prompt"><strong>Prompt para Claude</strong><pre id="prompt-claude-fir-auto">Actúa como tutor FIR y diseñador de evaluación formativa. Usa EXCLUSIVAMENTE el siguiente temario o fragmento de un PNT FICTICIO que pegaré al final.
+Crea 5 preguntas de opción múltiple con 4 alternativas y una única respuesta correcta. Incluye 2 preguntas de recuerdo, 2 de aplicación y 1 caso de decisión documental.
+Antes de mostrar las soluciones, ofrece únicamente las preguntas. Cuando responda con 1A, 2B, etc., corrige una a una con: acierto/error, respuesta correcta y cita textual exacta del fragmento que la respalda.
+No inventes artículos, guías ni protocolos. Si el texto no permite una pregunta con respuesta inequívoca, elimínala y explica por qué.
+No asignes una nota de competencia clínica ni afirmes que la evaluación está validada.
+[TEMARIO O FRAGMENTO FICTICIO]</pre><button type="button" data-copy="prompt-claude-fir-auto">Copiar prompt</button><span class="copy-status" role="status" aria-live="polite"></span></div>
+        <p class="check-note"><strong>Punto de control:</strong> Las cinco respuestas deben poder comprobarse en el texto aportado. Prueba una pregunta cuya respuesta no conste: Claude debe descartarla, no improvisar.</p>
+      </details>
+      <details data-mora-exercise="true">
+        <summary><h4>PROA · Panel reproducible con datos ficticios (15–20 min · opcional)</h4></summary>
+        <p>Adaptación docente del tipo de ejercicio trabajado por Juan Mora. Actividad opcional para construir con Claude, únicamente con material ficticio y validación profesional.</p>
+        <div class="prompt"><strong>Prompt para Claude</strong><pre id="prompt-claude-proa-panel">Actúa como farmacéutico de hospital experto en PROA y desarrollador de cuadros de mando docentes.
+Crea una herramienta local en un archivo HTML, sin librerías externas, para introducir una tabla FICTICIA de consumo de antimicrobianos y estancias por periodo.
+Columnas: periodo, antimicrobiano, DDD consumidas, estancias. Calcula DDD/100 estancias = DDD × 100 / estancias; agrupa por periodo y antimicrobiano, sumando numeradores y denominadores ANTES de calcular la razón.
+Muestra tabla, gráfico sencillo y exportación CSV. Valida que las estancias sean mayores que cero; no uses datos de pacientes ni envíes información.
+Casos de prueba:
+Enero, A, 120 DDD y 1.000 estancias → 12 DDD/100 estancias.
+Febrero, A, 150 DDD y 750 estancias → 20 DDD/100 estancias.
+Total conjunto → 270 × 100 / 1.750 = 15,43 DDD/100 estancias (no promediar 12 y 20).
+Señala que la DDD debe proceder de una definición ATC/DDD vigente y que el panel docente no valida indicadores PROA reales.
+Antes de programar, resume reglas y casos de prueba.</pre><button type="button" data-copy="prompt-claude-proa-panel">Copiar prompt</button><span class="copy-status" role="status" aria-live="polite"></span></div>
+        <p class="check-note"><strong>Punto de control:</strong> Resultados esperados: enero 12; febrero 20; conjunto 15,43 DDD/100 estancias. El total no es la media simple 16.</p>
+      </details>
+      <details data-mora-exercise="true">
+        <summary><h4>Atención farmacéutica · Registro estructurado de intervenciones (15–20 min · opcional)</h4></summary>
+        <p>Adaptación docente del tipo de ejercicio trabajado por Juan Mora. Actividad opcional para construir con Claude, únicamente con material ficticio y validación profesional.</p>
+        <div class="prompt"><strong>Prompt para Claude</strong><pre id="prompt-claude-intervenciones">Actúa como farmacéutico de hospital y diseñador de una herramienta docente de registro de intervenciones farmacéuticas.
+Desarrolla en un único HTML (CSS y JavaScript incluidos) un formulario con los siguientes campos para CASOS FICTICIOS: código de caso, área asistencial, problema identificado, tipo de intervención, destinatario, estado [propuesta / aceptada / rechazada / pendiente] y fecha ficticia.
+Salida: listado editable, filtros por estado y área, recuento por estados y exportación CSV. No guardes datos en servidor ni localStorage, no incluyas datos identificativos ni recomiendes decisiones clínicas.
+Asegura que «aceptada» no signifique «realizada» y que «pendiente» no cuente como aceptada.
+Datos para comprobar: INT01 aceptada; INT02 pendiente; INT03 rechazada; INT04 aceptada. Esperado: 4 registros, 2 aceptadas, 1 pendiente, 1 rechazada. Si calculas tasa de aceptación, usa denominador definido y explícito; no incluyas pendientes por defecto sin justificación.
+Antes de escribir código, detalla definiciones operativas y limitaciones.</pre><button type="button" data-copy="prompt-claude-intervenciones">Copiar prompt</button><span class="copy-status" role="status" aria-live="polite"></span></div>
+        <p class="check-note"><strong>Punto de control:</strong> El contador debe mostrar 4 intervenciones y 2 aceptadas. Cambiar el estado de INT02 a «aceptada» debe actualizar los contadores a 3, sin duplicar el registro.</p>
+      </details>
       <details>
         <summary><h4>1.4 · Skills: un procedimiento que Claude repite igual cada vez (para después)</h4></summary>
         <p>Una skill reúne instrucciones y recursos para una tarea repetida. Una vez instalada, Claude la activa por su descripción en cualquier conversación. Es la diferencia entre explicar cada vez cómo quieres algo y tenerlo ya enseñado. Como ejemplo, puedes descargar la <a href="assets/foco-3-octubre/valoracion-farmaceutica-vih.zip" download>skill de valoración farmacéutica (.zip)</a> que usamos en el taller FOCO-VIH y revisar su contenido antes de instalarla.</p>
