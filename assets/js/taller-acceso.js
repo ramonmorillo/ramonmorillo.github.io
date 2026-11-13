@@ -94,6 +94,10 @@
       if (n.nodeType === 1) reescribirEnlaces(mapa, n.parentNode || n);
     }))).observe(document.body, { childList: true, subtree: true });
     await ejecutarScripts();
+    if (taller === 'santiago-16-noviembre') {
+      const tituloEncargos = document.getElementById('soluciones-titulo');
+      if (tituloEncargos) tituloEncargos.textContent = 'Los encargos de Irene';
+    }
     document.documentElement.dataset.tallerAbierto = taller;
     document.dispatchEvent(new CustomEvent('taller:abierto', { detail: { taller } }));
     if (!location.hash || location.hash === '#top') {
