@@ -236,6 +236,30 @@ Comprobación: explica cómo se calcula el PDC con las variables que propones.</
       </details>
 
       <details>
+        <summary><h4>Práctica adicional · Vibecoding con Claude: formulario de adherencia (15–20 min · para después)</h4></summary>
+        <p>Inspirada en el ejercicio de entrevista de adherencia del taller de Juan Mora. Objetivo: transformar una necesidad clínica sencilla en una herramienta HTML de uso exclusivamente docente. No sustituye el análisis de adherencia que ya realizamos en ChatGPT ni valida su utilización con pacientes.</p>
+        <div class="prompt"><strong>Prompt para Claude</strong><pre id="prompt-claude-vibecoding-adherencia">Actúa como desarrollador de herramientas docentes para Farmacia Hospitalaria.
+Crea una aplicación en un único archivo HTML (HTML, CSS y JavaScript integrados; sin librerías externas ni servidor) para practicar la revisión de dispensaciones de pacientes ficticios.
+
+Formulario de entrada:
+- Código ficticio de registro (no incluir nombre ni historia clínica).
+- Unidades dispensadas durante el periodo observado.
+- Unidades previstas durante ese mismo periodo.
+- Observación libre sobre barreras percibidas (dato docente ficticio, opcional).
+
+Cálculo: porcentaje de cobertura simplificado = 100 × unidades dispensadas / unidades previstas. Muéstralo con un decimal. Aclara expresamente que esta métrica docente NO equivale a adherencia real, PDC ni MPR validado.
+Validación: unidades previstas > 0; unidades dispensadas >= 0; bloquear valores no numéricos; señalar cuando la cobertura exceda el 100 % sin truncarla silenciosamente.
+Salida: tabla de registros, porcentaje calculado y un resumen copiable. Añade un botón para descargar CSV, otro para reiniciar el formulario y una nota visible «Solo datos ficticios».
+Privacidad: no transmitir datos, no utilizar APIs ni guardar en localStorage. No recomendar cambios terapéuticos.
+Entrega el archivo HTML completo y explica cómo abrirlo localmente con doble clic.
+Incluye tres pruebas reproducibles: 28/28 = 100,0 %; 20/28 = 71,4 %; unidades previstas = 0 debe producir un error y no calcular.
+Antes de generar el código, resume las reglas e identifica posibles ambigüedades.</pre>
+        <button type="button" class="copy-btn" data-copy-target="prompt-claude-vibecoding-adherencia">Copiar prompt</button><span class="copy-status" role="status" aria-live="polite"></span></div>
+        <p class="check-note"><strong>Punto de control:</strong> 28/28 = 100,0 %; 20/28 = 71,4 %; el denominador cero debe impedir el cálculo. Prueba también 35/28 = 125,0 %: la herramienta debe avisar de cobertura superior al 100 %, sin convertir automáticamente ese valor en adherencia. Revisa el CSV y confirma que no contiene identificadores personales.</p>
+        <p><strong>Reto de mejora:</strong> añade preguntas estructuradas de entrevista motivacional y diferencia entre cobertura de dispensación y toma efectiva. Antes de reutilizarla en asistencia, define el indicador clínico válido, el periodo de observación, las fuentes de datos y el plan de validación.</p>
+      </details>
+
+      <details>
         <summary><h4>1.4 · Skills: un procedimiento que Claude repite igual cada vez (para después)</h4></summary>
         <p>Una skill reúne instrucciones y recursos para una tarea repetida. Una vez instalada, Claude la activa por su descripción en cualquier conversación. Es la diferencia entre explicar cada vez cómo quieres algo y tenerlo ya enseñado. Como ejemplo, puedes descargar la <a href="assets/foco-3-octubre/valoracion-farmaceutica-vih.zip" download>skill de valoración farmacéutica (.zip)</a> que usamos en el taller FOCO-VIH y revisar su contenido antes de instalarla.</p>
         <div class="table-scroll" role="region" aria-labelledby="tabla-skills-area" tabindex="0">

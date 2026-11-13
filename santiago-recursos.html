@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Apuntes del taller · Santiago 2026 · Ramón Morillo</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#173049;background:#f3f6f9}
+*{box-sizing:border-box}body{margin:0}header,main,footer{max-width:790px;margin:auto;padding:22px}header{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:.9rem}
+a{color:#12688b}h1{font-size:clamp(2rem,5vw,3.25rem);letter-spacing:-.045em;line-height:1.08;margin:15px 0}h2{font-size:1.15rem}
+small,.muted{color:#526a79}main{padding-top:50px;padding-bottom:70px}.eyebrow{color:#086f83;text-transform:uppercase;font-weight:750;font-size:.75rem;letter-spacing:.12em}
+.card{background:white;border:1px solid #dce5eb;border-radius:18px;padding:clamp(20px,5vw,38px);box-shadow:0 16px 45px #18344d10;margin-top:30px}
+label{display:block;margin:18px 0 7px;font-weight:650;font-size:.92rem}input[type=email]{width:100%;padding:15px;border:1px solid #9fafb8;border-radius:8px;font:inherit}
+button{background:#123a56;color:white;border:0;padding:15px 22px;border-radius:8px;font:inherit;font-weight:700;width:100%;cursor:pointer}
+button:disabled{background:#90a0aa;cursor:not-allowed}.check{display:flex;gap:10px;align-items:flex-start;margin:18px 0;font-size:.88rem}.check label{margin:0;font-weight:400}
+.notice{font-size:.87rem;line-height:1.55;color:#415766}.status{border-left:3px solid #d29937;padding-left:14px}footer{border-top:1px solid #dce5eb;font-size:.8rem;color:#61717f}
+</style>
+</head><body>
+<header><strong>Ramón Morillo · Formación</strong><a href="/santiago-16-noviembre.html">Volver al taller</a></header>
+<main><p class="eyebrow">Santiago de Compostela · 16 noviembre 2026</p>
+<h1>Los apuntes del taller, en tu correo</h1>
+<p class="muted">Inteligencia artificial aplicada a la Farmacia Hospitalaria. Prompts, casos prácticos, herramientas y recursos para continuar después de la sesión.</p>
+<section class="card" aria-labelledby="form-title">
+<h2 id="form-title">Solicita los materiales docentes</h2>
+<p>Recibirás un enlace al cuaderno del taller. No solicitamos datos de pacientes ni información clínica.</p>
+<form id="solicitud" method="post" action="" novalidate>
+<label for="email">Correo electrónico</label>
+<input id="email" type="email" name="email" autocomplete="email" required placeholder="nombre@correo.com" disabled>
+<div class="check"><input type="checkbox" id="consent" name="consent" value="si" required disabled><label for="consent">He leído la <a href="#privacidad" id="privacy">información sobre privacidad</a> y solicito recibir los materiales del taller por correo electrónico.</label></div>
+<input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+<input type="hidden" name="evento" value="santiago-16-noviembre-2026">
+<button type="submit" disabled id="send">Envío pendiente de activación</button>
+</form>
+<p class="notice status" id="status" role="status">Estamos configurando el envío automático. Este formulario no recoge ni transmite correos hasta que el servicio esté activado y probado.</p>
+<p class="notice">El correo se utilizará para atender esta solicitud, no para suscribirte a publicidad. No compartas datos clínicos en este formulario.</p>
+</section>
+<section class="card"><h2>¿Qué recibirás?</h2>
+<p>Una selección de los contenidos ya publicados en el taller: prompting profesional, análisis de datos ficticios, creación y validación de herramientas, soluciones personalizadas, ejercicios y enlaces de consulta.</p>
+<p><a href="/santiago-16-noviembre.html">Acceder a la web del taller</a> (requiere la clave facilitada por el docente).</p>
+</section><section class="card" id="privacidad"><h2>Información sobre privacidad</h2><p class="notice">Responsable: Ramón Morillo Verdugo. Finalidad: gestionar la solicitud y enviar los materiales del taller de Santiago. Base jurídica: solicitud y consentimiento expreso para la remisión del material. Los datos no se usarán para comunicaciones comerciales ni se publicarán. Podrás solicitar acceso, rectificación o supresión mediante el canal de contacto publicado en la web del responsable. Antes de activar el servicio se completarán aquí la dirección de contacto, el proveedor de correo, los destinatarios de los datos, el plazo de conservación y el resto de información exigida por la normativa.</p></section></main>
+<footer>Ramón Morillo Verdugo · Material docente · Uso de datos ficticios y revisión profesional obligatoria.</footer>
+<script>
+// Configure action only after publishing and testing a trusted mail endpoint.
+// Keep the form disabled if endpoint is not configured. No credential is stored here.
+const ENDPOINT = "";
+if (ENDPOINT.startsWith("https://script.google.com/macros/s/")) {
+ const form=document.getElementById("solicitud");
+ form.action=ENDPOINT;
+ for(const item of form.querySelectorAll("input,button")) item.disabled=false;
+ document.getElementById("send").textContent="Recibir los apuntes por correo";
+ document.getElementById("status").textContent="Al enviar la solicitud, se abrirá la confirmación del servicio de correo.";
+}
+</script>
+</body></html>
