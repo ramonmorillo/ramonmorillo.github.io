@@ -82,7 +82,13 @@
 
   async function mostrar(carga) {
     const mapa = prepararArchivos(carga.files);
+    // Conservar el QR público de Santiago al sustituir la pantalla de acceso por el contenido descifrado.
+    // Se retirará esta compatibilidad cuando se regenere el contenido cifrado con la fuente actualizada.
+    const qrPie = taller === 'santiago-16-noviembre' ? document.getElementById('santiago-qr-pie')?.outerHTML : null;
     document.body.innerHTML = carga.body;
+    if (qrPie && !document.getElementById('santiago-qr-pie')) {
+      document.querySelector('footer.footer')?.insertAdjacentHTML('afterbegin', qrPie);
+    }
     reescribirEnlaces(mapa, document.body);
     new MutationObserver((cambios) => cambios.forEach((c) => c.addedNodes.forEach((n) => {
       if (n.nodeType === 1) reescribirEnlaces(mapa, n.parentNode || n);
