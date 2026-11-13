@@ -47,5 +47,5 @@ function doPost(e) {
 }
 function salida(mensaje) {
   const safe = String(mensaje).replace(/&/g,'&amp;').replace(/</g,'&lt;');
-  return HtmlService.createHtmlOutput('<!doctype html><html lang="es"><meta charset="utf-8"><title>Apuntes Santiago</title><body style="font:18px system-ui;max-width:660px;margin:10vh auto;padding:25px"><h1>Recursos del taller</h1><p>'+safe+'</p><p><a href="https://ramonmorillo.es/santiago-recursos.html">Volver</a></p></body></html>');
+  return HtmlService.createHtmlOutput('<!doctype html><html lang="es"><meta charset="utf-8"><title>Apuntes Santiago</title><body style="font:18px system-ui;max-width:660px;margin:10vh auto;padding:25px"><h1>Recursos del taller</h1><p>'+safe+'</p><p><a href="https://drive.google.com/file/d/1xLdvrQKHxxVxE8K3kmc1AZZgE_giFBFQ/view" target="_blank" rel="noopener noreferrer">Abrir directamente el cuaderno PDF</a></p><p><a href="https://ramonmorillo.es/santiago-recursos.html">Volver</a></p></body></html>');
 }
