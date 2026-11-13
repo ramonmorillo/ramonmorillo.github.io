@@ -1,7 +1,7 @@
 /**
  * Santiago 2026 · envío de apuntes (borrador para Apps Script).
  * Ejecutar solo tras configurar propiedades, privacidad y pruebas.
- * Propiedades del script: MATERIAL_URL, CONTACT_EMAIL.
+ * Material del taller fijado al PDF de Drive compartido como lector.
  * Desplegar como aplicación web: ejecutar como propietario / acceso público.
  * ATENCIÓN: endpoint público; revisar cuotas y monitorizar abuso.
  */
@@ -15,9 +15,7 @@ function doPost(e) {
     !String(p.website || '').trim();
   if (!ok) return salida('La solicitud no es válida. Vuelve al formulario y revisa los datos.');
   const cfg = PropertiesService.getScriptProperties();
-  const url = cfg.getProperty('MATERIAL_URL');
-  const contact = cfg.getProperty('CONTACT_EMAIL');
-  if (!url || !/^https:\/\//.test(url) || !contact) return salida('Servicio temporalmente no disponible.');
+  const url = 'https://drive.google.com/file/d/1xLdvrQKHxxVxE8K3kmc1AZZgE_giFBFQ/view';
   const lock = LockService.getScriptLock();
   if (!lock.tryLock(5000)) return salida('Servicio ocupado. Inténtalo más tarde.');
   try {
