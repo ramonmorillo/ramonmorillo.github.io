@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-13 · Santiago 16-nov: nuevo programa y tiempos del taller
+
+- Programa: 16:00–16:30 apertura de la jornada (Javier Ductor · Experto en IA); 16:30–18:45 taller (Ramón Morillo); 18:45–19:00 conclusiones, encuesta de satisfacción y cierre (Javier Ductor). Sin mención a la entidad colaboradora, a petición suya.
+- Taller de 170 a 135 min: apertura 5, Claude 25 (ej. 1.3: 10), ChatGPT 20 (2.1 y 2.2: 6; 2.3 y 2.4: 4), Gemini Notebook 20 (7/7/6), pausa 10, SciSpace 10, ciborg 40 (opciones A/B: 25; puesta en común: 5), cierre 5.
+
 ## 2026-11-09 · Acceso con clave a los talleres de Sevilla (14-oct) y Santiago (16-nov)
 
 - `sevilla-14-octubre.html` y `santiago-16-noviembre.html` se publican cifradas (AES-256-GCM + PBKDF2-SHA-256, 600 000 iteraciones), con una pantalla de acceso con la identidad visual de cada taller. Cada página tiene su propia clave y una no abre la otra. Las URL no cambian.
