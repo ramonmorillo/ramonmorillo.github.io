@@ -95,6 +95,7 @@
     }))).observe(document.body, { childList: true, subtree: true });
     await ejecutarScripts();
     document.documentElement.dataset.tallerAbierto = taller;
+    document.dispatchEvent(new CustomEvent('taller:abierto', { detail: { taller } }));
     if (!location.hash || location.hash === '#top') {
       const h1 = document.querySelector('main h1, h1');
       if (h1) { h1.setAttribute('tabindex', '-1'); h1.focus({ preventScroll: true }); }
