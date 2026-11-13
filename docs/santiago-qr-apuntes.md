@@ -26,3 +26,11 @@ Estado: **propuesta en rama, NO publicada y NO activada**.
 - El enlace al PDF funciona para quien lo reciba; no es descarga individual ni autenticada.
 - La clave SANTIAGO protege por cifrado la página del taller; no implica que el PDF público esté protegido.
 - El material docente y sus derechos de reproducción deben verificarse antes de producir el cuaderno.
+
+## Avances del 13-11-2026
+- Cuaderno de 14 páginas ya generado, revisado y subido a Google Drive: https://drive.google.com/file/d/1xLdvrQKHxxVxE8K3kmc1AZZgE_giFBFQ/view
+- Verificado que el archivo todavía pertenece solo al propietario: no consta permiso público. El propietario debe cambiar en Drive > Compartir > Acceso general > Cualquier persona con el enlace > Lector; comprobar en una ventana privada antes de activar.
+- El QR PNG preparado fuera del repositorio se ha decodificado y dirige a https://ramonmorillo.es/santiago-recursos.html. Mantenerlo sin proyectar hasta verificar publicación y envío.
+- Nueva práctica opcional de vibecoding y cobertura simplificada en el archivo fuente `_talleres/santiago-16-noviembre.html`, dentro del bloque 01 Claude. Generar la salida cifrada con `npm run talleres` antes de integrar la rama.
+- El envío real no ha podido probarse: todavía falta desplegar Apps Script, obtener URL /exec y autorizar la cuenta que enviará correos. No simular recepción satisfactoria.
+- Comprobar que el apartado de privacidad contiene los datos completos del responsable antes de habilitar el formulario.
