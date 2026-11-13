@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-13 · Santiago 16-nov: herramientas de la parte ciborg
+
+- Sustituidas cambiosTAR por el Hub de Estratificación CMO y CMO VIH por EvidenceGap Radar; añadida FHarmacuentos como sexta herramienta. Textos y URL tomados de `data/catalogo.json`.
+
 ## 2026-11-13 · Santiago 16-nov: nuevo programa y tiempos del taller
 
 - Programa: 16:00–16:30 apertura de la jornada (Javier Ductor · Experto en IA); 16:30–18:45 taller (Ramón Morillo); 18:45–19:00 conclusiones, encuesta de satisfacción y cierre (Javier Ductor). Sin mención a la entidad colaboradora, a petición suya.
