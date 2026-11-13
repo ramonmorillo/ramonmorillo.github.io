@@ -1,7 +1,7 @@
 /**
  * Santiago 2026 · envío de apuntes (borrador para Apps Script).
  * Ejecutar solo tras configurar propiedades, privacidad y pruebas.
- * Propiedades del script: MATERIAL_URL, CONTACT_EMAIL.
+ * El enlace del cuaderno es público y se incluye también en la pantalla de respuesta.
  * Desplegar como aplicación web: ejecutar como propietario / acceso público.
  * ATENCIÓN: endpoint público; revisar cuotas y monitorizar abuso.
  */
@@ -15,9 +15,7 @@ function doPost(e) {
     !String(p.website || '').trim();
   if (!ok) return salida('La solicitud no es válida. Vuelve al formulario y revisa los datos.');
   const cfg = PropertiesService.getScriptProperties();
-  const url = cfg.getProperty('MATERIAL_URL');
-  const contact = cfg.getProperty('CONTACT_EMAIL');
-  if (!url || !/^https:\/\//.test(url) || !contact) return salida('Servicio temporalmente no disponible.');
+  const url = 'https://drive.google.com/file/d/1xLdvrQKHxxVxE8K3kmc1AZZgE_giFBFQ/view';
   const lock = LockService.getScriptLock();
   if (!lock.tryLock(5000)) return salida('Servicio ocupado. Inténtalo más tarde.');
   try {
@@ -29,11 +27,13 @@ function doPost(e) {
     // Evita dobles envíos inmediatos. No protege contra abuso distribuido.
     const hash = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, email)
       .map(x => ('0' + (x & 255).toString(16)).slice(-2)).join('');
-    if (cache.get('u-' + hash)) return salida('Si ya lo solicitaste, revisa tu bandeja de entrada y spam.');
+    if (cache.get('u-' + hash)) return salida('Ya recibimos una solicitud reciente para esta dirección. Para evitar duplicados, podrás reenviarla en un minuto. Puedes consultar los apuntes directamente desde el enlace inferior.');
+    if (MailApp.getRemainingDailyQuota() < 1) return salida('Se ha agotado temporalmente la cuota de correo de la cuenta remitente. Puedes abrir el cuaderno desde el enlace inferior.');
     MailApp.sendEmail({
       to: email,
       subject: 'Tus apuntes · Taller de IA en Farmacia Hospitalaria · Santiago',
       name: 'Ramón Morillo · Formación',
+      body: 'Hola. Gracias por participar en el taller de IA aplicada a la Farmacia Hospitalaria. Apuntes: ' + url + '\n\nUn saludo, Ramón Morillo',
       htmlBody: '<p>Hola:</p><p>Gracias por participar en el taller de IA aplicada a la Farmacia Hospitalaria.</p>' +
         '<p>Puedes acceder a los materiales docentes desde este enlace:</p>' +
         '<p><a href="' + url.replace(/&/g,'&amp;').replace(/"/g,'&quot;') + '">Consultar los apuntes</a></p>' +
@@ -41,8 +41,8 @@ function doPost(e) {
         '<p>Un saludo,<br>Ramón Morillo</p>'
     });
     cfg.setProperty(key, String(sent + 1));
-    cache.put('u-' + hash, '1', 21600);
-    return salida('Solicitud recibida. Revisa tu correo, incluida la carpeta de spam.');
+    cache.put('u-' + hash, '1', 60);
+    return salida('Correo enviado por el servicio. Revisa tu bandeja de entrada, incluido spam. El servidor destinatario puede retrasar o filtrar la entrega.');
   } finally { lock.releaseLock(); }
 }
 function salida(mensaje) {
