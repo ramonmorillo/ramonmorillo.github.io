@@ -31,24 +31,24 @@ button:disabled{background:#90a0aa;cursor:not-allowed}.check{display:flex;gap:10
 <input type="hidden" name="evento" value="santiago-16-noviembre-2026">
 <button type="submit" disabled id="send">Envío pendiente de activación</button>
 </form>
-<p class="notice status" id="status" role="status">Estamos configurando el envío automático. Este formulario no recoge ni transmite correos hasta que el servicio esté activado y probado.</p>
+<p class="notice status" id="status" role="status">Estamos configurando el envío automático. El servicio está conectado, pendiente de una prueba de recepción. Envíanos solo tu correo, nunca datos de pacientes.</p>
 <p class="notice">El correo se utilizará para atender esta solicitud, no para suscribirte a publicidad. No compartas datos clínicos en este formulario.</p>
 </section>
 <section class="card"><h2>¿Qué recibirás?</h2>
 <p>Una selección de los contenidos ya publicados en el taller: prompting profesional, análisis de datos ficticios, creación y validación de herramientas, soluciones personalizadas, ejercicios y enlaces de consulta.</p>
 <p><a href="/santiago-16-noviembre.html">Acceder a la web del taller</a> (requiere la clave facilitada por el docente).</p>
-</section><section class="card" id="privacidad"><h2>Información sobre privacidad</h2><p class="notice">Responsable: Ramón Morillo Verdugo. Finalidad: gestionar la solicitud y enviar los materiales del taller de Santiago. Base jurídica: solicitud y consentimiento expreso para la remisión del material. Los datos no se usarán para comunicaciones comerciales ni se publicarán. Podrás solicitar acceso, rectificación o supresión mediante el canal de contacto publicado en la web del responsable. Antes de activar el servicio se completarán aquí la dirección de contacto, el proveedor de correo, los destinatarios de los datos, el plazo de conservación y el resto de información exigida por la normativa.</p></section></main>
+</section><section class="card" id="privacidad"><h2>Información sobre privacidad</h2><p class="notice">Responsable: Ramón Morillo Verdugo. Finalidad: gestionar la solicitud y enviar los materiales del taller de Santiago. Base jurídica: solicitud y consentimiento expreso para la remisión del material. Los datos no se usarán para comunicaciones comerciales ni se publicarán. Podrás solicitar acceso, rectificación o supresión mediante el canal de contacto publicado en la web del responsable. Contacto: <a href="mailto:ramon.morillo.verdugo@gmail.com">ramon.morillo.verdugo@gmail.com</a>. El envío se gestiona con Google Apps Script y Gmail (Google), como proveedor tecnológico. No se crea una lista de distribución ni se comercializan los datos: la dirección se procesa para atender esta solicitud y queda reflejada en el correo enviado y en los registros técnicos del servicio conforme a la configuración y las políticas de conservación de Google. Puede solicitar su supresión escribiendo al contacto indicado, sin perjuicio de los registros que deban mantenerse por obligación legal. Más información en <a href="/privacidad/">la política general de privacidad</a>.</p></section></main>
 <footer>Ramón Morillo Verdugo · Material docente · Uso de datos ficticios y revisión profesional obligatoria.</footer>
 <script>
 // Configure action only after publishing and testing a trusted mail endpoint.
 // Keep the form disabled if endpoint is not configured. No credential is stored here.
-const ENDPOINT = "";
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbxc3pF3DZ465WSw4eSPqQ2SmwmhqoAxfzvV6ALflU9fH6iZU2eKbeYKf6A3zQQNz6l6dA/exec";
 if (ENDPOINT.startsWith("https://script.google.com/macros/s/")) {
  const form=document.getElementById("solicitud");
  form.action=ENDPOINT;
  for(const item of form.querySelectorAll("input,button")) item.disabled=false;
  document.getElementById("send").textContent="Recibir los apuntes por correo";
- document.getElementById("status").textContent="Al enviar la solicitud, se abrirá la confirmación del servicio de correo.";
+ document.getElementById("status").textContent="La solicitud se transmitirá al servicio de envío de correo de Google, que mostrará la confirmación del resultado.";
 }
 </script>
 </body></html>
