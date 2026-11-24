@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-24 · Contacto: el formulario ya no deja al visitante en un error 500
+
+- `/contacto/` enviaba con POST clásico a FormSubmit; cuando FormSubmit devolvía 500, el visitante acababa en una página de error ajena y el mensaje se perdía.
+- Con JavaScript, el formulario envía ahora por `formsubmit.co/ajax/` con 15 s de límite. Si la respuesta no es correcta (error HTTP, `success` falso, red o tiempo agotado), muestra el aviso en la propia página y ofrece abrir el correo del visitante con el mensaje ya redactado o copiarlo. Sin JavaScript se mantiene el envío clásico.
+- Pendiente de decisión: sustituir FormSubmit por un proveedor más fiable o propio (ver propuesta en la sesión).
 ## 2026-11-13 · Santiago 16-nov: herramientas de la parte ciborg
 
 - Sustituidas cambiosTAR por el Hub de Estratificación CMO y CMO VIH por EvidenceGap Radar; añadida FHarmacuentos como sexta herramienta. Textos y URL tomados de `data/catalogo.json`.

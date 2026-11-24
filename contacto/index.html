@@ -46,7 +46,7 @@
 <section class="section"><div class="wrap">
   <p id="enviado" class="panel tint" role="status" hidden>Mensaje enviado. Gracias: responderé al correo que has indicado.</p>
   <div class="grid g2" style="align-items:start">
-    <form class="form panel" action="https://formsubmit.co/ramon.morillo.verdugo@gmail.com" method="POST">
+    <form id="contactForm" class="form panel" action="https://formsubmit.co/ramon.morillo.verdugo@gmail.com" method="POST">
       <input type="hidden" name="_subject" value="Web ramonmorillo.es · contacto">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
@@ -57,9 +57,10 @@
       <label class="full">Motivo<select name="Motivo" required><option>Colaboración en investigación</option><option>Evaluación o adaptación de una herramienta</option><option>Invitación a congreso o jornada</option><option>Otra consulta profesional</option></select></label>
       <label class="full">Mensaje<textarea name="Mensaje" maxlength="3000" required></textarea><small>No incluyas datos de pacientes ni información clínica identificable.</small></label>
       <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <label class="check full"><input type="checkbox" required> <span>He leído el <a href="/privacidad/">aviso de privacidad</a> y acepto que estos datos se usen solo para responder a mi consulta.</span></label>
+      <label class="check full"><input type="checkbox" name="Consentimiento" value="Sí" required> <span>He leído el <a href="/privacidad/">aviso de privacidad</a> y acepto que estos datos se usen solo para responder a mi consulta.</span></label>
       <p class="full small muted" style="margin:0">El envío se realiza mediante el servicio externo FormSubmit, que remite el mensaje por correo electrónico. No se almacena en esta web.</p>
       <button class="btn full" type="submit">Enviar mensaje</button>
+      <div id="contactStatus" class="full" role="status" aria-live="polite"></div>
     </form>
     <div>
       <h2 style="font-size:var(--fs-4)">Correo directo</h2>
@@ -72,7 +73,59 @@
     </div>
   </div>
 </div></section>
-<script>if(new URLSearchParams(location.search).get('enviado')==='1'){document.getElementById('enviado').hidden=false;history.replaceState(null,'',location.pathname)}</script>
+<script>
+(function(){
+  var TO='ramon.morillo.verdugo'+'@'+'gmail.com';
+  var ENDPOINT='https://formsubmit.co/ajax/'+TO;
+  var ok=document.getElementById('enviado');
+  if(new URLSearchParams(location.search).get('enviado')==='1'){ok.hidden=false;history.replaceState(null,'',location.pathname)}
+  var form=document.getElementById('contactForm');
+  if(!form||!window.fetch||!window.FormData)return; // sin JS moderno: envío HTML clásico
+  var status=document.getElementById('contactStatus');
+  var btn=form.querySelector('button[type="submit"]');
+  function val(n){var el=form.elements[n];return el?String(el.value||'').trim():''}
+  function draft(){
+    var subject='Web ramonmorillo.es · '+val('Motivo');
+    var body='Nombre: '+val('Nombre')+'\nCorreo: '+val('email')+'\nInstitución: '+(val('Institución')||'—')+'\nMotivo: '+val('Motivo')+'\n\n'+val('Mensaje');
+    return {subject:subject,body:body};
+  }
+  function fallback(reason){
+    var d=draft();
+    var href='mailto:'+TO+'?subject='+encodeURIComponent(d.subject)+'&body='+encodeURIComponent(d.body);
+    status.innerHTML='';
+    var box=document.createElement('div');box.className='panel tint';
+    box.innerHTML='<p style="margin-top:0"><strong>El mensaje no se ha podido enviar desde la web.</strong> No es un problema de tus datos: el servicio de envío no ha respondido correctamente. No se ha perdido lo que has escrito.</p>'
+      +'<p><a class="btn" id="cMail">Abrir mi correo con el mensaje ya redactado</a> <button class="btn ghost" type="button" id="cCopy">Copiar el mensaje</button></p>'
+      +'<p class="small muted" style="margin-bottom:0">También puedes escribir directamente a <a id="cAddr"></a>. Detalle técnico: <span id="cWhy"></span></p>';
+    status.appendChild(box);
+    box.querySelector('#cMail').href=href;
+    var a=box.querySelector('#cAddr');a.href='mailto:'+TO;a.textContent=TO;
+    box.querySelector('#cWhy').textContent=reason;
+    box.querySelector('#cCopy').addEventListener('click',function(){
+      var t='Para: '+TO+'\nAsunto: '+d.subject+'\n\n'+d.body;
+      (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){this.textContent='Copiado'}.bind(this),function(){window.prompt('Copia el mensaje:',t)});
+    });
+    box.querySelector('#cMail').focus();
+  }
+  form.addEventListener('submit',function(e){
+    if(!form.checkValidity())return; // deja que el navegador muestre los errores de validación
+    e.preventDefault();
+    if(val('_honey'))return;
+    btn.disabled=true;btn.textContent='Enviando…';status.innerHTML='';
+    var ctrl=window.AbortController?new AbortController():null;
+    var timer=setTimeout(function(){if(ctrl)ctrl.abort()},15000);
+    fetch(ENDPOINT,{method:'POST',headers:{'Accept':'application/json'},body:new FormData(form),signal:ctrl?ctrl.signal:undefined})
+      .then(function(r){return r.json().catch(function(){return {}}).then(function(j){return {r:r,j:j}})})
+      .then(function(x){
+        var success=x.r.ok&&(x.j.success===true||x.j.success==='true');
+        if(!success)throw new Error('HTTP '+x.r.status+(x.j.message?' · '+x.j.message:''));
+        form.reset();form.hidden=true;ok.hidden=false;ok.tabIndex=-1;ok.focus();
+      })
+      .catch(function(err){fallback(err&&err.name==='AbortError'?'sin respuesta en 15 s':(err&&err.message)||'error de red')})
+      .then(function(){clearTimeout(timer);btn.disabled=false;btn.textContent='Enviar mensaje'});
+  });
+})();
+</script>
 </main>
 <footer class="site-footer">
   <div class="wrap">
