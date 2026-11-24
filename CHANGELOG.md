@@ -4,7 +4,7 @@
 
 - `/contacto/` enviaba con POST clásico a FormSubmit; cuando FormSubmit devolvía 500, el visitante acababa en una página de error ajena y el mensaje se perdía.
 - Con JavaScript, el formulario envía ahora por `formsubmit.co/ajax/` con 15 s de límite. Si la respuesta no es correcta (error HTTP, `success` falso, red o tiempo agotado), muestra el aviso en la propia página y ofrece abrir el correo del visitante con el mensaje ya redactado o copiarlo. Sin JavaScript se mantiene el envío clásico.
-- Pendiente de decisión: sustituir FormSubmit por un proveedor más fiable o propio (ver propuesta en la sesión).
+- Preparado un receptor propio en Google Apps Script (`docs/contacto-apps-script.gs`), sin cuentas nuevas: envía el aviso desde el Gmail del titular y, opcionalmente, registra cada mensaje en una hoja. Se activa pegando su URL `/exec` en `APPS_SCRIPT_URL` de `contacto/index.html`; mientras esté vacío se sigue usando FormSubmit.
 
 ## 2026-11-13 · Santiago 16-nov: herramientas de la parte ciborg
 

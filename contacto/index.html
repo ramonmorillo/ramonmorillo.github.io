@@ -76,7 +76,9 @@
 <script>
 (function(){
   var TO='ramon.morillo.verdugo'+'@'+'gmail.com';
-  var ENDPOINT='https://formsubmit.co/ajax/'+TO;
+  // Receptor propio en Google Apps Script (ver docs/contacto-apps-script.gs). Mientras esté vacío se usa FormSubmit.
+  var APPS_SCRIPT_URL='';
+  var ENDPOINT=APPS_SCRIPT_URL||('https://formsubmit.co/ajax/'+TO);
   var ok=document.getElementById('enviado');
   if(new URLSearchParams(location.search).get('enviado')==='1'){ok.hidden=false;history.replaceState(null,'',location.pathname)}
   var form=document.getElementById('contactForm');
@@ -114,7 +116,7 @@
     btn.disabled=true;btn.textContent='Enviando…';status.innerHTML='';
     var ctrl=window.AbortController?new AbortController():null;
     var timer=setTimeout(function(){if(ctrl)ctrl.abort()},15000);
-    fetch(ENDPOINT,{method:'POST',headers:{'Accept':'application/json'},body:new FormData(form),signal:ctrl?ctrl.signal:undefined})
+    fetch(ENDPOINT,APPS_SCRIPT_URL?{method:'POST',body:new URLSearchParams(new FormData(form)),signal:ctrl?ctrl.signal:undefined}:{method:'POST',headers:{'Accept':'application/json'},body:new FormData(form),signal:ctrl?ctrl.signal:undefined})
       .then(function(r){return r.json().catch(function(){return {}}).then(function(j){return {r:r,j:j}})})
       .then(function(x){
         var success=x.r.ok&&(x.j.success===true||x.j.success==='true');
