@@ -16,7 +16,7 @@
  */
 
 const TO = 'ramon.morillo.verdugo@gmail.com';
-const SHEET_ID = ''; // opcional
+const SHEET_ID = '14tO4bl-kxKH-vfRn54o0CuiNECGQNft5WO8qwG66d5o'; // Hoja «Contactos web ramonmorillo.es»
 const FIELDS = ['Nombre', 'email', 'Institución', 'Motivo', 'Mensaje'];
 const MAX = { Nombre: 120, email: 160, 'Institución': 160, Motivo: 120, Mensaje: 3000 };
 
@@ -51,13 +51,16 @@ function doPost(e) {
 
     if (SHEET_ID) {
       SpreadsheetApp.openById(SHEET_ID).getSheets()[0]
-        .appendRow([new Date()].concat(FIELDS.map(function (k) { return d[k]; })));
+        .appendRow([new Date()].concat(FIELDS.map(function (k) { return safeCell(d[k]); })));
     }
     return json({ success: true });
   } catch (err) {
     return json({ success: false, message: 'Error interno del receptor.' });
   }
 }
+
+// Evita que un texto que empiece por = + - @ se interprete como fórmula en la hoja.
+function safeCell(v) { return /^[=+\-@]/.test(v) ? "'" + v : v; }
 
 function doGet() { return json({ ok: true, service: 'contacto ramonmorillo.es' }); }
 
