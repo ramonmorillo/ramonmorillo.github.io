@@ -58,7 +58,7 @@
       <label class="full">Mensaje<textarea name="Mensaje" maxlength="3000" required></textarea><small>No incluyas datos de pacientes ni información clínica identificable.</small></label>
       <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
       <label class="check full"><input type="checkbox" name="Consentimiento" value="Sí" required> <span>He leído el <a href="/privacidad/">aviso de privacidad</a> y acepto que estos datos se usen solo para responder a mi consulta.</span></label>
-      <p class="full small muted" style="margin:0">El envío se realiza mediante el servicio externo FormSubmit, que remite el mensaje por correo electrónico. No se almacena en esta web.</p>
+      <p class="full small muted" style="margin:0">El mensaje se remite por correo electrónico mediante Google (Apps Script y Gmail). No se almacena en esta web.</p>
       <button class="btn full" type="submit">Enviar mensaje</button>
       <div id="contactStatus" class="full" role="status" aria-live="polite"></div>
     </form>
@@ -77,7 +77,7 @@
 (function(){
   var TO='ramon.morillo.verdugo'+'@'+'gmail.com';
   // Receptor propio en Google Apps Script (ver docs/contacto-apps-script.gs). Mientras esté vacío se usa FormSubmit.
-  var APPS_SCRIPT_URL='';
+  var APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbwQcV7kXJarrrnwHqvCqf_6y6MhIALLkDdOyOxWEEeyGlZ_DXG1aw51I_DqmOb5eBPS8w/exec';
   var ENDPOINT=APPS_SCRIPT_URL||('https://formsubmit.co/ajax/'+TO);
   var ok=document.getElementById('enviado');
   if(new URLSearchParams(location.search).get('enviado')==='1'){ok.hidden=false;history.replaceState(null,'',location.pathname)}
